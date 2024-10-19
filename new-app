@@ -1,3 +1,5 @@
+#!/bin/sh
+
 function error {
 	echo -e "\e[1;31m$1\e[0m"
 	exit 1
@@ -37,7 +39,7 @@ function print_help {
 	this project. It should be run from the project top-level, i.e. Blue.
 
 	USAGE:
-		[1mbash ./scripts/new-app.sh github APPNAME REPO_VISIBILITY[0m
+		[1m./new-app github APPNAME REPO_VISIBILITY[0m
 	Creates a github repo for the app, and clones the (empty) repo into 
 	this repo.
 	APPNAME is the name of the application you want to add a 
@@ -47,7 +49,7 @@ function print_help {
 	REPO_VISIBILITY should be one of 'public' and 'private'. It controls 
 	the visibility of the GitHub repo. Defaults to 'private'.
 
-		[1mbash ./scripts/new-app.sh create-submodule APPNAME[0m
+		[1m./new-app create-submodule APPNAME[0m
 	Adds a submodule for the repo at ./configs/APPNAME. Changes still 
 	have to be committed after running this.
 	EOF
