@@ -1,6 +1,6 @@
-[submodule "configs/riverwm"]
-	path = configs/riverwm
-	url = ./configs/riverwm
 [submodule "configs/bash"]
 	path = configs/bash
 	url = ./configs/bash/
+[submodule "configs/Desktop-Environments/riverwm"]
+	path = configs/riverwm
+	url = https://github.com/SixteenThousand/blue-riverwm.git
