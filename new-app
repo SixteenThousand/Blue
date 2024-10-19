@@ -6,17 +6,16 @@ function error {
 }
 
 function main {
+	if [ ! "$(basename $(pwd))" = 'Blue' ]
+	then
+		error 'You can only run this from the project toplevel, i.e. Blue!'
+	fi
 	case $1 in
 		-h|--help) print_help;;
 		github) github $2 $3;;
 		create-submodule) create_submodule $2;;
 		*) error 'Invalid option! Try --help instead';;
 	esac
-
-	if [ ! "$(basename $(pwd))" = 'Blue' ]
-	then
-		error 'You can only run this from the project toplevel, i.e. Blue!'
-	fi
 }
 
 function github {
