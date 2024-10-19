@@ -7,3 +7,6 @@
 [submodule "configs/swaywm"]
 	path = configs/swaywm
 	url = https://github.com/SixteenThousand/blue-swaywm
+[submodule "configs/nvim"]
+	path = configs/nvim
+	url = https://github.com/SixteenThousand/neovim-config-2024
