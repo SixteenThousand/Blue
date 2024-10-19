@@ -34,3 +34,6 @@
 [submodule "configs/wezterm"]
 	path = configs/wezterm
 	url = https://github.com/SixteenThousand/blue-wezterm
+[submodule "configs/zsh"]
+	path = configs/zsh
+	url = https://github.com/SixteenThousand/blue-zsh
