@@ -1,0 +1,2 @@
+--map-syntax='.yona:TOML'
+--map-syntax='*.csproj:XML'

@@ -1,0 +1,3 @@
+.mode box
+.headers on
+.prompt 'sqlite3> ' '. . . .>   '
