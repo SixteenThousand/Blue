@@ -1,0 +1,3 @@
+[submodule "configs/riverwm"]
+	path = configs/riverwm
+	url = ./configs/riverwm
