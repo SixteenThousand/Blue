@@ -10,3 +10,27 @@
 [submodule "configs/nvim"]
 	path = configs/nvim
 	url = https://github.com/SixteenThousand/neovim-config-2024
+[submodule "configs/alacritty"]
+	path = configs/alacritty
+	url = https://github.com/SixteenThousand/blue-alacritty
+[submodule "configs/clifm"]
+	path = configs/clifm
+	url = https://github.com/SixteenThousand/blue-clifm
+[submodule "configs/fish"]
+	path = configs/fish
+	url = https://github.com/SixteenThousand/blue-fish
+[submodule "configs/i3wm"]
+	path = configs/i3wm
+	url = https://github.com/SixteenThousand/blue-i3wm
+[submodule "configs/neovide"]
+	path = configs/neovide
+	url = https://github.com/SixteenThousand/blue-neovide
+[submodule "configs/rofi"]
+	path = configs/rofi
+	url = https://github.com/SixteenThousand/blue-rofi
+[submodule "configs/wayfire"]
+	path = configs/wayfire
+	url = https://github.com/SixteenThousand/blue-wayfire
+[submodule "configs/wezterm"]
+	path = configs/wezterm
+	url = https://github.com/SixteenThousand/blue-wezterm
