@@ -4,3 +4,6 @@
 [submodule "configs/bash"]
 	path = configs/bash
 	url = https://github.com/SixteenThousand/blue-bash
+[submodule "configs/swaywm"]
+	path = configs/swaywm
+	url = https://github.com/SixteenThousand/blue-swaywm
