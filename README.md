@@ -11,9 +11,11 @@ need when using a new system, i.e., once in a Blue Moon.
 ## Interesting Features
 
 - Hand written shell prompts for bash, fish, zsh...and python 
-- Command-line colour scheme switchers for Alacritty and WezTerm
+- A Command-line colour scheme switcher for WezTerm
 - A complete failure to set a colour scheme in tmux (seriously, if you know 
   how to do that, please contact me)
+- A hand-rolled neovim configuration
+- A shell history search tool for bash (search for `stale`)
 
 ## Dependencies
 
