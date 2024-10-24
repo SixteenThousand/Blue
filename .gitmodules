@@ -37,3 +37,6 @@
 [submodule "configs/zsh"]
 	path = configs/zsh
 	url = https://github.com/SixteenThousand/blue-zsh
+[submodule "configs/ranger"]
+	path = configs/ranger
+	url = https://github.com/SixteenThousand/blue-ranger
