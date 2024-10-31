@@ -40,3 +40,6 @@
 [submodule "configs/ranger"]
 	path = configs/ranger
 	url = https://github.com/SixteenThousand/blue-ranger
+[submodule "configs/awesomewm"]
+	path = configs/awesomewm
+	url = https://github.com/SixteenThousand/blue-awesomewm
