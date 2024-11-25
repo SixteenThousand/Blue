@@ -43,3 +43,6 @@
 [submodule "configs/awesomewm"]
 	path = configs/awesomewm
 	url = https://github.com/SixteenThousand/blue-awesomewm
+[submodule "configs/herbstluftwm"]
+	path = configs/herbstluftwm
+	url = https://github.com/SixteenThousand/blue-herbstluftwm
