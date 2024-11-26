@@ -2,19 +2,19 @@ declare -a apps
 
 apps=(
 	alacritty
-	# awesomewm
+	awesomewm
 	bash
-	# clifm
-	# fish
+	clifm
+	fish
 	i3wm
 	misc
-	# neovide
+	neovide
 	nvim
-	# riverwm
+	riverwm
 	rofi
 	swaywm
-	# wayfire
-	# wezterm
+	wayfire
+	wezterm
 )
 
 for app in ${apps[@]}
