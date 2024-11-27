@@ -46,3 +46,6 @@
 [submodule "configs/herbstluftwm"]
 	path = configs/herbstluftwm
 	url = https://github.com/SixteenThousand/blue-herbstluftwm
+[submodule "configs/dunst"]
+	path = configs/dunst
+	url = https://github.com/SixteenThousand/blue-dunst
