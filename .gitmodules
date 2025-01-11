@@ -49,3 +49,9 @@
 [submodule "configs/dunst"]
 	path = configs/dunst
 	url = https://github.com/SixteenThousand/blue-dunst
+[submodule "configs/kitty"]
+	path = configs/kitty
+	url = https://github.com/SixteenThousand/blue-kitty
+[submodule "configs/emacs"]
+	path = configs/emacs
+	url = https://github.com/SixteenThousand/blue-emacs
