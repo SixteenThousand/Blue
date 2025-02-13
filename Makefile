@@ -1,4 +1,14 @@
 install:
-	bash ./scripts/blue_install.sh install
+	./blue install \
+		alacritty \
+		awesomewm \
+		bash \
+		dunst \
+		kitty \
+		misc \
+		nnn \
+		nvim \
+		rofi \
+		swaywm
 uninstall:
-	bash ./scripts/blue_install.sh uninstall
+	./blue uninstall $$(command ls --color=never)
