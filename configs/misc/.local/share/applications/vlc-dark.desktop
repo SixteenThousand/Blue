@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=sh -c "export XDG_CURRENT_DESKTOP=KDE && vlc"
+Name=VLC Dark Mode (KDE Plasma)
+GenericName=Media Player
+Type=Application
+Icon=vlc
