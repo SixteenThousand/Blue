@@ -1,0 +1,100 @@
+#!/bin/sh
+
+
+case $1 in
+	XDG_CONFIG_HOME)
+		DEFAULT=$HOME/.config
+		if [ "${XDG_CONFIG_HOME:-XXXX}" = XXXX ]
+		then
+			echo -e "Set: [\e[1mNo\e[0m]"
+		else
+			echo -e "Set: [\e[1mYes\e[0m]"
+		fi
+		echo -e "Current: [\e[1m${XDG_CONFIG_HOME:-$DEFAULT}\e[0m]"
+		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		;;
+	XDG_DATA_HOME)
+		DEFAULT=$HOME/.local/share
+		if [ "${XDG_DATA_HOME:-XXXX}" = XXXX ]
+		then
+			echo -e "Set: [\e[1mNo\e[0m]"
+		else
+			echo -e "Set: [\e[1mYes\e[0m]"
+		fi
+		echo -e "Current: [\e[1m${XDG_DATA_HOME:-$DEFAULT}\e[0m]"
+		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		;;
+	XDG_STATE_HOME)
+		DEFAULT=$HOME/.local/state
+		if [ "${XDG_STATE_HOME:-XXXX}" = XXXX ]
+		then
+			echo -e "Set: [\e[1mNo\e[0m]"
+		else
+			echo -e "Set: [\e[1mYes\e[0m]"
+		fi
+		echo -e "Current: [\e[1m${XDG_STATE_HOME:-$DEFAULT}\e[0m]"
+		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		;;
+	XDG_DATA_DIRS)
+		DEFAULT=/usr/local/share:/usr/share/
+		if [ "${XDG_DATA_DIRS:-XXXX}" = XXXX ]
+		then
+			echo -e "Set: [\e[1mNo\e[0m]"
+		else
+			echo -e "Set: [\e[1mYes\e[0m]"
+		fi
+		echo -e "Current: [\e[1m${XDG_DATA_DIRS:-$DEFAULT}\e[0m]"
+		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		;;
+	XDG_CONFIG_DIRS)
+		DEFAULT=/etc/xdg
+		if [ "${XDG_CONFIG_DIRS:-XXXX}" = XXXX ]
+		then
+			echo -e "Set: [\e[1mNo\e[0m]"
+		else
+			echo -e "Set: [\e[1mYes\e[0m]"
+		fi
+		echo -e "Current: [\e[1m${XDG_CONFIG_DIRS:-$DEFAULT}\e[0m]"
+		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		;;
+	XDG_CACHE_HOME)
+		DEFAULT=$HOME/.cache
+		if [ "${XDG_CACHE_HOME:-XXXX}" = XXXX ]
+		then
+			echo -e "Set: [\e[1mNo\e[0m]"
+		else
+			echo -e "Set: [\e[1mYes\e[0m]"
+		fi
+		echo -e "Current: [\e[1m${XDG_CACHE_HOME:-$DEFAULT}\e[0m]"
+		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		;;
+	XDG_RUNTIME_DIR)
+		DEFAULT="¯\_ (ツ)_/¯"
+		if [ "${XDG_RUNTIME_DIR:-XXXX}" = XXXX ]
+		then
+			echo -e "Set: [\e[1mNo\e[0m]"
+		else
+			echo -e "Set: [\e[1mYes\e[0m]"
+		fi
+		echo -e "Current: [\e[1m${XDG_RUNTIME_DIR:-$DEFAULT}\e[0m]"
+		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		;;
+	-h|--help)
+		cat <<- EOF
+		xdg-env, a tool to inspect the state of FreeDesktop XDG Desktop Specification
+		Environment Variables
+
+		Usage:
+		    xdg-env ENV_VAR_NAME
+		Prints out the current value and the default value of ENV_VAR_NAME, and
+		whether that variable is set or not.
+		For example,
+		    xdg-env XDG_CONFIG_HOME
+		might print out
+		    Set: [Yes]
+		    Current: [/home/tim/my-config-dir]
+		    Default: [/home/tim/.config]
+		EOF
+		;;
+	*) echo "The fuck was that?!";;
+esac
