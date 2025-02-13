@@ -56,6 +56,7 @@ check_pwd() {
 new_thing() {
 	case $1 in
 		github)
+			[ "$#" -lt 3 ] && error 'Not enough arguments!'
 			local name=$1
 			local visibility='--'${2:-'private'}
 			local DESCRIPTION='Please see https://github.com/SixteenThousand/Blue for more information about this repository'
@@ -65,20 +66,23 @@ new_thing() {
 			exit
 			;;
 		submodule)
+			[ "$#" -lt 2 ] && error 'Not enough arguments!'
 			git submodule add \
-				"https://github.com/SixteenThousand/blue-$name" "./configs/$name"
+				"https://github.com/SixteenThousand/blue-$2" "./configs/$2"
+			git commit -m ">> add $2 config"
 			exit
 			;;
 	esac
 }
 
 install_configs() {
-	operation=$1
+	[ "$#" -lt 2 ] && error 'Not enough arguments!'
+	local operation=$1
 	shift 1
-	toplevel="$PWD"
+	local toplevel="$PWD"
 	for app in $@
 	do
-		app_dir="configs/$app"
+		local app_dir="configs/$app"
 		if [ -d "$app_dir" ]
 		then
 			cd ./configs/$app
