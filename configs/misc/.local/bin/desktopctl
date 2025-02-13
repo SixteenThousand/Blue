@@ -95,6 +95,9 @@ case $1 in
 		
 		    desktopctl mute
 		Mute system volume and display a notification
+
+		    desktopctl autostart
+		Open all apps specified by the desktop files in ~/.config/autostart
 		
 		Acknowledgement:
 		The code for the volume changing commands is modelled on the volume-helper 
@@ -121,5 +124,12 @@ case $1 in
 		notify-send -e -t 600 \
 			-h string:x-canonical-private-synchronous:brightness \
 			-h "int:value:$VALUE" "Brightness: $VALUE%"
+		;;
+	autostart)
+		autostart_dir=$HOME/.config/autostart
+		for app in $(command ls $autostart_dir)
+		do
+			gio launch "$autostart_dir/$app"
+		done
 		;;
 esac
