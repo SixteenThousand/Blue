@@ -1,0 +1,156 @@
+#!/bin/sh
+
+
+print_help() {
+	cat <<- EOF
+	Blue - the files I need once in a blue moon
+
+	This is a digustingly long bash script that automates the processes of 
+	adding new stuff to this repository (a [3mconfig for an app[0m) and putting the
+	config files in the relevant places ([3minstalling a config[0m).
+
+	[1;33mPlease note you MUST run this script from the top level directory of the
+	repository, called 'Blue'. Things WILL break and you WILL feel sad if you
+	don't.[0m
+
+	Usage:
+	    ./blue new github APPNAME [REPO_VISIBILITY]
+	Creates a github repo for the app, and clones the (empty) repo into 
+	this repo.
+	  APPNAME is the name of the application you want to add a 
+	configuration for, e.g. riverwm. The new config repo will be in a 
+	directory called ./configs/APPNAME, and its corresponding GitHub
+	repo will be called blue-APPNAME.
+	REPO_VISIBILITY should be one of 'public' and 'private'. It controls 
+	the visibility of the GitHub repo. Defaults to 'private'.
+
+	    ./blue new submodule APPNAME
+	Creates a git-submodule at ./configs/APPNAME. SHould be only run after:
+	    1) Creating a github repo for the config (see above)
+	    2) Making a commit in the new repo locally
+
+	    ./blue [install|uninstall] APPNAME...
+	cd's into .configs/APPNAME and runs "make install/uninstall".
+	If multiple APPNAME's are given, does the same for those.
+
+	    ./blue gitconfig
+	Runs  the commands to setup git how I like it on a new machine.
+	Interactively prompts the user for email, name, etc.
+	EOF
+	exit 0
+}
+
+error() {
+	echo -e "\e[1;31m$1\e[0m\n$2"
+	exit 1
+}
+
+check_pwd() {
+	if [ "$(dirname $(realpath $0))" != "$PWD" ]
+	then
+		error "You're in the wrong directory!" \
+			"Go to the top-level of the repository, i.e. 'Blue', where this file is located"
+	fi
+}
+
+new_thing() {
+	case $1 in
+		github)
+			local name=$1
+			local visibility='--'${2:-'private'}
+			local DESCRIPTION='Please see https://github.com/SixteenThousand/Blue for more information about this repository'
+			cd ./configs
+			gh repo create "blue-$name" --description "$DESCRIPTION" $visibility --clone
+			mv "blue-$name" $name
+			exit
+			;;
+		submodule)
+			git submodule add \
+				"https://github.com/SixteenThousand/blue-$name" "./configs/$name"
+			exit
+			;;
+	esac
+}
+
+install_configs() {
+	operation=$1
+	shift 1
+	toplevel="$PWD"
+	for app in $@
+	do
+		app_dir="configs/$app"
+		if [ -d "$app_dir" ]
+		then
+			cd ./configs/$app
+			if make $operation
+			then
+				echo -e "\e[1;33m[$app] configured!\e[0m"
+			fi
+			cd "$toplevel"
+		else
+			error "[configs/$app] does not exist!"
+		fi
+	done
+}
+
+gitconfig() {
+	# personal details
+	read -p 'What is your name?: ' NAME
+	read -p 'What is email that you use with git?: ' EMAIL
+	git config --global user.email={$EMAIL}
+	git config --global user.name={$NAME}
+	echo 'Personal details added!'
+	# standard config
+	git config --global init.defaultBranch main
+	git config --global alias.goto checkout
+	git config --global alias.st status
+	git config --global alias.diffs 'diff --cached'
+	echo 'Aliases added!'
+	# git-credential-oauth
+	read -p 'Do you want to install git-credential-oauth? (y/N): ' proceed
+	if [ "$proceed" = y ] || [ "$proceed" = Y ]
+	then
+		if which dnf
+		then
+			sudo dnf install git-credential-oauth
+		elif which go
+		then
+			go install github.com/hickfordgit-credential-oauth@latest
+		fi
+		if git credential-oauth configure
+		then
+			echo 'git-crendential-oauth installed & configured!'
+		fi
+	fi
+	# signing keys
+	cat <<- EOF
+	You should now use 'gpg --gen-keys' (or something like that) to generate a 
+	signing key for commits; use
+	    git config --global user.signingkey={GnuPG signing key}
+	to register this with git.
+	EOF
+}
+
+
+# "main"
+case $1 in
+	-h|--help)
+		print_help
+		;;
+	new)
+		check_pwd
+		shift 1
+		new_thing $@
+		exit
+		;;
+	install|uninstall)
+		check_pwd
+		install_configs $@
+		exit
+		;;
+	gitconfig)
+		gitconfig
+		exit
+		;;
+	*) error 'Invalid option! Try --help instead';;
+esac
