@@ -55,3 +55,6 @@
 [submodule "configs/emacs"]
 	path = configs/emacs
 	url = https://github.com/SixteenThousand/blue-emacs
+[submodule "configs/nnn"]
+	path = configs/nnn
+	url = https://github.com/SixteenThousand/blue-nnn
