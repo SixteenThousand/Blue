@@ -109,6 +109,8 @@ gitconfig() {
 	git config --global alias.goto checkout
 	git config --global alias.st status
 	git config --global alias.diffs 'diff --cached'
+	git config --global alias.taglist \
+		'tag --format="%(refname:strip=2) -> %(objectname)" --sort=-refname'
 	echo 'Aliases added!'
 	# git-credential-oauth
 	read -p 'Do you want to install git-credential-oauth? (y/N): ' proceed
