@@ -34,9 +34,6 @@ make install
 ```
 This will run `make install` in every subdirectory of `./configs`.
 
-If you just want to add a new application's configuration files to this 
-repository, there are two ways to do this:
-1. Just make a new directory in `./configs/misc`. This directory will be 
-   symlinked to `~/.config`.
-2. Use the `new-app` script. Run `./new-app --help` in the project root for 
-   details.
+Do add new configs, or for other configuration management stuff, use the 
+`blue` script provided in this repository. You can run `./blue --help` to 
+see available options.
