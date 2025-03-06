@@ -36,6 +36,10 @@ print_help() {
 	    ./blue gitconfig
 	Runs  the commands to setup git how I like it on a new machine.
 	Interactively prompts the user for email, name, etc.
+
+	    ./blue update
+	Runs "git push" in every config repository, then commits all changes to Blue
+	and tags the commit.
 	EOF
 	exit 0
 }
@@ -137,6 +141,25 @@ gitconfig() {
 	EOF
 }
 
+update() {
+	local config_repos="$(find ./configs -maxdepth 1 -type d -not -name 'misc')"
+	local toplevel="$PWD"
+	local errors
+	for repo in "$config_repos"
+	do
+		cd "$repo"
+		if ! git push
+		then
+			errors="$errors\n$repo"
+		fi
+		cd "$toplevel"
+	done
+	git add -A
+	git commit -m ">> monthly update"
+	git tag "v$(date +%Y%m%d)"
+	git push
+}
+
 
 # "main"
 case $1 in
@@ -156,6 +179,10 @@ case $1 in
 		;;
 	gitconfig)
 		gitconfig
+		exit
+		;;
+	update)
+		update
 		exit
 		;;
 	*) error 'Invalid option! Try --help instead';;
