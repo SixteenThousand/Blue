@@ -2,4 +2,5 @@
 Exec=sh -c "$BROWSER https://web.whatsapp.com"
 Name=WhatsApp
 Type=Application
-NoDisplay=true
+X-KDE-AutostartScript=true
+NoDisplay=false
