@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gibbous>
+  <prep>
+    <msg>Committed and pushed changes to Blue?</msg>
+  </prep>
+  <backup>
+    cd $BACKUP_ROOT/Backups/gibbous-v3/Blue
+    git pull
+    git submodule update
+  </backup>
+</gibbous>
