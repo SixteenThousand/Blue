@@ -1,5 +1,5 @@
 IGNORE="--ignore=Makefile"
 install:
-	stow -S . -t $(HOME) $(IGNORE)
+	stow -S . -t ${HOME} ${IGNORE}
 uninstall:
-	stow -D . -t $(HOME) $(IGNORE)
+	stow -D . -t ${HOME} ${IGNORE}
