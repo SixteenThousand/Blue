@@ -27,3 +27,14 @@ or $env:APPDATA/LibreOffice/4/user
 ### linux
 ~/.config/libreoffice/4/user
 or $XDG_CONFIG_HOME/libreoffice/4/user
+
+
+## Default browser on UNIX
+You can use `xdg-settings set default-web-browser {DESKTOP FILE}` to set it 
+for most things, but it's also good to have the environment variable 
+$BROWSER set.
+
+Unfortunately, these things conflict :(. If $BROWSER has been set already, 
+then xdg-settings will complain if you try to reset the default browser, 
+*despite the fact that $BROWSER does not set the default browser for all 
+situations*
