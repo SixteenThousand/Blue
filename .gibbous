@@ -4,7 +4,7 @@
     <msg>Committed and pushed changes to Blue?</msg>
   </prep>
   <backup>
-    cd $BACKUP_ROOT/Backups/gibbous-v3/Blue
+    cd $BACKUP_ROOT/Blue
     git pull
     git submodule update
   </backup>
