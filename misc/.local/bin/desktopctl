@@ -17,14 +17,14 @@ rewallpaper() {
 	if [ "$XDG_CURRENT_DESKTOP" = KDE ]
 	then
 		cmd='plasma-apply-wallpaperimage --fill-mode preserveAspectCrop'
-	elif pgrep swaybg 2>&1 >/dev/null
+	elif pgrep swaybg >/dev/null 2>&1 || pgrep sway >/dev/null 2>&1
 	then
 		cmd=swaybg_wrap
 	fi
 	# detect whether new wallpaper has been set manually, and if not, find it
 	if [ -z "$new_wallpaper" ]
 	then
-		local personal=$(find -L $HOME/Pictures/Profile_Pics -type f)
+		local personal=$(find -L $HOME/Pictures/Wallpapers -type f)
 		local desktops=$(find -L /usr/share/wallpapers -type f -name '1920x1080*' -o -name '5120x2880*')
 		# this line broke when split
 		new_wallpaper=$(echo -e "$personal\n$desktops" | fzf)
@@ -40,9 +40,9 @@ rewallpaper() {
 	fi
 }
 
-function change_vol {
+change_vol() {
 	local SINK="@DEFAULT_SINK@"
-	amixer sset Master $2%$1
+	amixer sset Master "$2%$1"
 	local VOLUME=$(pactl get-sink-volume $SINK \
 		| sed -e '/.*balance.*/d;s/.* \([[:digit:]]\+\)%.*/\1/')
 	notify-send \
@@ -54,7 +54,7 @@ function change_vol {
 		"Volume: $VOLUME%"
 }
 
-function mute {
+mute() {
 	local SINK="@DEFAULT_SINK@"
 	amixer sset Master toggle
 	local MSG="Audio Unmuted!! Play that music, buddy!"
@@ -83,7 +83,7 @@ case $1 in
 		  - feh (X11)
 		  - plasma-apply-wallpaperimage (KDE Plasma desktop - could be X11 or wayland)
 		DOES NOT automatically detect display resolution.
-		Currently searches for wallpapers in ~/Pictures/Profile_Pics and 
+		Currently searches for wallpapers in ~/Pictures/Wallpapers and 
 		/usr/share/wallpapers.
 		  If FILE is provided, sets the wallpaper to FILE. FILE must be an absolute
 		path. Detects setting method same as before.
@@ -133,3 +133,5 @@ case $1 in
 		done
 		;;
 esac
+
+# vim: expandtab=false, shiftwidth=4
