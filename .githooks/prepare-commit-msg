@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# List of files with staged changes
+STAGED_CHANGES=$(git status --porcelain | grep '^M\|^D' | cut -d ' ' -f 3)
+COMMIT_MSG_FILE=$1
+CURRENT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+for file in $STAGED_CHANGES; do
+  app=${file%%/*}
+  # Skip stuff in toplevel
+  [ -d "$app" ] || continue
+  # Check we're only committing changes to one app's config at a time
+  if [ -n "$first_app" ] && [ "$app" != "$first_app" ]; then
+    echo 'Only commit changes for one app at a time!' >&2
+    exit 1
+  fi
+  first_app=$app
+done
+
+echo -e "[$app]\n>>" > "$COMMIT_MSG_FILE"
+echo "$CURRENT_MSG" >> "$COMMIT_MSG_FILE"
+
+
+# vim: et sw=2

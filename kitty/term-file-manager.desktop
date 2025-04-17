@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Terminal File Manager
+Exec=kitty -o "shell=$SIXTEEN_TFM"
+Type=Application
+Terminal=false
+GenericName=File Manager
+Icon=kitty

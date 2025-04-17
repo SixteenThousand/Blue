@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- See https://github.com/SixteenThousand/Gibbous
+     for more information about this file -->
 <gibbous>
   <prep>
     <msg>Committed and pushed changes to Blue?</msg>

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+brightnessctl set 100%
+amixer sset Master 20%

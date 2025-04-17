@@ -1,0 +1,216 @@
+### VARIABLES
+set $layoutMod Super+Alt
+set $moveMod Super+Shift
+# this must be set for use in system wide config files
+set $mod Mod4
+
+
+### KEYBOARD SETTINGS
+input * {
+    xkb_layout "gb"
+    xkb_options caps:escape
+    # run the following to set layout at runtime
+    # swaymsg input type:keyboard xkb_layout gb
+}
+
+
+### MOUSE/POINTER/CURSOR SETTINGS
+seat seat0 xcursor_theme default 36
+# may need to turn off this setting if I ever use blender
+seat seat0 hide_cursor when-typing enable
+focus_follows_mouse no
+
+
+### OUTPUT CONFIGURATION
+# Wallpaper. Requires: desktop-backgrounds-compat, swaybg
+exec --no-startup-id ~/.swaybg
+
+# fixing the zoom
+# find outputs from swaymsg -t get_outputs (or xrandr --query on X11)
+# wlr-randr can also be used to do this kind of stuff
+output eDP-1 scale 1
+
+
+### LAUNCH/CLOSE APPS
+# kill focused window
+bindsym Super+q kill
+bindsym Alt+F4 kill
+bindsym {
+    # Start your launcher
+    Super+a exec rofi -show drun
+    # Find & xdg-open a file
+    Super+o exec rofile
+    # other app shortcuts
+    Super+b exec $BROWSER
+    Super+g exec gio launch ~/.local/share/applications/term-file-manager.desktop
+    Super+t exec $MAIL
+    Super+Return exec $TERMINAL
+}
+
+
+### META STUFF
+bindsym {
+    Super+Shift+q exit
+    Super+Shift+Delete exit; exec brightnessctl set 100%; exec systemctl poweroff 
+    Super+Shift+r reload; exec notify-send sway 'Reloaded!'
+}
+
+
+### MOVE FOCUS
+bindsym {
+    Super+Tab exec 'rofi -show window'
+    Super+w exec swayext window next
+    Super+x exec swayext window prev
+    Alt+Tab exec swayext window next
+    Alt+Shift+Tab exec swayext window prev
+    Super+u [urgent=newest] focus
+    Super+1 workspace number 1
+    Super+2 workspace number 2
+    Super+3 workspace number 3
+    Super+4 workspace number 4
+    Super+5 workspace number 5
+    Super+6 workspace number 6
+    Super+7 workspace number 7
+    Super+8 workspace number 8
+    Super+9 workspace number 9
+    Super+space workspace back_and_forth
+    Super+Shift+space exec swayext workspace new
+
+    # normal change workspace
+    Super+h exec swayext workspace -4
+    Super+j workspace next
+    Super+k workspace prev
+    Super+l exec swayext workspace +4
+    Super+Left  exec swayext workspace -4
+    Super+Down  workspace next
+    Super+Up    workspace prev
+    Super+Right exec swayext workspace +4
+
+    # go to next number workspace
+    Super+Comma exec swayext workspace -1
+    Super+Period exec swayext workspace +1
+}
+
+
+### MOVE WINDOWS
+bindsym {
+    $moveMod+h move left
+    $moveMod+j move down
+    $moveMod+k move up
+    $moveMod+l move right
+    # Ditto, with arrow keys
+    $moveMod+Left move left
+    $moveMod+Down move down
+    $moveMod+Up move up
+    $moveMod+Right move right
+    # Move focused container to workspace
+    $moveMod+1 move container to workspace number 1; workspace 1
+    $moveMod+2 move container to workspace number 2; workspace 2
+    $moveMod+3 move container to workspace number 3; workspace 3
+    $moveMod+4 move container to workspace number 4; workspace 4
+    $moveMod+5 move container to workspace number 5; workspace 5
+    $moveMod+6 move container to workspace number 6; workspace 6
+    $moveMod+7 move container to workspace number 7; workspace 7
+    $moveMod+8 move container to workspace number 8; workspace 8
+    $moveMod+9 move container to workspace number 9; workspace 9
+    # scratchpad/special workspace
+    $moveMod+minus border pixel 5; move scratchpad
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    Super+minus scratchpad show
+}
+
+
+### LAYOUT
+# default layout
+workspace_layout default
+bindsym {
+    # Switch the current container between different layout styles
+    Super+s split toggle
+    $layoutMod+Return layout toggle split tabbed
+    F11 fullscreen toggle
+    Super+Alt+space floating toggle; border pixel 5
+    # Swap focus between the tiling area and the floating area
+    Super+Escape focus mode_toggle
+}
+
+
+### RESIZE WINDOWS
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym {
+        h resize shrink width 10px
+        j resize grow height 10px
+        k resize shrink height 10px
+        l resize grow width 10px
+        # Ditto, with arrow keys
+        Left resize shrink width 10px
+        Down resize grow height 10px
+        Up resize shrink height 10px
+        Right resize grow width 10px
+        # Return to default mode
+        Return mode "default"
+        Escape mode "default"
+    }
+}
+bindsym Super+r mode "resize"
+
+
+## WINDOW DECORATIONS
+# get rid of those damn titlebars (except in tabbed mode)
+default_border pixel 4
+font FantasqueSansM Nerd Font 12
+smart_borders on
+client.focused #1d6432cc #1d6432cc #ffffff #1d6432ee
+
+
+### MEDIA/HARDWARE CONTROLS
+# this is used in the system config; included below
+set $volume_step 2
+bindsym {
+    # for non-laptops
+    Super+F1 exec amixer sset Master toggle
+    Super+F2 exec amixer sset Master $volume_step%-
+    Super+F3 exec amixer sset Master $volume_step%+
+    Super+F4 exec playerctl play-pause
+    Super+F7 exec brightnessctl set 10%+
+    Super+F6 exec brightnessctl set 10%-
+}
+
+
+### NOTIFICATIONS
+bindsym Super+n exec dunstctl close-all
+
+### AUTOSTART
+exec --no-startup-id desktopctl autostart || :
+exec --no-startup-id dunst & disown
+
+### RULES
+for_window [title=".*Video Bridge.*"] kill
+
+### IMPORTS
+# Include configs from 3 locations:
+#  - /usr/share/sway/config.d
+#  - /etc/sway/config.d
+#  - $XDG_CONFIG_HOME/sway/config.d ($HOME/.config/sway/config.d)
+#
+# If multiple directories contain the files with the same name, the later
+# directory takes precedence; `$XDG_CONFIG_HOME/sway/config.d/20-swayidle.conf`
+# will always be loaded instead of `/usr/share/sway/config.d/20-swayidle.conf`
+# or `/etc/sway/config.d/20-swayidle.conf`
+#
+# This mechanism permits overriding our default configuration per-system
+# (/etc) or per-user ($XDG_CONFIG_HOME) basis. Just create the file you
+# want to modify/override in the higher-level directory.
+#
+# For example, to disable the default bar from Fedora configs, you'll need to
+#     $ echo -n > "$HOME/.config/sway/config.d/90-bar.conf"
+#
+# Note the quoting, the $() and the arguments quoting. All the parts are equally
+# important to make the magic work. And if you want to learn the secret behind
+# the trick, it's all in the `wordexp(3)`.
+#
+include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'

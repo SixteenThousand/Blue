@@ -1,0 +1,73 @@
+* {
+    font-family: 'Fantasque Sans Mono', monospace;
+    font-size: 16px;
+}
+
+
+/* WAYBAR ITSELF */
+window#waybar {
+    background-color: rgba(43, 48, 59, 0.8);
+    color: #ffffff;
+}
+
+/* GENERAL STYLES */
+#clock,
+#cpu,
+#battery,
+#memory,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#tray,
+#idle_inhibitor {
+    padding: 5px;
+    color: #ffffff;
+    background-color: rgba(40,40,40,0.6);
+    border-left: 2px solid white;
+}
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button {
+  border-radius: 0;
+}
+
+/* BATTERY */
+#battery.charging, #battery.plugged {
+    color: #ffffff;
+    background-color: #26A65B;
+}
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* TAGS */
+#tags button.occupied {
+  background-color: rgba(28, 70, 140, 0.4);
+}
+#tags button.focused {
+    background: rgba(40, 100, 200, 0.6);
+}
+#tags button.urgent {
+    background-color: #eb4d4b;
+}
+
+/* RIVER MODE */
+#mode, #layout {
+  background-color: rgba(28, 70, 140, 0.4);
+  padding: 3px;
+}
+#window {
+  padding: 0 20px;
+}

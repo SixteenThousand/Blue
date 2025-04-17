@@ -1,0 +1,49 @@
+#!/bin/sh
+
+case $1 in
+	-h|--help)
+		cat <<- EOF
+		rofile is a little tool to quickly open a file from deep wiothin the file system.
+		It has no options as yet, you just run it
+		EOF
+		exit 0
+		;;
+esac
+
+FILE_LIST=$HOME/FILE_LIST
+REFRESH_CMD=':refresh'
+
+refresh_file_list() {
+	find $HOME -maxdepth 8 -type f -not -path '*/.*' > $FILE_LIST
+	echo $REFRESH_CMD >> $FILE_LIST
+}
+
+choose_file() {
+	TARGET=$(cat $FILE_LIST | rofi -dmenu -matching normal -i \
+		-theme-str 'window {width: 100%; height: 100%; location: west; anchor: west;}')
+	if [ -z "$TARGET" ]
+	then
+		exit 1
+	fi
+	if [ "$TARGET" = "$REFRESH_CMD" ]
+	then
+		refresh_file_list
+	elif ! xdg-open "$TARGET"
+	then
+		rofi -e 'File does not exist! Press escape to refresh file list and choose again'
+		refresh_file_list
+		choose_file
+	fi
+}
+
+if [ ! -f "$FILE_LIST" ]
+then
+	refresh_file_list
+fi
+choose_file
+# refresh file list if it hasn't been refreshed for a day
+timediff=$(( "$(date '+%s')" - "$(stat $FILE_LIST -c '%Y')" ))
+if [ "$timediff" -gt 86400 ]
+then
+	refresh_file_list
+fi

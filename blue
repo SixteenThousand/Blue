@@ -1,189 +1,60 @@
 #!/bin/sh
 
 
-print_help() {
-	cat <<- EOF
-	Blue - the files I need once in a blue moon
-
-	This is a digustingly long bash script that automates the processes of 
-	adding new stuff to this repository (a [3mconfig for an app[0m) and putting the
-	config files in the relevant places ([3minstalling a config[0m).
-
-	[1;33mPlease note you MUST run this script from the top level directory of the
-	repository, called 'Blue'. Things WILL break and you WILL feel sad if you
-	don't.[0m
-
-	Usage:
-	    ./blue new github APPNAME [REPO_VISIBILITY]
-	Creates a github repo for the app, and clones the (empty) repo into 
-	this repo.
-	  APPNAME is the name of the application you want to add a 
-	configuration for, e.g. riverwm. The new config repo will be in a 
-	directory called ./configs/APPNAME, and its corresponding GitHub
-	repo will be called blue-APPNAME.
-	REPO_VISIBILITY should be one of 'public' and 'private'. It controls 
-	the visibility of the GitHub repo. Defaults to 'private'.
-
-	    ./blue new submodule APPNAME
-	Creates a git-submodule at ./configs/APPNAME. SHould be only run after:
-	    1) Creating a github repo for the config (see above)
-	    2) Making a commit in the new repo locally
-
-	    ./blue [install|uninstall] APPNAME...
-	cd's into .configs/APPNAME and runs "make install/uninstall".
-	If multiple APPNAME's are given, does the same for those.
-
-	    ./blue gitconfig
-	Runs  the commands to setup git how I like it on a new machine.
-	Interactively prompts the user for email, name, etc.
-
-	    ./blue update
-	Runs "git push" in every config repository, then commits all changes to Blue
-	and tags the commit.
-	EOF
-	exit 0
-}
-
 error() {
-	echo -e "\e[1;31m$1\e[0m\n$2"
-	exit 1
+  echo "$1" >&2
+  exit 1
 }
 
 check_pwd() {
-	if [ "$(dirname $(realpath $0))" != "$PWD" ]
-	then
-		error "You're in the wrong directory!" \
-			"Go to the top-level of the repository, i.e. 'Blue', where this file is located"
-	fi
-}
-
-new_thing() {
-	case $1 in
-		github)
-			[ "$#" -lt 3 ] && error 'Not enough arguments!'
-			local name=$1
-			local visibility='--'${2:-'private'}
-			local DESCRIPTION='Please see https://github.com/SixteenThousand/Blue for more information about this repository'
-			cd ./configs
-			gh repo create "blue-$name" --description "$DESCRIPTION" $visibility --clone
-			mv "blue-$name" $name
-			exit
-			;;
-		submodule)
-			[ "$#" -lt 2 ] && error 'Not enough arguments!'
-			git submodule add \
-				"https://github.com/SixteenThousand/blue-$2" "./configs/$2"
-			git commit -m ">> add $2 config"
-			exit
-			;;
-	esac
+  if [ "${PWD%/Blue}" = "$PWD" ]; then
+    local maybe_right_dir=$(dirname $(realpath "$0"))
+    error \
+"You're in the wrong directory! Try running this script from ${maybe_right_dir}"
+  fi
 }
 
 install_configs() {
-	[ "$#" -lt 2 ] && error 'Not enough arguments!'
-	local operation=$1
-	shift 1
-	local toplevel="$PWD"
-	for app in $@
-	do
-		local app_dir="configs/$app"
-		if [ -d "$app_dir" ]
-		then
-			cd ./configs/$app
-			if make $operation
-			then
-				echo -e "\e[1;33m[$app] configured!\e[0m"
-			fi
-			cd "$toplevel"
-		else
-			error "[configs/$app] does not exist!"
-		fi
-	done
+  [ "$#" -lt 2 ] && error 'Not enough arguments!'
+  local operation=$1
+  shift 1
+  local toplevel=$PWD
+  for app in $@
+  do
+    if [ -d "$app" ]
+    then
+      cd "./$app"
+      pwd # debug
+      if make "$operation"
+      then
+        echo -e "\e[1;33m[${app}] configured!\e[0m"
+      fi
+      cd "$toplevel"
+    else
+      error "[${app}] does not exist!"
+    fi
+  done
 }
 
-gitconfig() {
-	# personal details
-	read -p 'What is your name?: ' NAME
-	read -p 'What is email that you use with git?: ' EMAIL
-	git config --global user.email={$EMAIL}
-	git config --global user.name={$NAME}
-	echo 'Personal details added!'
-	# standard config
-	git config --global init.defaultBranch main
-	git config --global alias.goto checkout
-	git config --global alias.st status
-	git config --global alias.diffs 'diff --cached'
-	git config --global alias.taglist \
-		'tag --format="%(refname:strip=2) -> %(objectname)" --sort=-refname'
-	echo 'Aliases added!'
-	# git-credential-oauth
-	read -p 'Do you want to install git-credential-oauth? (y/N): ' proceed
-	if [ "$proceed" = y ] || [ "$proceed" = Y ]
-	then
-		if which dnf
-		then
-			sudo dnf install git-credential-oauth
-		elif which go
-		then
-			go install github.com/hickfordgit-credential-oauth@latest
-		fi
-		if git credential-oauth configure
-		then
-			echo 'git-crendential-oauth installed & configured!'
-		fi
-	fi
-	# signing keys
-	cat <<- EOF
-	You should now use 'gpg --gen-keys' (or something like that) to generate a 
-	signing key for commits; use
-	    git config --global user.signingkey={GnuPG signing key}
-	to register this with git.
-	EOF
-}
-
-update() {
-	local config_repos="$(find ./configs -maxdepth 1 -type d -not -name 'misc')"
-	local toplevel="$PWD"
-	local errors
-	for repo in "$config_repos"
-	do
-		cd "$repo"
-		if ! git push
-		then
-			errors="$errors\n$repo"
-		fi
-		cd "$toplevel"
-	done
-	git add -A
-	git commit -m ">> monthly update"
-	git tag "v$(date +%Y%m%d)"
-	git push
+print_help() {
+  echo "\
+  Helper script for dealing with this repository.
+  Run './blue install APP' to install the config located in APP/
+  Run './blue uninstall APP' to reverse this.
+  To run either of these, you must be running this script from the 'Blue'
+  directory."
+  exit 0
 }
 
 
-# "main"
 case $1 in
-	-h|--help)
-		print_help
-		;;
-	new)
-		check_pwd
-		shift 1
-		new_thing $@
-		exit
-		;;
-	install|uninstall)
-		check_pwd
-		install_configs $@
-		exit
-		;;
-	gitconfig)
-		gitconfig
-		exit
-		;;
-	update)
-		update
-		exit
-		;;
-	*) error 'Invalid option! Try --help instead';;
+  -h|--help)
+    print_help
+    ;;
+  install|uninstall)
+    check_pwd
+    install_configs $@
+    exit
+    ;;
+  *) error 'Invalid option! Try --help instead';;
 esac

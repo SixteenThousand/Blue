@@ -1,0 +1,199 @@
+#!/bin/bash
+
+ENV_VARS_FILE=${XDG_CONFIG_HOME:-$HOME/.config}/river/actions/constants.sh
+LOG_FILE=$HOME/river.log
+
+function main {
+	# setup
+	if [ ! -f "$ENV_VARS_FILE" ]
+	then
+		write_log 'Catastrophic failure has occurred. Loading default config...'
+		source ${XDG_CONFIG_HOME:-$HOME/.config}/river/default
+		exit 1
+	fi
+	source $ENV_VARS_FILE
+	mkdir -p $STATE_DIR
+	echo 0 > $CURRENT_WS_FILE
+	rm $LOG_FILE
+	
+	keyboard_config
+	quit_config
+	window_config
+	tags_config
+	navigation_config
+	window_rules
+	pretty_config
+	layout_config
+	hardware_buttons_config
+	apps_config
+	scratchpad_config
+	resize_mode
+	
+	# reload config
+	riverctl map normal Control+Super R spawn \
+		"$CONFIG_DIR/init; notify-send River 'Config reloaded!'"
+	# autostart, but not on config reload
+	if [ ! -f "$STATE_DIR/is-running" ]
+	then
+		firefox https://web.whatsapp.com & disown
+		panel_config
+		notification_config
+	fi
+	touch "$STATE_DIR/is-running"
+	
+	# idling
+	swayidle -w before-sleep 'swaylock -f -c 222255' & disown
+}
+
+function write_log {
+	echo "$(date):: $1" >> $LOG_FILE
+}
+
+
+function keyboard_config {
+	riverctl keyboard-layout gb
+	riverctl keyboard-layout -options caps:escape gb
+	riverctl set-repeat 50 300
+}
+
+function quit_config {
+	QUIT_HOOK=$CONFIG_DIR/hooks/quit
+	if [ ! -f $QUIT_HOOK ]
+	then
+		QUIT_HOOK=':'
+	fi
+	riverctl map normal Super+Shift Q spawn "$QUIT_HOOK && riverctl exit"
+	riverctl map normal Super+Shift Delete spawn \
+		"$QUIT_HOOK && riverctl exit && systemctl poweroff"
+	unset QUIT_HOOK
+}
+
+function window_config {
+	riverctl map normal Super Q close
+	riverctl map normal Super Space toggle-float
+	riverctl map normal Super F toggle-fullscreen
+}
+
+function tags_config {
+	set_tags="source $ENV_VARS_FILE && $CONFIG_DIR/actions/set-tags"
+	shift_tags="source $ENV_VARS_FILE && $CONFIG_DIR/actions/shift-tags"
+
+	for ws in $(seq 0 8)
+	do
+		tags=$((1 << $ws))
+		riverctl map normal Super $((ws+1)) spawn "$set_tags $ws"
+		riverctl map normal Super+Shift $((ws+1)) spawn \
+			"riverctl set-view-tags $tags && $set_tags $ws"
+	done
+	
+	declare -A vi_directions
+	vi_directions=(
+		[Left]=h
+		[Down]=j
+		[Up]=k
+		[Right]=l
+	)
+	for direction in $(echo Down Up Right Left)
+	do
+		riverctl map normal Super $direction spawn "$shift_tags $direction"
+		riverctl map normal Super ${vi_directions[$direction]} spawn \
+			"$shift_tags $direction"
+		riverctl map normal Super+Shift $direction \
+			spawn "$shift_tags $direction window"
+		riverctl map normal Super+Shift ${vi_directions[$direction]} \
+			spawn "$shift_tags $direction window"
+	done
+}
+
+function navigation_config {
+	riverctl map normal Super W focus-view next
+	riverctl map normal Alt Tab focus-view next
+	riverctl map normal Super X focus-view previous
+	riverctl map normal Alt+Shift Tab focus-view previous
+}
+
+function window_rules {
+	riverctl rule-add -app-id 'bar' csd
+}
+
+function layout_config {
+	riverctl default-layout rivertile
+	riverctl send-layout-cmd rivertile 'main-ratio 0.5'
+	riverctl default-attach-mode bottom
+	riverctl map normal Super+Shift w swap next
+	riverctl map normal Super+Shift x swap previous
+}
+
+function pretty_config {
+	riverctl xcursor_theme Breeze 36
+	riverctl border-color-focused 0x006600
+	riverctl border-color-unfocused 0x000066
+	rivertile -view-padding 0 -outer-padding 0 & disown
+	[ -x "$HOME/.swaybg" ] && $HOME/.swaybg
+}
+
+function hardware_buttons_config {
+	for mode in normal locked
+	do
+		riverctl map $mode None XF86AudioRaiseVolume \
+			spawn 'amixer set Master 2%+'
+		riverctl map $mode None XF86AudioLowerVolume \
+			spawn 'amixer set Master 2%-'
+		riverctl map $mode None XF86AudioMute \
+			spawn 'amixer set Master toggle'
+
+		riverctl map $mode None XF86AudioMedia spawn 'playerctl play-pause'
+		riverctl map $mode None XF86AudioPlay  spawn 'playerctl play-pause'
+		riverctl map $mode None XF86AudioPrev  spawn 'playerctl previous'
+		riverctl map $mode None XF86AudioNext  spawn 'playerctl next'
+
+		riverctl map $mode None XF86MonBrightnessUp \
+			spawn 'brightnessctl set 5%+'
+		riverctl map $mode None XF86MonBrightnessDown \
+			spawn 'brightnessctl set 5%-'
+	done
+}
+
+function panel_config {
+	PANEL_CONFIG=$CONFIG_DIR/panel
+	if ! pgrep waybar
+	then
+		waybar --config $PANEL_CONFIG/waybar.jsonc \
+			--style $PANEL_CONFIG/waybar.css & disown
+	fi
+	riverctl map normal Super Escape spawn \
+		"source $ENV_VARS_FILE && $CONFIG_DIR/actions/toggle-panel"
+}
+
+function notification_config {
+	dunst & disown
+	riverctl map normal Super N spawn 'dunstctl close-all'
+}
+
+function apps_config {
+	riverctl map normal Super G spawn 'gio launch $HOME/.local/share/applications/term-file-manager.desktop'
+	riverctl map normal Super A spawn 'rofi -show drun'
+	riverctl map normal Super B spawn 'firefox'
+	riverctl map normal Super Return spawn "$TERMINAL"
+	riverctl map normal Super T spawn 'thunderbird'
+}
+
+function scratchpad_config {
+	SCRATCH_TAGS=$((1 << 9))
+	riverctl map normal Super+Shift Minus set-view-tags $SCRATCH_TAGS
+	riverctl map normal Super Minus toggle-focused-tags $SCRATCH_TAGS
+			# "source $ENV_VARS_FILE && $CONFIG_DIR/actions/show-scratch"
+}
+
+function resize_mode {
+	riverctl declare-mode resize
+	riverctl map normal Super R enter-mode resize
+	riverctl map -repeat resize Escape enter-mode normal
+	riverctl map -repeat resize Left  resize horizontal -15
+	riverctl map -repeat resize Right resize horizontal +15
+	riverctl map -repeat resize Down  resize vertical -15
+	riverctl map -repeat resize Up    resize vertical +15
+}
+
+
+main

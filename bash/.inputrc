@@ -1,0 +1,18 @@
+set colored-stats on
+set colored-completion-prefix on
+set completion-ignore-case on
+set completion-display-width 100
+set print-completions-horizontally on
+TAB: menu-complete
+
+set echo-control-characters off
+
+# \e is escape, but in this case is equivalent to Alt
+# [1;3D/C are the left & right arrow keys
+Control-g: "mvt\r"
+"\eg": "mvt -c\r"
+"\e[1;3D": "cd -\r"
+"\e[1;3C": "mvt -c\r"
+"\e-": "cd ..\r"
+Control-o: "pick -f $EDITOR\r"
+Control-k: " $(pick)"

@@ -1,14 +1,14 @@
 install:
 	./blue install \
 		alacritty \
-		awesomewm \
 		bash \
 		dunst \
+		herbstluftwm \
 		kitty \
 		misc \
-		nnn \
 		nvim \
 		rofi \
 		swaywm
 uninstall:
-	./blue uninstall $$(command ls --color=never)
+	find -mindepth 1 -maxdepth 1 -type d -not -name '.git*' | \
+		xargs ./blue uninstall

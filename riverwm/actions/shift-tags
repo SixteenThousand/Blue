@@ -1,0 +1,28 @@
+#!/bin/lua
+
+local direction,window = ...
+
+local curr_ws_file = io.open(os.getenv("CURRENT_WS_FILE"),"r")
+local curr_ws = tonumber(curr_ws_file:read())
+curr_ws_file:close()
+
+if direction == "Left" then
+    new_ws = curr_ws - 1
+elseif direction == "Right" then
+    new_ws = curr_ws + 1
+elseif direction == "Up" then
+    new_ws = curr_ws - 3
+else
+    new_ws = curr_ws + 3
+end
+
+new_ws = new_ws % 9
+
+curr_ws_file = io.open(os.getenv("CURRENT_WS_FILE"),"w")
+curr_ws_file:write(tostring(new_ws))
+curr_ws_file:close()
+local new_tags = 1 << new_ws
+if window then
+    os.execute("riverctl set-view-tags "..tostring(new_tags))
+end
+os.execute("riverctl set-focused-tags "..tostring(new_tags))

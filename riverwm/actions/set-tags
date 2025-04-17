@@ -1,0 +1,11 @@
+#!/bin/lua
+
+local arg = ...
+local new_ws = tonumber(arg)
+
+local curr_ws_fp
+curr_ws_fp = io.open(os.getenv("CURRENT_WS_FILE"),"w")
+
+curr_ws_fp:write(tostring(new_ws-1))
+curr_ws_fp:close()
+os.execute("riverctl set-focused-tags "..tostring(1 << new_ws))
