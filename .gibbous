@@ -3,11 +3,11 @@
      for more information about this file -->
 <gibbous>
   <prep>
-    <msg>Committed and pushed changes to Blue?</msg>
+    <msg>Rebased, committed and pushed changes to Blue?</msg>
   </prep>
+  <liveOutput>false</liveOutput>
   <backup>
-    cd $BACKUP_ROOT/Blue
+    cd $GIBBOUS_BACKUP_DIR/Blue
     git pull
-    git submodule update
   </backup>
 </gibbous>

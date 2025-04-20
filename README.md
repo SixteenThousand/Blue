@@ -3,10 +3,9 @@
 *It is unusual tonight. The moon is blue. The system is changing. It is time 
 to start again.*
 
-This is Blue, where I store all of my dotfiles and anything else I might 
-need when using a new system, i.e., once in a Blue Moon.
+This is Blue, where I store all of my dotfiles<sup>1</sup>, i.e., things I 
+might need when using a new system, once in a Blue Moon.
 
----
 
 ## Interesting Features
 
@@ -17,23 +16,32 @@ need when using a new system, i.e., once in a Blue Moon.
 - A hand-rolled neovim configuration
 - A shell history search tool for bash (search for `stale`)
 
-## Dependencies
+More interesting features can be found by reading the `README.md` files in 
+each of the subdirectories of this repository.
+
+
+## Dependencies & Using This Repository
 
 - GNU stow
 - GNU make
 
-## Getting Started
-
-If you're reading this and you're not me from the future, then...I'm not 
-sure why you're reading this? But anyway, to use this repository on a new 
-system, clone the repo and in a terminal, in the project root, run
-```bash
-git submodule init
-git submodule update
+Make is used to setup each set of dotfiles; for example, if you want to try 
+out my bash configuration, clone this repository and run this in your 
+terminal:
+```
+cd bash
 make install
 ```
-This will run `make install` in every subdirectory of `./configs`.
+This will then run a script that uses Stow to make symlinks between the 
+files here and where the actual configuration files should go.
 
-Do add new configs, or for other configuration management stuff, use the 
-`blue` script provided in this repository. You can run `./blue --help` to 
-see available options.
+If you are me in the future, you may be able to skip all of that by just 
+running `make install` from without `cd`'ing first, which just runs `make 
+install` for all of the apps that I currently use.
+
+
+---
+
+## Footnotes
+
+1. https://www.freecodecamp.org/news/dotfiles-what-is-a-dot-file-and-how-to-create-it-in-mac-and-linux/
