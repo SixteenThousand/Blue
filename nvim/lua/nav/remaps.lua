@@ -9,8 +9,9 @@ local bookmarks = {
     ["'"] = vim.fn.stdpath("config"),
     [";"] = vim.fn.stdpath("data"),
     ["p"] = "~/Projects",
-    ["i"] = "~/Projects/ideas.md",
-    ["t"] = "~/temp",
+    ["t"] = "~/Wiki/To-Do.md",
+    ["w"] = "~/Wiki/index.md",
+    ["s"] = "~/Temp",
 }
 
 for key,path in pairs(bookmarks) do

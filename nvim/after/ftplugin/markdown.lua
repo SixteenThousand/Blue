@@ -1,4 +1,11 @@
-vim.keymap.set("n", "<C-CR>", "<Cmd>MDListItemBelow<CR>")
-vim.keymap.set("n", "<C-S-CR>", "<Cmd>MDResetListNumbering<CR>")
-vim.keymap.set("i", "<C-CR>", "<Esc><Cmd>MDListItemBelow<CR>")
-vim.keymap.set("i", "<C-S-CR>", "<Esc><Cmd>MDResetListNumbering<CR>")
+-- See lua/plugins/list.lua for more information
+-- Reset most vimwiki header key bindings to their defaults...
+vim.keymap.set("n", "[[", "<Plug>VimwikiGotoPrevHeader")
+vim.keymap.set("n", "]]", "<Plug>VimwikiGoToNextHeader")
+vim.keymap.set("n", "[=", "<Plug>VimwikiGoToPrevSiblingHeader")
+vim.keymap.set("n", "]=", "<Plug>VimwikiGoToNextSiblingHeader")
+vim.keymap.set("n", "]u", "<Plug>VimwikiGoToParentHeader")
+vim.keymap.set("n", "]u", "<Plug>VimwikiGoToParentHeader")
+-- ... but change some
+vim.keymap.set("n", "<leader>,", "<Plug>VimwikiRemoveHeaderLevel")
+vim.keymap.set("n", "<leader>.", "<Plug>VimwikiAddHeaderLevel")

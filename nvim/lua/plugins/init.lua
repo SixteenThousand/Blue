@@ -1,4 +1,5 @@
 local plugin_list = require("plugins.list")
+require("plugins.preload")
 
 -- set loading order
 local dirs = {}

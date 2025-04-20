@@ -4,7 +4,7 @@
 vim.api.nvim_create_user_command(
     "Fox",
     function()
-        vim.cmd("!firefox --new-tab %")
+        vim.cmd("!$BROWSER --new-tab %")
     end,
     {}
 )
@@ -51,8 +51,20 @@ vim.api.nvim_create_user_command(
     {nargs="?"}
 )
 
+vim.api.nvim_create_user_command(
+    "Ctags",
+    function()
+        vim.fn.system([[
+            cd $(git rev-parse --show-toplevel || yona -s pwd)
+            ctags --recurse
+        ]])
+    end,
+    {}
+)
+
 
 -- Ex-mode abbreviations
 vim.cmd([[
     cnoreabbrev Man vertical Man
+    cnoreabbrev vh vertical help
 ]])

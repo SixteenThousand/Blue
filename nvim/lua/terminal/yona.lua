@@ -41,6 +41,6 @@ vim.go.grepformat = "%f:%l,%f:%l%m,%f  %l%m"
 vim.go.grepprg = table.concat({
     "cd %:h &&",
     "grep -RHIn",
-    "--exclude-dir .git --exclude-dir node_modules",
+    "--exclude-dir .git --exclude-dir node_modules --exclude tags",
     "$* $(yona -s pwd 2>/dev/null)",
 }, " ")

@@ -66,7 +66,21 @@ return {
     },
     "vim-surround",
     {
-        dirname = "markdown.nvim",
-        setup = "markdown",
+        dirname = "vimwiki",
+        config = function()
+            vim.g.vimwiki_markdown_link_ext = 1
+            vim.g.vimwiki_list = {
+                {
+                    path = "~/Wiki",
+                    syntax = "markdown",
+                    ext = ".md",
+                    diary_frequency = "monthly",
+                    auto_toc = 1,
+                },
+            }
+            -- Remove header key bindings so `-` works as normal
+            -- See after/ftplugin/markdown.lua for more information
+            vim.g.vimwiki_key_mappings = { headers = 0 }
+        end,
     },
 }
