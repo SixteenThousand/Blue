@@ -1,6 +1,7 @@
 ### VARIABLES
 set $layoutMod Super+Alt
 set $moveMod Super+Shift
+set $script_dir $HOME/.config/sway/scripts
 # this must be set for use in system wide config files
 set $mod Mod4
 
@@ -26,9 +27,7 @@ focus_follows_mouse no
 exec --no-startup-id ~/.swaybg
 
 # fixing the zoom
-# find outputs from swaymsg -t get_outputs (or xrandr --query on X11)
-# wlr-randr can also be used to do this kind of stuff
-output eDP-1 scale 1
+output * scale 1
 
 
 ### LAUNCH/CLOSE APPS
@@ -38,32 +37,38 @@ bindsym Alt+F4 kill
 bindsym {
     # Start your launcher
     Super+a exec rofi -show drun
-    # Find & xdg-open a file
-    Super+o exec rofile
+    Alt+space exec rofi -show drun
     # other app shortcuts
     Super+b exec $BROWSER
-    Super+g exec gio launch ~/.local/share/applications/term-file-manager.desktop
-    Super+t exec $MAIL
+    Super+Shift+Return $BROWSER
     Super+Return exec $TERMINAL
+    # open a file
+    Super+o exec $TERMINAL -e desktopctl open --fm
+    Super+Shift+o exec $TERMINAL -e desktopctl open
 }
 
 
 ### META STUFF
 bindsym {
     Super+Shift+q exit
-    Super+Shift+Delete exit; exec brightnessctl set 100%; exec systemctl poweroff 
+    Super+Shift+Delete exec brightnessctl set 100%; exec systemctl poweroff 
     Super+Shift+r reload; exec notify-send sway 'Reloaded!'
 }
 
 
 ### MOVE FOCUS
 bindsym {
+    # windows
     Super+Tab exec 'rofi -show window'
-    Super+w exec swayext window next
-    Super+x exec swayext window prev
-    Alt+Tab exec swayext window next
-    Alt+Shift+Tab exec swayext window prev
+    Alt+Tab focus next
+    Alt+Shift+Tab focus prev
+    Super+w focus next
+    Super+Shift+w focus prev
+    Super+x focus prev
+    Super+e focus parent
+    Super+Shift+e focus child
     Super+u [urgent=newest] focus
+    # workspaces
     Super+1 workspace number 1
     Super+2 workspace number 2
     Super+3 workspace number 3
@@ -73,22 +78,17 @@ bindsym {
     Super+7 workspace number 7
     Super+8 workspace number 8
     Super+9 workspace number 9
-    Super+space workspace back_and_forth
-    Super+Shift+space exec swayext workspace new
-
-    # normal change workspace
-    Super+h exec swayext workspace -4
+    Super+Backspace workspace back_and_forth
+    Super+Semicolon workspace back_and_forth
     Super+j workspace next
     Super+k workspace prev
-    Super+l exec swayext workspace +4
-    Super+Left  exec swayext workspace -4
-    Super+Down  workspace next
-    Super+Up    workspace prev
-    Super+Right exec swayext workspace +4
-
-    # go to next number workspace
-    Super+Comma exec swayext workspace -1
-    Super+Period exec swayext workspace +1
+    Super+Down workspace next
+    Super+Up workspace prev
+    Super+Comma workspace prev
+    Super+Period workspace next
+    Super+space exec $script_dir/new_workspace
+    # Swap focus between the tiling area and the floating area
+    Super+equal focus mode_toggle
 }
 
 
@@ -113,11 +113,11 @@ bindsym {
     $moveMod+7 move container to workspace number 7; workspace 7
     $moveMod+8 move container to workspace number 8; workspace 8
     $moveMod+9 move container to workspace number 9; workspace 9
-    # scratchpad/special workspace
+    # scratchpad workspace
     $moveMod+minus border pixel 5; move scratchpad
-    # Show the next scratchpad window or hide the focused scratchpad window.
-    # If there are multiple scratchpad windows, this command cycles through them.
+    # Cycle through scratchpad windows
     Super+minus scratchpad show
+    Super+Shift+space exec $script_dir/new_workspace with_window
 }
 
 
@@ -126,12 +126,15 @@ bindsym {
 workspace_layout default
 bindsym {
     # Switch the current container between different layout styles
-    Super+s split toggle
+    $layoutMod+semicolon split horizontal
+    # get rid of a split
+    $layoutMod+apostrophe split none
+    # numbersign = hash/tilde key
+    $layoutMod+numbersign split toggle
     $layoutMod+Return layout toggle split tabbed
     F11 fullscreen toggle
-    Super+Alt+space floating toggle; border pixel 5
-    # Swap focus between the tiling area and the floating area
-    Super+Escape focus mode_toggle
+    Super+f fullscreen toggle
+    $layoutMod+equal floating toggle; border pixel 5
 }
 
 
@@ -172,19 +175,19 @@ client.focused #1d6432cc #1d6432cc #ffffff #1d6432ee
 set $volume_step 2
 bindsym {
     # for non-laptops
-    Super+F1 exec amixer sset Master toggle
-    Super+F2 exec amixer sset Master $volume_step%-
-    Super+F3 exec amixer sset Master $volume_step%+
+    Super+F1 exec desktopctl mute
+    Super+F2 exec desktopctl vol - 2
+    Super+F3 exec desktopctl vol + 2
     Super+F4 exec playerctl play-pause
-    Super+F7 exec brightnessctl set 10%+
-    Super+F6 exec brightnessctl set 10%-
+    Super+F6 exec desktopctl mon - 5
+    Super+F7 exec desktopctl mon + 5
 }
-
 
 ### NOTIFICATIONS
 bindsym Super+n exec dunstctl close-all
 
 ### AUTOSTART
+# `desktopctl` is a script I wrote. You should be able to find in Blue/misc.
 exec --no-startup-id desktopctl autostart || :
 exec --no-startup-id dunst & disown
 

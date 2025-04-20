@@ -1,11 +1,17 @@
-# My Configuration For Sway
+# My Sway Configuration
+This is my configuration for the Sway compositor (some might say "window 
+manager"). It's what shows windows on my laptop/desktop screen, and allows 
+me to set key bindings (some might say "keyboard shortcuts") to do things 
+like:
+    - open applications
+    - switch focus between windows
+    - show how much battery I have left
 
-These are my configuration files for the sway compositor, a lightweight 
-desktop environment (i.e. the GUI which allows you open applications, see a 
-panel, etc.).
 
-## Usage
-
-If you want to use this config, just clone this repository and run `make 
-install` from inside it. You can run `make uninstall` later to remove it 
-again.
+## Notes
+### Output names
+"Outputs" in this context mean monitors, or screens. You can get the names 
+of outputs currently connected via:
+    - `swaymsg --type get_outputs`
+    - `wlr-randr` (if installed)
+    - `xrandr --query` (on X11, so not Sway)

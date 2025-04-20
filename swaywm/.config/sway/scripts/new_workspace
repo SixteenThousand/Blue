@@ -1,0 +1,28 @@
+#!/usr/bin/python3
+
+import json
+import subprocess
+import os
+import sys
+from datetime import datetime
+
+try:
+    proc = subprocess.run(
+        ["swaymsg", "-r", "-t", "get_workspaces"],
+        capture_output=True
+    )
+    workspaces = json.loads(proc.stdout)
+    new_ws_num = -1
+    for ws in workspaces:
+        if ws["num"] > new_ws_num:
+            new_ws_num = ws["num"]
+    new_ws_num += 1
+    cmd = f"workspace {new_ws_num}"
+    if len(sys.argv) > 1 and sys.argv[1] == "with_window":
+        cmd = f"move window to workspace {new_ws_num}; " + cmd
+    subprocess.run(["swaymsg", cmd])
+except:
+    log = open(os.environ["HOME"] + "/Swayext.log", "a")
+    log.write(str(datetime.now()) + " | " + repr(sys.exception()) + "\n")
+    log.close()
+    subprocess.run(["notify-send", "sway", "error!"])
