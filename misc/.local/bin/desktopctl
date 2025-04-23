@@ -98,6 +98,10 @@ case $1 in
 
 		    desktopctl autostart
 		Open all apps specified by the desktop files in ~/.config/autostart
+
+		    desktopctl open [--fm]
+		Select a file (with fzf) and open it. With --fm option, use nnn. Note files must 
+		be selected, not simply hovered over.
 		
 		Acknowledgement:
 		The code for the volume changing commands is modelled on the volume-helper 
@@ -126,12 +130,20 @@ case $1 in
 			-h "int:value:$VALUE" "Brightness: $VALUE%"
 		;;
 	autostart)
-		autostart_dir=$HOME/.config/autostart
-		for app in $(command ls $autostart_dir)
-		do
-			gio launch "$autostart_dir/$app"
-		done
+		$HOME/.config/autostart/autostart.sh
+		;;
+	open)
+		if [ "$2" = --fm ]
+		then
+			for file in $(nnn -p - $HOME/Documents)
+			do
+				nohup xdg-open "$file" > $HOME/.desktopctl.log
+			done
+		else
+			cd $HOME/Documents
+			nohup xdg-open $(fzf) > $HOME/.desktopctl.log
+		fi
 		;;
 esac
 
-# vim: expandtab=false, shiftwidth=4
+# vim: noexpandtab shiftwidth=4
