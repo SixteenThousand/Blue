@@ -13,3 +13,5 @@ alias yg='grep -RnH --exclude-dir=.git --exclude-dir=node_modules \
 # Pipe data into xcopy to save it in the clipboard,
 # and run this to print the clipboard contents to stdout
 alias xcopy='xclip -selection clipboard'
+alias pm=pnpm
+alias px=pnpx
