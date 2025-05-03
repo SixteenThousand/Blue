@@ -13,11 +13,17 @@ vim.api.nvim_create_user_command(
 vim.api.nvim_create_user_command(
 	"Path",
 	function(opts)
+        local path
+        if vim.bo.filetype == "netrw" then
+            path = vim.bo.netrw_curdir
+        else
+            path = vim.fn.expand("%:p")
+        end
         if opts.fargs[1] == nil then
-            vim.fn.setreg("\"",vim.fn.expand("%:p"))
+            vim.fn.setreg("\"",path)
             print("path yanked to register \"\"")
         else
-            vim.fn.setreg(opts.fargs[1],vim.fn.expand("%:p"))
+            vim.fn.setreg(opts.fargs[1],path)
             print("path yanked to register \""..opts.fargs[1])
         end
 	end,
