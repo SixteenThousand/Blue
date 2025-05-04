@@ -1,5 +1,11 @@
-#!/bin/sh
+#!/usr/bin/sh
 
-$BROWSER https://web.whatsapp.com & disown
-$MAIL & disown
-$TERMINAL --hold $EDITOR "$HOME/Wiki/To-Do.md"
+NO_OPT="don't do that"
+choice=$(echo -e "open internet stuff\n${NO_OPT}" | rofi -dmenu)
+
+if [ -n "$choice" ] && [ "$choice" != "$NO_OPT" ]; then
+    $BROWSER https://web.whatsapp.com https://discordapp.com/channels/@me & disown
+    $MAIL & disown
+fi
+
+$TERMINAL --hold $EDITOR "$HOME/Wiki/To-Do.md" & disown
