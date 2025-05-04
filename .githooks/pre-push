@@ -1,0 +1,4 @@
+#!/usr/bin/sh
+
+echo "You should only be pushing when making a backup!" >&2
+exit 1
