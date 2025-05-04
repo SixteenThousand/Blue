@@ -4,20 +4,34 @@
 STAGED_CHANGES=$(git diff --name-only --cached)
 COMMIT_MSG_FILE=$1
 CURRENT_MSG=$(cat "$COMMIT_MSG_FILE")
+BRANCH=$(git branch --show-current)
 
+commit_app=
 for file in $STAGED_CHANGES; do
   app=${file%%/*}
-  # Skip stuff in toplevel
-  [ -d "$app" ] || continue
+  # Treat stuff outside of an app config as part of the "Blue application"
+  if ! [ -d "$app" ]; then
+    app=Blue
+  fi
   # Check we're only committing changes to one app's config at a time
-  if [ -n "$first_app" ] && [ "$app" != "$first_app" ]; then
+  if [ -n "$commit_app" ] && [ "$app" != "$commit_app" ]; then
     echo 'Only commit changes for one app at a time!' >&2
     exit 1
   fi
-  first_app=$app
+  commit_app=$app
 done
 
-echo -e "[$app]\n>>" > "$COMMIT_MSG_FILE"
+case "$BRANCH" in
+  "${commit_app}"-*)
+    :
+    ;;
+  *-*)
+    echo "The current branch only accepts changes for ${BRANCH%%-*}" >&2
+    exit 1
+    ;;
+esac
+
+echo -e "[${commit_app}]\n>> " > "$COMMIT_MSG_FILE"
 echo "$CURRENT_MSG" >> "$COMMIT_MSG_FILE"
 
 
