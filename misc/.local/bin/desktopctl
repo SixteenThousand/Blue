@@ -1,8 +1,11 @@
 #!/bin/sh
 
 
+DESKTOPCTL_LOG=${HOME}/.desktopctl.log
+
+
 info_help() {
-	cat <<- EOF
+    cat <<- EOF
  Little script to change things about your desktop environment.
 
  Usage:
@@ -32,6 +35,10 @@ info_help() {
     desktopctl open [--fm]
   Select a file (with fzf) and open it. With --fm option, use nnn. Note files must 
   be selected, not simply hovered over.
+  
+    desktopctl check_battery
+  Checks /sys/class/power_supply/BAT1 for current battery charge. Useful for
+  an anacron job.
 
  Acknowledgement:
  The code for the volume changing commands is modelled on the volume-helper 
@@ -39,6 +46,7 @@ info_help() {
  of sway.
 EOF
 }
+
 swaybg_wrap() {
     killall swaybg
     swaybg --mode fill --image $1 & disown
@@ -107,10 +115,36 @@ mute() {
         "$MSG"
 }
 
+open_file() {
+    if [ "$1" = --fm ]
+    then
+        for file in $(nnn -p - $HOME/Documents)
+        do
+            nohup xdg-open "$file" > $DESKTOPCTL_LOG
+        done
+    else
+        cd $HOME/Documents
+        nohup xdg-open $(fzf) > $DESKTOPCTL_LOG
+    fi
+}
+
+check_battery() {
+    local charge=$(cat /sys/class/power_supply/BAT1/capacity)
+    if [ "$charge" -lt 20 ]
+    then
+        notify-send \
+            --app-name desktopctl --urgency=critical \
+            --expire-time=30000 --wait \
+            "Battery" \
+            "Battery VERY LOW: ${charge}%!!!" \
+            & disown
+    fi
+}
+
 # "main"
 case $1 in
     -h|--help)
-		info_help
+        info_help
         exit
         ;;
     bg)
@@ -136,15 +170,10 @@ case $1 in
         $HOME/.config/autostart/autostart.sh
         ;;
     open)
-        if [ "$2" = --fm ]
-        then
-            for file in $(nnn -p - $HOME/Documents)
-            do
-                nohup xdg-open "$file" > $HOME/.desktopctl.log
-            done
-        else
-            cd $HOME/Documents
-            nohup xdg-open $(fzf) > $HOME/.desktopctl.log
-        fi
+        shift 1
+        open_file $@
+        ;;
+    check_battery)
+        check_battery
         ;;
 esac
