@@ -7,7 +7,8 @@
   </prep>
   <liveOutput>false</liveOutput>
   <backup>
-    cd $GIBBOUS_BACKUP_DIR/Blue
+    git push --no-verify
+    cd "$GIBBOUS_BACKUP_DIR/Blue"
     git pull
   </backup>
 </gibbous>
