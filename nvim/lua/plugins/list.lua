@@ -4,7 +4,7 @@ return {
     "nvim-web-devicons",
     {
         dirname = "nvim-treesitter",
-        config = function()
+        post = function()
             require("plugins.treesitter")
         end,
     },
@@ -18,7 +18,7 @@ return {
     "rose-pine-neovim",
     {
         dirname = "lualine.nvim",
-        config = function()
+        post = function()
             require("lualine").setup({
                 options = {
                     -- note lualine is also mentioned in the <A-r> remap in 
@@ -40,10 +40,15 @@ return {
     },
     -- IDE-like stuff
     "nvim-lspconfig",
-    "LuaSnip",
+    {
+        dirname = "LuaSnip",
+        post = function()
+            require("plugins.luasnip")
+        end,
+    },
     {
         dirname = "Comment.nvim",
-        config = function()
+        post = function()
             require("Comment").setup()
             local commapi = require("Comment.api")
             -- for some reason, "<C-_>" translates to "Ctrl+/"
@@ -53,21 +58,32 @@ return {
     },
     {
         dirname = "nvim-treesitter-textobjects",
-        config = function()
+        post = function()
             require("plugins.treesitter")
         end,
     },
-    "telescope.nvim",
+    {
+	    dirname = "telescope.nvim",
+	    post = function()
+		    require("plugins.telescope")
+	    end,
+    },
     {
         dirname = "vim-fugitive",
-        config = function()
+        post = function()
             require("plugins.fugitive")
         end,
     },
     "vim-surround",
     {
         dirname = "vimwiki",
-        config = function()
+        pre = function()
+            vim.g.vimwiki_markdown_link_ext = 1
+            vim.g.vimwiki_list = {
+                { path = "~/Wiki", syntax = "markdown", ext = ".md", },
+            }
+        end,
+        post = function()
             vim.g.vimwiki_markdown_link_ext = 1
             vim.g.vimwiki_list = {
                 {

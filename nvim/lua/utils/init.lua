@@ -14,12 +14,6 @@ function M.path_exists(path)
     return vim.loop.fs_stat(path) ~= nil
 end
 
-function M.force_exist_dir(path)
-    if not M.path_exists(path) then
-        vim.fn.mkdir(path)
-    end
-end
-
 function M.parse_path(path)
     -- converts a path to unix style & converts ~ to $HOME
     return path:gsub("\\","/"):gsub("~",os.getenv("HOME"))
@@ -29,7 +23,7 @@ end
 -- logging
 M.LOGDIR = M.parse_path(vim.fn.stdpath("data").."/thom-logs")
 M.MAIN_LOGFILE = "main.log"
-M.force_exist_dir(M.LOGDIR)
+vim.fn.mkdir(M.LOGDIR, "p")
 
 -- writes some output to a given logfile options are:
 -- var: a variable to be logged. will be converted to a string

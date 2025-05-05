@@ -62,6 +62,8 @@ function set_colours()
             vim.cmd.colorscheme(vim.g.sixteen_colourscheme)
             vim.api.nvim_set_hl(0, "Normal", { bg="none" })
             vim.api.nvim_set_hl(0, "NormalFloat", { bg="none" })
+            -- TODO: Fix status line bugs that this line causes
+            vim.api.nvim_set_hl(0, "EndOfBuffer", { bg="none" })
             return
         end
     end
@@ -143,4 +145,3 @@ vim.keymap.set("n","<leader>cb",function()
         backgroundFp:close()
     end
 end)
-

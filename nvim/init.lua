@@ -1,24 +1,14 @@
--- loose config files
-require("colon")
-require("remap")
+-- Pre-plugin modules
+require("misc")
 require("settings")
-
--- packages
+require("nav")
 require("terminal")
 
--- plugin-dependent packages
-local pluginsOn,_ = pcall(require,"plugins")
-if pluginsOn then
-    require("amber")
-    if vim.g.sixteen_lsp then
-        require("lsp")
-    end
-    require("nav")
-    require("pretty")
-    require("snippets")
-else
-    require("nav.remaps")
-end
+pcall(require,"plugins")
 
+-- Post-plugin modules
+require("amber")
+require("colours")
+require("lsp")
 
 print("And It Goes On...")

@@ -1,6 +1,18 @@
--- ++++++++++++ keymaps ++++++++++++
+local lspconfOn, lspconf = pcall(require, "lspconfig")
+if not lspconfOn then
+    return
+end
 
--- get information/hover
+--- Servers
+lspconf.pyright.setup{}
+lspconf.rust_analyzer.setup{
+    cmd = {"rust-analyzer"},
+}
+lspconf.gopls.setup{}
+lspconf.ts_ls.setup{}
+lspconf.clangd.setup{}
+
+--- Get Information & Hover
 vim.api.nvim_create_autocmd("LspAttach",{
     callback = function(evt)
         local client = vim.lsp.get_client_by_id(evt.data.client_id)
@@ -17,7 +29,7 @@ vim.api.nvim_create_autocmd("LspAttach",{
     end,
 })
 
--- goto warnings/errors
+--- Key Bindings
 vim.keymap.set("n","]e",function()
     vim.diagnostic.goto_next({
         severity = vim.diagnostic.severity.ERROR
