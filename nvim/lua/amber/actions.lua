@@ -81,4 +81,28 @@ function M.manage()
     vim.cmd.edit(SESS_DIR)
 end
 
+function M.load_local_session()
+    local session_path = vim.fn.getcwd().."/.session.vim"
+    if vim.fn.filereadable(session_path) == 0 then
+        return
+    end
+    local choice = vim.fn.input(
+        "A session file was found. Do you want to load it? (Y/n)? "
+    )
+    if choice ~= "n" and choice ~= "N" then
+        vim.cmd.source(session_path)
+    end
+    print("\n")
+end
+
+function M.save_local_session()
+    local session_path = vim.fn.getcwd().."/.session.vim"
+    vim.cmd("mksession! "..session_path)
+    print(string.format(
+        "Session preserved in amber at <<%s>>",
+        session_path
+    ))
+end
+
+
 return M

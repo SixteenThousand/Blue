@@ -18,7 +18,7 @@ vim.api.nvim_create_user_command(
         if opts.fargs[1] ~= nil then
             subcommands[opts.fargs[1]](opts.fargs[2])
         else
-            print("Amber: command under construction...")
+            actions.save_local_session()
         end
     end,
     {nargs="*"}
