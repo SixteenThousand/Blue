@@ -9,8 +9,8 @@ vim.opt_global.cpoptions:append("I")
 vim.o.shiftwidth = 4 -- buffer opt
 vim.o.tabstop = 4 -- buffer opt
 vim.o.expandtab = true -- buffer opt
--- vim.opt_local.formatoptions:remove{ "r", "o", "l" }
-    -- stops vim from auto-inserting a bunch of comments
+vim.opt_local.formatoptions:append("r,o,l")
+    -- make vim auto-insert a bunch of comments
 
 
 -- keeps at least {number} lines beneath the cursor (unless at end of file)
