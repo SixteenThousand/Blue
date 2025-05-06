@@ -33,9 +33,13 @@ function mkscratch(ext)
     local file = dir.."/jaeha"
     if ext == nil then
         local ext = vim.fn.input(string.format(
-            "Creating file (leave empty for no extension) %s.",
+            "Creating file (empty => executable script, - => abort) %s.",
             file
         ))
+    end
+    if ext == "-" then
+        print("Operation aborted")
+        return
     end
     if #ext > 0 then
         file = file.."."..ext
