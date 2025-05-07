@@ -52,3 +52,5 @@ vim.o.relativenumber = true
 
 vim.go.splitright = true
 vim.go.splitbelow = true
+
+vim.opt_global.sessionoptions:remove("folds")
