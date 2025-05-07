@@ -1,3 +1,4 @@
+-- this is my own session manager
 local M = {}
 
 local utils = require("utils")
@@ -102,6 +103,62 @@ function M.save_local_session()
         "Session preserved in amber at <<%s>>",
         session_path
     ))
+end
+
+
+--- UI
+local subcommands = {
+    save = M.save,
+    new = M.save,
+    list = M.list,
+    delete = M.delete,
+    wipe = M.wipe,
+    load = M.load,
+    quit = M.quit,
+    manage = M.manage,
+}
+
+vim.api.nvim_create_user_command(
+    "Amber",
+    function(opts)
+        if opts.fargs[1] ~= nil then
+            subcommands[opts.fargs[1]](opts.fargs[2])
+        else
+            M.save_local_session()
+        end
+    end,
+    {nargs="*"}
+)
+
+vim.keymap.set("n", "<A-S-q>", M.quit)
+
+
+-- telescope front-end
+local utilsOn,popup = pcall(require,"utils.popup")
+if utilsOn then
+	vim.keymap.set("n","<A-a>",function()
+		popup.telescope_dropdown(
+			"Amber: Load Session",
+			M.get_amber_files(),
+			M.load
+		)
+	end)
+
+	vim.keymap.set("n","<A-q>",function()
+		popup.telescope_dropdown(
+			"Amber: Quit",
+			M.get_amber_files(),
+			M.quit
+		)
+	end)
+
+	vim.keymap.set("n","<A-S-a>",function()
+		popup.telescope_dropdown(
+			"Amber: Save Session",
+			M.get_amber_files(),
+			M.save
+		)
+	end)
 end
 
 

@@ -10,7 +10,6 @@ require("terminal")
 local pluginsOn,_ = pcall(require,"plugins")
 if pluginsOn then
     require("amber")
-    require("amber.actions").load_local_session()
     if vim.g.sixteen_lsp then
         require("lsp")
     end
