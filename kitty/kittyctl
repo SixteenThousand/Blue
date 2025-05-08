@@ -2,6 +2,21 @@
 
 config_dir=$HOME/.config/kitty
 
+print_help() {
+    cat <<- EOF
+ kittyctl - a few little kitty helpers
+
+ Usage:
+   kittyctl theme|colourscheme [THEME]
+     Switch colourscheme to THEME, or fuzzy find from
+     ${config_dir}/themes if no THEME
+     is given.
+   kittyctl opacity|bg NUMBER
+     Set background opacity to NUMBER.
+     0 <= NUMBER <= 1.
+EOF
+}
+
 colourscheme() {
 	# pick a theme
 	local new_theme
@@ -30,6 +45,10 @@ opacity() {
 }
 
 case $1 in
+    help|-h|--help)
+        print_help
+        exit
+        ;;
 	theme|colourscheme)
 		colourscheme $2
 		exit
