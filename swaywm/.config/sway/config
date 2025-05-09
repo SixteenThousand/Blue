@@ -40,7 +40,7 @@ bindsym {
     Alt+space exec rofi -show drun
     # other app shortcuts
     Super+b exec $BROWSER
-    Super+Shift+Return $BROWSER
+    Super+Shift+Return exec desktopctl todo
     Super+Return exec $TERMINAL
     # open a file
     Super+o exec $TERMINAL -e desktopctl open --fm
