@@ -45,4 +45,4 @@ export NNN_PLUG='z:changedir;m:mount;p:playlist;b:browser'
 export XCURSOR_SIZE=48
 
 
-export PATH="$HOME/.local/bin:$HOME/bin:$PATH:"
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
