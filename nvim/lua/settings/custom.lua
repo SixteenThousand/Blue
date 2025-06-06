@@ -102,7 +102,10 @@ function M.tag_mode()
     )
     vim.keymap.set("i","<C-.>",
         function()
+            local line = vim.fn.getline(".")
             local startpos = vim.fn.getpos(".")
+            local line_before_cursor = line:sub(1,startpos[3]-1)
+            local line_after_cursor = line:sub(startpos[3])
             vim.api.nvim_set_current_line(
                 line_before_cursor..">"..line_after_cursor)
             vim.fn.cursor(startpos[2],startpos[3]+1)

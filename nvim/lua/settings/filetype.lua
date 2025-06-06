@@ -72,3 +72,11 @@ vim.api.nvim_create_user_command(
 
 -- lisp stuff
 vim.g.lisp_rainbow = 1
+
+-- python stuff
+vim.g.python_indent = {
+    open_paren = "shiftwidth()",
+    continue =  "shiftwidth()",
+    closed_paren_align_last_line = false,
+}
+vim.g.python_indent.searchpair_timeout = 400

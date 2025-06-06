@@ -1,5 +1,5 @@
 -- default places :find & co will look
-vim.opt_global.path = { ".", "", "./**3" }
+vim.opt_global.path = { ".", "", "./**4", "**4", }
 
 -- indentation & autocommenting
 vim.go.smarttab = false
@@ -24,7 +24,7 @@ vim.go.autowriteall = true
 -- allow h & l to take you to a new line
 vim.opt_global.whichwrap:append("h,l")
 vim.o.wrap = false -- window opt
-vim.o.textwidth = 76
+vim.o.textwidth = 79
 
 -- search stuff, incl. file & buffer search
 vim.go.hlsearch = false

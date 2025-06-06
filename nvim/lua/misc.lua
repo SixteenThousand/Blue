@@ -58,7 +58,7 @@ vim.keymap.set("t","<Esc>","<C-\\><C-N>")
 vim.keymap.set("t","<C-PageUp>","<C-\\><C-N><C-PageUp>")
 vim.keymap.set("t","<C-PageDown>","<C-\\><C-N><C-PageDown>")
 
---- Window Stuff
+--- WINDOW STUFF
 -- exiting a buffer/window
 vim.keymap.set({"n","i","t"},"<A-w>",function ()
     local id = vim.fn.win_getid()

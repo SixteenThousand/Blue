@@ -26,6 +26,7 @@ vim.api.nvim_create_autocmd("LspAttach",{
         vim.keymap.set("n","gd",vim.lsp.buf.definition,{buffer=true})
         vim.keymap.set({"n","i"},"<F2>",vim.lsp.buf.rename,{buffer=true})
         vim.opt_global.completeopt:remove("preview")
+        vim.keymap.set("n", "<F3>", vim.lsp.buf.code_action)
     end,
 })
 
