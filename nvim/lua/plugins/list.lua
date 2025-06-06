@@ -2,12 +2,6 @@ return {
     --- DEPENDENCIES
     "plenary.nvim",
     "nvim-web-devicons",
-    {
-        dirname = "nvim-treesitter",
-        post = function()
-            require("plugins.treesitter")
-        end,
-    },
     --- EXTENSIONS PROPER
     -- colourschemes
     "everforest",
@@ -54,12 +48,6 @@ return {
             -- for some reason, "<C-_>" translates to "Ctrl+/"
             vim.keymap.set({"n","i","v"},"<C-_>",commapi.toggle.linewise.current)
             vim.keymap.set({"n","i","v"},"<C-/>",commapi.toggle.linewise.current)
-        end,
-    },
-    {
-        dirname = "nvim-treesitter-textobjects",
-        post = function()
-            require("plugins.treesitter")
         end,
     },
     {

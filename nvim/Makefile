@@ -8,8 +8,6 @@ PLUGINS=\
 		https://github.com/tadmccorkle/markdown.nvim.git \
 		https://github.com/EdenEast/nightfox.nvim.git \
 		https://github.com/neovim/nvim-lspconfig.git \
-		https://github.com/nvim-treesitter/nvim-treesitter.git \
-		https://github.com/nvim-treesitter/nvim-treesitter-textobjects.git \
 		https://github.com/nvim-tree/nvim-web-devicons.git \
 		https://github.com/nvim-lua/plenary.nvim.git \
 		https://github.com/ku-s-h/summerfruit256.vim.git \
@@ -24,6 +22,7 @@ install:
 uninstall:
 	rm ${CONF_DIR}
 
+# Only to be used if *really* necessary
 plugins:
 	mkdir -p ${PLUGIN_DIR}
 	git clone https://github.com/catppuccin/nvim.git ${PLUGIN_DIR}/catppuccin
