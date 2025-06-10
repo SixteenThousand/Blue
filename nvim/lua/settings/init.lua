@@ -59,7 +59,16 @@ vim.api.nvim_create_user_command(
 vim.api.nvim_create_user_command(
 	"Fold",
     function(opts)
-        custom.fold_actions[opts.fargs[1]]()
+        local cmd = opts.fargs[1]
+        if cmd == "?" or cmd == "help" then
+            for k,_ in custom.fold_actions do
+                print(k)
+            end
+        elseif cmd == "header" then
+            custom.fold_by_header(opts.fargs[2], opts.fargs[3])
+        else
+            custom.fold_actions[opts.fargs[1]]()
+        end
     end,
-    {nargs=1}
+    {nargs="*"}
 )

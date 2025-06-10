@@ -114,7 +114,7 @@ function M.tag_mode()
     )
 end
 
--- ++++++++++++ folding settings ++++++++++++
+--- FOLDING SETTINGS 
 function sixteen_fold_text()
 	return "+--- "..(vim.v.foldend-vim.v.foldstart+1).." lines: "..vim.fn.getline(vim.v.foldstart).." ..."
 end
@@ -126,6 +126,42 @@ function py_indent_foldlevel(line_num, maxlevel)
     local level = math.max(vim.fn.indent(line_num), vim.fn.indent(line_num+1))
         / vim.bo.shiftwidth
     return math.min(level, maxlevel)
+end
+
+function M.fold_by_header(header, end_pat)
+    vim.wo.foldcolumn = "1"
+    local need_escape = "\\/|"
+    local start_pos = vim.fn.getpos(".")
+    vim.cmd("normal zEgg")
+    local h_pat = "^"..vim.fn.escape(header, need_escape)
+
+    local line_delta = 0
+    if end_pat then
+        if tonumber(end_pat) then
+            end_pat = string.rep("\\n", tonumber(end_pat)+1)
+            line_delta = -1
+        else
+            end_pat = "^"..vim.fn.escape(end_pat, need_escape)
+        end
+    else
+        end_pat = "\\n\\n\\n"
+    end
+    print(end_pat) -- debug
+
+    -- find folds
+    local header_line = vim.fn.search(h_pat, "cW")
+    while header_line ~= 0 do
+        local end_line = vim.fn.search(end_pat, "ceW")
+        if end_line == 0 then
+            vim.cmd(string.format("%d,$fold", header_line))
+            break
+        else
+            vim.cmd(
+                string.format("%d,%dfold", header_line, end_line+line_delta))
+        end
+        header_line = vim.fn.search(h_pat, "cW")
+    end
+    vim.fn.setcursorcharpos(start_pos)
 end
         
 vim.wo.foldcolumn = "0"
@@ -166,9 +202,6 @@ M.fold_actions = {
         vim.wo.foldmethod = "marker"
         vim.wo.foldmarker = "{{{,}}}"
         vim.wo.foldcolumn = "2"
-    end,
-    ["?"] = function()
-        print("show wipe py max1 c")
     end,
 }
 
