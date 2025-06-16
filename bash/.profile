@@ -5,7 +5,7 @@ then
 fi
 export EDITOR
 export TERMINAL='kitty -1'
-export BROWSER=firefox
+export BROWSER=qutebrowser
 export MAIL="$TERMINAL aerc"
 
 export XDG_CONFIG_HOME="$HOME/.config"
