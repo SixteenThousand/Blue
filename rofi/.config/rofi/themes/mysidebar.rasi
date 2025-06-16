@@ -73,7 +73,7 @@ inputbar {
 }
 mainbox {
     expand: true;
-    background-color: #1c1c1cee;
+    background-color: #1c1c1c;
     spacing: 1em;
 }
 listview {
