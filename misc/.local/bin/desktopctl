@@ -39,8 +39,13 @@ info_help() {
     desktopctl check_battery
   Checks /sys/class/power_supply/BAT1 for current battery charge. Useful for
   an anacron job.
+
     desktopctl todo
   Open a todo list file.
+
+    desktopctl bt [connect DEVICE|off]
+  Turn on bluetooth and connect to DEVICE or disable bluetooth entirely. See 
+  bluetooth(1) or bluetoothctl(1) for more details.
 
  Acknowledgement:
  The code for the volume changing commands is modelled on the volume-helper 
@@ -143,6 +148,24 @@ check_battery() {
     fi
 }
 
+get_bt_device_uuid() {
+    bluetoothctl devices | awk "/$1/ { print \$2 }"
+}
+
+bt() {
+    if [ "$1" = connect ]; then
+        bluetooth on
+        # If you try to connect immediately it just fails
+        notify-send 'desktopctl' 'Turning on bluetooth...'
+        sleep 3
+        notify-send 'desktopctl' 'Attemting to connect...'
+        bluetoothctl connect $(get_bt_device_uuid "$2")
+    else
+        bluetoothctl disconnect
+        bluetooth off
+    fi
+}
+
 # "main"
 case $1 in
     -h|--help)
@@ -180,5 +203,11 @@ case $1 in
         ;;
     todo)
         $TERMINAL -e "$EDITOR" "${HOME}/Wiki/To-Do.md" & disown
+        ;;
+    bt)
+        bt "$2" "$3"
+        ;;
+    *)
+        info_help
         ;;
 esac
