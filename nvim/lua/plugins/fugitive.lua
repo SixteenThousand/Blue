@@ -1,10 +1,8 @@
 -- vim-fugitive config
 
--- status
-vim.keymap.set("n","<leader>gg",":Git ")
+vim.keymap.set("n","<leader>gg",":vertical Git ")
 vim.keymap.set("n","<leader>gs",function () vim.cmd("Git status") end)
 
--- staging
 vim.keymap.set("n","<leader>ge",function ()
     vim.cmd("Git add -A")
     print("All Changes Staged! Proceed to commit!")
@@ -14,19 +12,13 @@ vim.keymap.set("n","<leader>ga",function ()
     print("This buffer has been staged!")
 end)
 
--- committing (also see :Diff command)
 vim.keymap.set("n","<leader>gc",function ()
-    vim.cmd.Git("commit")
+    vim.cmd("vertical Git commit")
     vim.cmd.startinsert()
 end)
 
--- branching
-vim.keymap.set("n","<leader>gb",":Git branch ")
-vim.keymap.set("n","<leader>gm",":Git merge ")
-
--- git diffing
-vim.keymap.set("n","<leader>gd",":Git diff ")
-vim.keymap.set("n","<leader>gf",":Git diff %<CR>")
+vim.keymap.set("n","<leader>gd",":vertical Git diff ")
+vim.keymap.set("n","<leader>gf",":vertical Git diff %<CR>")
 vim.api.nvim_create_user_command(
     "Diff",
     function(opts)
@@ -44,14 +36,11 @@ vim.api.nvim_create_user_command(
     {nargs="?"}
 )
 
--- logging
 vim.keymap.set("n","<leader>gl",function()
     if vim.v.count == 0 then
-        vim.cmd("Git log")
+        vim.cmd("vertical Git log")
     else
-        vim.cmd("Git log -"..vim.v.count)
+        vim.cmd("vertical Git log -"..vim.v.count)
     end
 end)
-
--- git man pages
-vim.keymap.set("n","<leader>gh",":Git help ")
+vim.keymap.set("n", "<leader>gb", ":vertical Git blame %<CR>")

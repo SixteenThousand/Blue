@@ -1,7 +1,10 @@
--- ++++++++++++ Custom "Settings" ++++++++++++
--- this module holds functions that change a group of related settings at  
--- once, effectively creating my own custom settings
--- any commands to invoke these "settings" should be in settings/init.lua
+--- CUSTOM "SETTINGS"
+
+--[[
+-- This module holds functions that change a group of related settings at  
+-- once, effectively creating my own custom settings.
+-- Any commands to invoke these "settings" should be in settings/init.lua
+--]]
 
 local utils = require("utils")
 local M = {}
@@ -128,12 +131,12 @@ function py_indent_foldlevel(line_num, maxlevel)
     return math.min(level, maxlevel)
 end
 
-function M.fold_by_header(header, end_pat)
+function M.fold_by_header(header_pat, end_pat)
     vim.wo.foldcolumn = "1"
     local need_escape = "\\/|"
     local start_pos = vim.fn.getpos(".")
     vim.cmd("normal zEgg")
-    local h_pat = "^"..vim.fn.escape(header, need_escape)
+    header_pat = vim.fn.escape(header_pat, need_escape)
 
     local line_delta = 0
     if end_pat then
@@ -141,7 +144,7 @@ function M.fold_by_header(header, end_pat)
             end_pat = string.rep("\\n", tonumber(end_pat)+1)
             line_delta = -1
         else
-            end_pat = "^"..vim.fn.escape(end_pat, need_escape)
+            end_pat = vim.fn.escape(end_pat, need_escape)
         end
     else
         end_pat = "\\n\\n\\n"
@@ -149,7 +152,7 @@ function M.fold_by_header(header, end_pat)
     print(end_pat) -- debug
 
     -- find folds
-    local header_line = vim.fn.search(h_pat, "cW")
+    local header_line = vim.fn.search(header_pat, "cW")
     while header_line ~= 0 do
         local end_line = vim.fn.search(end_pat, "ceW")
         if end_line == 0 then
@@ -159,7 +162,7 @@ function M.fold_by_header(header, end_pat)
             vim.cmd(
                 string.format("%d,%dfold", header_line, end_line+line_delta))
         end
-        header_line = vim.fn.search(h_pat, "cW")
+        header_line = vim.fn.search(header_pat, "cW")
     end
     vim.fn.setcursorcharpos(start_pos)
 end

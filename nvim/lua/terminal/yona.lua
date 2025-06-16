@@ -46,5 +46,6 @@ vim.go.grepprg = table.concat({
     "--exclude-dir node_modules",
     "--exclude-dir .venv",
     "--exclude tags",
+    "--exclude .session.vim",
     "$* $(yona -s pwd 2>/dev/null)",
 }, " ")

@@ -53,6 +53,7 @@ vim.o.relativenumber = true
 vim.go.splitright = true
 vim.go.splitbelow = true
 
-vim.opt_global.sessionoptions:remove("folds")
--- Get syntax highlighting loaded in session load
-vim.opt_global.sessionoptions:append("localoptions")
+vim.opt_global.sessionoptions:append{
+    "localoptions", -- Get syntax highlighting loaded in session load
+    "globals", -- Keep my own special settings
+}
