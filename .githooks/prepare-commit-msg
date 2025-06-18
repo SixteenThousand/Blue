@@ -6,6 +6,11 @@ COMMIT_MSG_FILE=$1
 CURRENT_MSG=$(cat "$COMMIT_MSG_FILE")
 BRANCH=$(git branch --show-current)
 
+# Check this isn't already using the right style
+if [ "$(head -c 1 ${COMMIT_MSG_FILE})" = '[' ]; then
+  exit 0
+fi
+
 commit_app=
 for file in $STAGED_CHANGES; do
   app=${file%%/*}
