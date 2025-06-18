@@ -1,8 +1,5 @@
 # stuff added by/for applications
 
-# zoxide
-eval "$(zoxide init bash || :)"
-
 # rust/rustup
 if [ -f "$HOME/.cargo/env" ]
 then

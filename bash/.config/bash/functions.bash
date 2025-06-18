@@ -1,9 +1,5 @@
 # scripts that either can't be separate files or are just too small to be
 
-function mvt {
-	source ~/.config/bash/lazy/mvt.bash $@
-}
-
 function book {
   local old_dir=$PWD
 	cd ~/Documents/Books-and-Things
@@ -47,6 +43,7 @@ function stale {
 		?*)
 			# add command -DIGIT to bookmarks
 			local stale_cmd=$(fc -ln "-$1" "-$1")
+            stale_cmd=$(echo "$stale_cmd" | sed 's/^\s*//')
 			echo "About to add >>[1m$stale_cmd[0m<< to stale bookmarks."
 			local proceed
 			read -p "Proceed? (Y/n): " proceed
@@ -81,21 +78,23 @@ function stale {
 	fi
 }
 
-function fq {
-	local name=$1
-	shift 1
-	find . $@ -name "$name" 2>/dev/null
-}
-
 function pathgrep {
 	find $(echo $PATH | sed -e 's/:/ /g') -maxdepth 1 -type f,l 2>/dev/null |
 		xargs stat --format=%N |
 		grep $@
 }
 
+function project_files {
+    find \
+        -path '*node_modules*' \
+        -o -path '*.git*' \
+        -o -path '*.venv*' \
+        -prune -o \
+        -type f -print
+}
+
 # Choose a file!
 function pick {
-	local findcmd="find -path '*node_modules*' -o -path '*.git*' -prune -o -type f -print"
 	local program=
 	local fzf=
 	for arg in $@
@@ -131,9 +130,9 @@ function pick {
 	local choice
 	if [ -n "$fzf" ]
 	then
-		choice="$(eval "$findcmd" | fzf --prompt="$PS3")"
+		choice="$(project_files | fzf --prompt="$PS3")"
 	else
-		select file in $(eval "$findcmd")
+		select file in $(project_files)
 		do
 			[ -z "$file" ] && return 1
 			choice="$file"
@@ -148,6 +147,7 @@ function pick {
 	if [ -n "$program" ]
 	then
 		$program "$choice"
+        history -s $program "$choice"
 	else
 		echo "$choice"
 	fi
@@ -163,11 +163,90 @@ function lsproc {
 	done
 }
 
-function mpvv {
-	if [ "${1#*.}" = playlist ]
-	then
-		mpv --vid=no --loop-playlist=inf $1
-	else
-		mpv --vid=no --loop-file=inf $1
-	fi
+function yg {
+    project_files | xargs grep -nHI --color=always $@
+}
+
+function mvt {
+    local search_depth=8
+    local search_directory=/
+    local print_dir=
+    local new_dir=
+    while [ "$#" -gt 0 ]
+    do
+        case $1 in
+            -c|--cwd)
+                search_directory=$(pwd)
+                ;;
+            -d|--depth)
+                search_depth=$2
+                shift
+                ;;
+            -h|--help)
+                cat <<- EOF
+Move To! v1.4 (bash)
+Options:
+    -h,--help
+        Show this help message
+    -d,--depth DEPTH
+        Specify how deep within the directory tree you want to search.
+        Defaults to 8.
+    -s,--search_directory DIRECTORY
+        Specify the directory to search within. Can be relative.
+        Defaults to /.
+    -c,--cwd
+        Search within the current working directory. Equivalent to
+          -s \$(PWD)
+    -p,--print
+        Instead of changing the working directory, just print the chosen
+        directory
+EOF
+                return
+                ;;
+            -s|--search-directory)
+                search_directory=$2
+                shift
+                ;;
+            -p|--print) print_dir=TRUE;;
+            *)
+                echo "mvt: Error: invalid option $1" >&2
+                return;;
+        esac
+        shift
+    done
+    new_dir="$(find ${search_directory} -maxdepth ${search_depth} -type d \
+        2>/dev/null | fzf)"
+    # check fzf wasn't cancelled before changing directory
+    if [ -n "$new_dir" -a -z "$print_dir" ]
+    then
+        cd "$new_dir"
+    else
+        echo $new_dir
+    fi
+}
+
+SIXTEEN_BOOKMARKS="
+${HOME}/Projects
+${HOME}/Projects/Blue
+${HOME}/Music
+${HOME}/Documents
+${HOME}
+${HOME}/.local/share
+/usr
+"
+
+function get_bookmark_dirs {
+    find $SIXTEEN_BOOKMARKS -maxdepth 1 -type d
+}
+
+function z {
+    if [[ -z $1 ]]; then
+        cd
+        return
+    fi
+    cd "$(get_bookmark_dirs | grep -i "$1.*$2" | head -n 1)"
+}
+
+function zi {
+    cd "$(get_bookmark_dirs | fzf)"
 }

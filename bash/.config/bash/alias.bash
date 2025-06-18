@@ -9,11 +9,6 @@ alias tmd='tmux detach'
 alias sbcl='rlwrap sbcl'
 alias shell='rlwrap xargs -L 1'
 alias zathura='zathura --fork'
-alias yg='grep -RnHI \
-    --exclude-dir=.git \
-    --exclude-dir=node_modules \
-    --exclude-dir=.venv \
-	--color=always'
 # Pipe data into xcopy to save it in the clipboard,
 # and run this to print the clipboard contents to stdout
 alias xcopy='xclip -selection clipboard'
