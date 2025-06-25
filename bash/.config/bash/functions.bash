@@ -227,16 +227,16 @@ EOF
 
 SIXTEEN_BOOKMARKS="
 ${HOME}/Projects
-${HOME}/Projects/Blue
 ${HOME}/Music
 ${HOME}/Documents
 ${HOME}
 ${HOME}/.local/share
 /usr
+/mnt
 "
 
 function get_bookmark_dirs {
-    find $SIXTEEN_BOOKMARKS -maxdepth 1 -type d
+    find $SIXTEEN_BOOKMARKS -maxdepth 2 -type d 2>/dev/null
 }
 
 function z {
