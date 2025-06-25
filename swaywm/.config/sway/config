@@ -27,7 +27,7 @@ focus_follows_mouse no
 exec --no-startup-id ~/.swaybg
 
 # fixing the zoom
-output * scale 1
+output * scale 0.8
 
 
 ### LAUNCH/CLOSE APPS
@@ -193,6 +193,21 @@ exec --no-startup-id dunst & disown
 
 ### RULES
 for_window [title=".*Video Bridge.*"] kill
+
+### BAR/PANEL
+bar {
+    swaybar_command swaybar
+    position top
+    font FantasqueSansM Nerd Font 18
+    colors {
+        background #000000cc
+        focused_workspace #226622 #226622 #ffffff
+        inactive_workspace #222222cc #222222cc #dddddd
+        separator #ffffff
+    }
+    status_command i3status -c ${XDG_CONFIG_HOME:-$HOME/.config}/sway/i3status.conf
+    tray_padding 5px
+}
 
 ### IMPORTS
 # Include configs from 3 locations:
