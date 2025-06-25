@@ -435,6 +435,11 @@ globalkeys = gears.table.join(
         {}
     ),
     awful.key(
+        { super }, "F4",
+        function() awful.spawn("playerctl play-pause") end,
+        {}
+    ),
+    awful.key(
         {}, "XF86AudioMute",
         function()
             awful.spawn("desktopctl mute")
@@ -450,6 +455,27 @@ globalkeys = gears.table.join(
     ),
     awful.key(
         {}, "XF86AudioRaiseVolume",
+        function()
+            awful.spawn("desktopctl vol + 2")
+        end,
+        {}
+    ),
+    awful.key(
+        { super }, "F1",
+        function()
+            awful.spawn("desktopctl mute")
+        end,
+        {}
+    ),
+    awful.key(
+        { super }, "F2",
+        function()
+            awful.spawn("desktopctl vol - 2")
+        end,
+        {}
+    ),
+    awful.key(
+        { super }, "F3",
         function()
             awful.spawn("desktopctl vol + 2")
         end,

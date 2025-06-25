@@ -16,5 +16,9 @@ xsetroot -xcf /usr/share/icons/Adwaita/cursors/default 48
 xset -dpms
 xset s off
 
+xrandr --output LVDS-1 --scale 1.2
+
+xss-lock --transfer-sleep-lock -- i3lock --nofork --color 662266
+
 # open some apps
 desktopctl autostart
