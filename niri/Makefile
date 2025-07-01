@@ -1,8 +1,11 @@
+CONFIG_DIR=${HOME}/.config/niri
+
 install:
-	ln -sf ${PWD} ${HOME}/.config/niri
+	mv ${CONFIG_DIR} ./OLD-niri-config || :
+	ln -sf ${PWD} ${CONFIG_DIR}
 
 uninstall:
-	rm -I ${HOME}/.config/niri
+	rm -I ${CONFIG_DIR}
 
 build: panel/*
 	killall waybar
