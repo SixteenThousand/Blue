@@ -18,7 +18,7 @@ history = 1000
 
 [font]
 normal = { family = "FantasqueSansM Nerd Font", style = "Regular" }
-size = 13
+size = 10
 
 [cursor]
 style = { shape = "Block", blinking = "On" }
@@ -30,14 +30,6 @@ hide_when_typing = true
 [bell]
 animation = "EaseOutSine"
 duration = 300
-[bell.command]
-program = "ffplay"
-args = [
-    "-nodisp",
-    "-autoexit",
-    "-hide_banner",
-    "/usr/share/sounds/freedesktop/stereo/bell.oga"
-]
 
 
 [keyboard]
