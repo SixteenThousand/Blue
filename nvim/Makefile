@@ -20,7 +20,7 @@ install:
 	ln -s ${PWD} ${CONF_DIR}
 	mkdir -p ./state
 uninstall:
-	rm ${CONF_DIR}
+	rm -I ${CONF_DIR}
 
 # Only to be used if *really* necessary
 plugins:
