@@ -1,7 +1,7 @@
 install:
 	ln -s $(PWD) $(HOME)/.config/dunst
 uninstall:
-	rm $(HOME)/.config/dunst
+	rm -I $(HOME)/.config/dunst
 build:
 	killall dunst
 	dunst & disown
