@@ -3,19 +3,19 @@
 
 CSCHEMES_DIR="$HOME/.config/alacritty/external-themes/themes"
 
-function change_cscheme {
-	if [ -z "$1" ]
-	then
-		echo "guess we're not changing colourscheme then..."
-		exit 1
-	fi
-	CSCHEME="$CSCHEMES_DIR/$1.toml"
-	alacritty msg config "$(cat "$CSCHEME")"
-	cp "$CSCHEME" ~/.config/alacritty/theme.toml
+change_cscheme() {
+    if [ -z "$1" ]
+    then
+        echo "guess we're not changing colourscheme then..."
+        exit 1
+    fi
+    CSCHEME="$CSCHEMES_DIR/$1.toml"
+    alacritty msg config "$(cat "$CSCHEME")"
+    cp "$CSCHEME" ~/.config/alacritty/theme.toml
 }
 
 case $1 in
     -p|--opacity) alacritty msg config "window.opacity=$2";;
-	-c|--colourscheme) change_cscheme "$2";;
-	*) change_cscheme "$(ls "$CSCHEMES_DIR" | sed 's/\.toml$//' | fzf)";;
+    -c|--colourscheme) change_cscheme "$2";;
+    *) change_cscheme "$(ls "$CSCHEMES_DIR" | sed 's/\.toml$//' | fzf)";;
 esac
