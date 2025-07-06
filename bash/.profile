@@ -1,10 +1,5 @@
-EDITOR=vim
-if type nvim 2>&1 >/dev/null
-then
-	EDITOR=nvim
-fi
-export EDITOR
-export TERMINAL='kitty -1'
+export EDITOR=nvim
+export TERMINAL=alacwrapper
 export BROWSER=qutebrowser
 export MAIL="$TERMINAL aerc"
 
