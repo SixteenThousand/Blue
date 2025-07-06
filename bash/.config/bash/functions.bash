@@ -84,13 +84,16 @@ function pathgrep {
 		grep $@
 }
 
+# Pass argument 'd' to get project directories
 function project_files {
+    local item_type=f
+    [[ -n $1 ]] && item_type=$1
     find \
         -path '*node_modules*' \
         -o -path '*.git*' \
         -o -path '*.venv*' \
         -prune -o \
-        -type f -print
+        -type $item_type -print
 }
 
 # Choose a file!
@@ -226,13 +229,13 @@ EOF
 }
 
 SIXTEEN_BOOKMARKS="
+/mnt
 ${HOME}/Projects
 ${HOME}/Music
 ${HOME}/Documents
 ${HOME}
 ${HOME}/.local/share
 /usr
-/mnt
 "
 
 function get_bookmark_dirs {
@@ -249,4 +252,9 @@ function z {
 
 function zi {
     cd "$(get_bookmark_dirs | fzf)"
+}
+
+function zz {
+    [[ -z $1 ]] && return 1
+    cd "$(project_files d | grep -i "$1.*$2" | head -n 1)"
 }
