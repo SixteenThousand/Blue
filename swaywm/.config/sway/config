@@ -27,7 +27,7 @@ focus_follows_mouse no
 exec --no-startup-id ~/.swaybg
 
 # fixing the zoom
-output * scale 0.8
+output * scale 1
 
 
 ### LAUNCH/CLOSE APPS
@@ -198,7 +198,7 @@ for_window [title=".*Video Bridge.*"] kill
 bar {
     swaybar_command swaybar
     position top
-    font FantasqueSansM Nerd Font 18
+    font FantasqueSansM Nerd Font 14
     colors {
         background #000000cc
         focused_workspace #226622 #226622 #ffffff
