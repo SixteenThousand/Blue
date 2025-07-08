@@ -182,6 +182,11 @@ bindsym {
     Super+F6 exec desktopctl mon - 5
     Super+F7 exec desktopctl mon + 5
 }
+# Mount USB sticks and the like
+bindsym {
+    Super+c exec desktopctl mount
+    Super+Shift+c desktopctl unmount
+}
 
 ### NOTIFICATIONS
 bindsym Super+n exec dunstctl close-all
