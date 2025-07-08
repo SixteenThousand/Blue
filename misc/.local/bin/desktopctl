@@ -47,6 +47,9 @@ info_help() {
   Turn on bluetooth and connect to DEVICE or disable bluetooth entirely. See 
   bluetooth(1) or bluetoothctl(1) for more details.
 
+    desktopctl mount|unmount
+  Mount stuff just the way I like it ;). Also unmount without a spelling error.
+
  Acknowledgement:
  The code for the volume changing commands is modelled on the volume-helper 
  script provided at /usr/libexec/sway/volume-helper in the Fedora distribution
@@ -166,6 +169,43 @@ bt() {
     fi
 }
 
+mount_one_thing() {
+    findmnt --mountpoint "$1" || {
+        mount --target "$1" && \
+        successful="$successful"$'\n'"$1"
+        # This feels like it shouldn't work, but it does
+    }
+}
+
+mount_stuff() {
+    local named=$(find /mnt -mindepth 1 -maxdepth 1 -type d -not -name 'usb*')
+    local successful=
+    for dir in $named; do
+        mount_one_thing "$dir"
+    done
+    for dir in /mnt/usb*; do
+        mount_one_thing "$dir"
+    done
+    if [ -z "$successful" ]; then
+        notify-send 'desktopctl' 'Failed to mount any drives'
+    else
+        notify-send 'desktopctl' "Drives mounted to: $successful"
+    fi
+}
+
+unmount_stuff() {
+    local points=$(find /mnt -mindepth 1 -maxdepth 1 -type d)
+    local successful=
+    for dir in $points; do
+        umount "$dir" && successful="$successful"$'\n'"$dir"
+    done
+    if [ -z "$successful" ]; then
+        notify-send 'desktopctl' 'Failed to unmount any drives'
+    else
+        notify-send 'desktopctl' "Drives unmounted from: $successful"
+    fi
+}
+
 # "main"
 case $1 in
     -h|--help)
@@ -206,6 +246,12 @@ case $1 in
         ;;
     bt)
         bt "$2" "$3"
+        ;;
+    mount)
+        mount_stuff
+        ;;
+    unmount)
+        unmount_stuff
         ;;
     *)
         info_help
