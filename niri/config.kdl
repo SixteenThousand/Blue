@@ -386,6 +386,10 @@ binds {
     XF86MonBrightnessUp  allow-when-locked=true { spawn "desktopctl" "mon" "+" "5"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "desktopctl" "mon" "-" "5"; }
 
+    // Mount stuff
+    Mod+C { spawn "desktopctl" "mount"; }
+    Mod+Shift+C { spawn "desktopctl" "unmount"; }
+    
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
@@ -520,8 +524,6 @@ binds {
     // Expand the focused column to space not taken up by other fully visible columns.
     // Makes the column "fill the rest of the space".
     Mod+Ctrl+F { expand-column-to-available-width; }
-
-    Mod+C { center-column; }
 
     // Center all fully visible columns on screen.
     Mod+Ctrl+C { center-visible-columns; }
