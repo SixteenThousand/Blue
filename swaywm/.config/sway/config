@@ -45,6 +45,9 @@ bindsym {
     # open a file
     Super+o exec $TERMINAL -e desktopctl open --fm
     Super+Shift+o exec $TERMINAL -e desktopctl open
+
+    Super+p exec sh -c \
+        '$TERMINAL -e python3; sleep 0.05; swaymsg "floating enable; resize set 60ppt 80ppt"'
 }
 
 
