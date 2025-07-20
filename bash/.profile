@@ -1,6 +1,6 @@
 export EDITOR=nvim
 export TERMINAL=alacwrapper
-export BROWSER=qutebrowser
+export BROWSER=firefox
 export MAIL="$TERMINAL aerc"
 
 export XDG_CONFIG_HOME="$HOME/.config"
