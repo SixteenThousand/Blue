@@ -188,7 +188,7 @@ bindsym {
 # Mount USB sticks and the like
 bindsym {
     Super+c exec desktopctl mount
-    Super+Shift+c desktopctl unmount
+    Super+Shift+c exec desktopctl unmount
 }
 
 ### NOTIFICATIONS
