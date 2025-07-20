@@ -36,8 +36,8 @@ bindsym Super+q kill
 bindsym Alt+F4 kill
 bindsym {
     # Start your launcher
-    Super+a exec rofi -show drun
-    Alt+space exec rofi -show drun
+    Super+a exec fuzzel
+    Alt+space exec fuzzel
     # other app shortcuts
     Super+b exec $BROWSER
     Super+Shift+Return exec desktopctl todo
@@ -201,6 +201,39 @@ exec --no-startup-id dunst & disown
 
 ### RULES
 for_window [title=".*Video Bridge.*"] kill
+
+### BAR/PANEL
+bar {
+    swaybar_command swaybar
+    position top
+    font FantasqueSansM Nerd Font 14
+    colors {
+        background #000000cc
+        focused_workspace #226622 #226622 #ffffff
+        inactive_workspace #222222cc #222222cc #dddddd
+        separator #ffffff
+    }
+    status_command i3status -c ${XDG_CONFIG_HOME:-$HOME/.config}/sway/i3status.conf
+    tray_padding 5px
+}
+
+# ### IDLE CONFIGURATION
+
+bindsym Super+i inhibit_idle open
+bindsym Super+Shift+i inhibit_idle none
+
+exec --no-startup-id swayidle -w \
+    timeout 600 "notify-send swaylock 'you still there buddy?'" \
+    timeout 900 "swaylock -f" \
+    timeout 1200 "swaymsg 'output * poweroff'" resume "swaymsg 'output * power on'" \
+    before-sleep 'swaylock -f'
+
+### PRINT SCREEN/SCREENSHOT
+bindsym {
+    Print exec grimshot --notify save output
+    Ctrl+Print exec grimshot --notify save area
+    Alt+Print exec grimshot --notify save active
+}
 
 ### IMPORTS
 # Include configs from 3 locations:

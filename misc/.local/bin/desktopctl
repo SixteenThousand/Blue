@@ -83,7 +83,7 @@ rewallpaper() {
         local personal=$(find -L $HOME/Pictures/Wallpapers -type f)
         local desktops=$(find -L /usr/share/wallpapers -type f -name '1920x1080*' -o -name '5120x2880*')
         # this line broke when split
-        new_wallpaper=$(echo -e "$personal\n$desktops" | fzf)
+        new_wallpaper=$(printf "$personal\n$desktops\n" | fzf)
     fi
     # set wallpaper, if possible
     if [ -z "$new_wallpaper" ]
@@ -92,7 +92,7 @@ rewallpaper() {
         exit 1
     else
         $cmd $new_wallpaper
-        echo -e "Wallpaper set to >>\e[1m$new_wallpaper\e[0m<<"
+        printf "Wallpaper set to >>\e[1m$new_wallpaper\e[0m<<\n"
     fi
 }
 

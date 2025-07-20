@@ -1,7 +1,4 @@
-CONFIG_DIR=${HOME}/.config/herbstluftwm
-
-build:
-	./autostart reload
+CONFIG_DIR=${HOME}/.config/fuzzel
 
 install:
 	ln -s ${PWD} ${CONFIG_DIR}

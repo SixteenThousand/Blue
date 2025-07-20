@@ -1,11 +1,9 @@
 IGNORE="--ignore=Makefile"
-ifeq (${XDG_CONFIG_DIR},)
-	CONF_DIR=${HOME}/.config
-else
-	CONF_DIR=${XDG_CONFIG_DIR}
-endif
+CONF_HOME=${HOME}/.config
+
 install:
-	mkdir -p ${CONF_DIR}
-	stow -S . -t ${CONF_DIR} ${IGNORE}
+	mv ${CONF_HOME}/i3 ./OLD-i3-config || :
+	stow -S . -t ${CONF_HOME} ${IGNORE}
+
 uninstall:
-	stow -D . -t ${CONF_DIR} ${IGNORE}
+	stow -D . -t ${CONF_HOME} ${IGNORE}

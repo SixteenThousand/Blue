@@ -33,6 +33,10 @@ esac
 
 # get italics in man pages
 export MANROFFOPT=-P-i
+# With thanks to Wildcard on Stackoverflow: https://unix.stackexchange.com/questions/396397/open-multiple-man-pages-in-less
+function  mman {
+    LESSOPEN='|man %s' MAN_KEEP_FORMATTING=1 less -isR $@
+}
 
 # nnn, the file manager
 function nnn {

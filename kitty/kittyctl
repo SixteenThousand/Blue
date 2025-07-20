@@ -25,7 +25,7 @@ colourscheme() {
 		new_theme="$(command ls $config_dir/themes | fzf)"
 		if [ -z "$new_theme" ]
 		then
-			echo -e "\e[1;33mGuess we're not doing that then...\e[0m"
+			printf "\e[1;33mGuess we're not doing that then...\e[0m\n"
 			return 1
 		fi
 	else
@@ -35,13 +35,13 @@ colourscheme() {
 	cat "$config_dir/themes/$new_theme" > $config_dir/theme.conf
 	echo $KITTY_PID
 	kill -s USR1 $KITTY_PID
-	echo -e "\e[1;32mNew theme is $new_theme!\e[0m"
+	printf "\e[1;32mNew theme is $new_theme!\e[0m\n"
 }
 
 opacity() {
 	echo "background_opacity $1" > "$config_dir/opacity.conf"
 	kill -s USR1 $KITTY_PID
-	echo -e "\e[1;32mOpacity is now $1\e[0m"
+	printf "\e[1;32mOpacity is now $1\e[0m\n"
 }
 
 case $1 in

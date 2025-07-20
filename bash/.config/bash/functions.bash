@@ -44,7 +44,7 @@ function stale {
 			# add command -DIGIT to bookmarks
 			local stale_cmd=$(fc -ln "-$1" "-$1")
             stale_cmd=$(echo "$stale_cmd" | sed 's/^\s*//')
-			echo "About to add >>[1m$stale_cmd[0m<< to stale bookmarks."
+			echo -e "About to add >>\x1b[1m$stale_cmd\x1b[0m<< to stale bookmarks."
 			local proceed
 			read -p "Proceed? (Y/n): " proceed
 			if [ "$proceed" != n ] && [ "$proceed" != N ]
@@ -68,7 +68,11 @@ function stale {
 	# history should come with dates; see ~/.bashrc
 	stale_cmd=${stale_cmd#*|}
 	local proceed
-	read -p "About to run >>[1m$stale_cmd[0m<<. Proceed (y/N)? " proceed
+    local prompt=$(printf \
+        "About to run >>\x1b[1m%s\x1b[0m<<. Proceed (y/N)? " \
+        "$stale_cmd" \
+    )
+    read -p "$prompt" proceed
 	if [ "$proceed" = y ] || [ "$proceed" = Y ]
 	then
 		eval "$stale_cmd"
@@ -84,74 +88,75 @@ function pathgrep {
 		grep $@
 }
 
+# Pass argument 'd' to get project directories
 function project_files {
+    local item_type=f
+    [[ -n $1 ]] && item_type=$1
     find \
         -path '*node_modules*' \
         -o -path '*.git*' \
         -o -path '*.venv*' \
         -prune -o \
-        -type f -print
+        -type $item_type -print
 }
 
 # Choose a file!
 function pick {
-	local program=
-	local fzf=
-	for arg in $@
-	do
-		case $arg in
-			-h|--help)
-				cat <<- EOF
-				Pick a file!
-				Ignores anything within a .git or node_modules directory.
-				Echoes file name to stdout by default if no PROGRAM is specified
-				(see below).
-				
-				Usage:
-				    pick -h|--help
-				Show this message
-				    pick -f|--fzf [PROGRAM]
-				Fuzzy find a file (requires fzf). Opens file with PROGRAM.
-				    pick [PROGRAM]
-				Use bash built-in select to pick a file to open (with PROGRAM).
-				EOF
-				return 0
-				;;
-			-f|--fzf)
-				fzf=1
-				;;
-			*)
-				program="$arg"
-				;;
-		esac
-	done
-	local old_ps3="$PS3"
-	PS3='[1;33mChoose a file> [0m'
-	local choice
-	if [ -n "$fzf" ]
-	then
-		choice="$(project_files | fzf --prompt="$PS3")"
-	else
-		select file in $(project_files)
-		do
-			[ -z "$file" ] && return 1
-			choice="$file"
-			break
-		done
-	fi
-	if [ -z "$choice" ]
-	then
-		echo -e "\e[1;33mGuess we're not doing that then...\e[0m"
-		return 1
-	fi
-	if [ -n "$program" ]
-	then
-		$program "$choice"
+    local program=
+    local choice=
+    local old_ps3="$PS3"
+    PS3=$(printf '\x1b[1;33mChoose a file> \x1b[0m')
+    for arg in $@
+    do
+        case $arg in
+            -h|--help)
+                cat <<- EOF
+Pick a file!
+Ignores anything within .git, node_modules, etc. directories.
+Echoes file name to stdout by default if no PROGRAM is specified
+(see below).
+
+Usage:
+    pick -h|--help
+Show this message
+    pick -f|--fzf [PROGRAM]
+Fuzzy find a file (requires fzf). Opens file with PROGRAM.
+    pick -s|--select [PROGRAM]
+Use bash built-in select to pick a file to open (with PROGRAM).
+    pick [PATH_FRAGMENT]
+Grep through all the file paths in the current directory for one whose path 
+contains PATH_FRAGMENT. Opens with \$EDITOR.
+EOF
+                return 0
+                ;;
+            -f|--fzf)
+                choice="$(project_files | fzf --prompt="$PS3")"
+                ;;
+            -s|--select)
+                select file in $(project_files)
+                do
+                    [ -z "$file" ] && return 1
+                    choice="$file"
+                    break
+                done
+                ;;
+            *) program="$arg";;
+        esac
+    done
+    if [ -z "${choice}${program}" ]; then
+        echo -e "\e[1;33mGuess we're not doing that then...\e[0m"
+        return 1
+    fi
+    if [ -z "$choice" ]; then
+        choice="$(project_files | grep ".*${program}.*" | head -n 1)"
+        $EDITOR "$choice"
+    elif [ -n "$program" ]; then
+        $program "$choice"
         history -s $program "$choice"
-	else
-		echo "$choice"
-	fi
-	PS3="$old_ps3"
+    else
+        echo "$choice"
+    fi
+    PS3="$old_ps3"
 }
 
 function lsproc {
@@ -226,8 +231,8 @@ EOF
 }
 
 SIXTEEN_BOOKMARKS="
+/mnt
 ${HOME}/Projects
-${HOME}/Projects/Blue
 ${HOME}/Music
 ${HOME}/Documents
 ${HOME}
@@ -236,7 +241,7 @@ ${HOME}/.local/share
 "
 
 function get_bookmark_dirs {
-    find $SIXTEEN_BOOKMARKS -maxdepth 1 -type d
+    find $SIXTEEN_BOOKMARKS -maxdepth 2 -type d 2>/dev/null
 }
 
 function z {
@@ -249,4 +254,9 @@ function z {
 
 function zi {
     cd "$(get_bookmark_dirs | fzf)"
+}
+
+function zz {
+    [[ -z $1 ]] && return 1
+    cd "$(project_files d | grep -i "$1.*$2" | head -n 1)"
 }

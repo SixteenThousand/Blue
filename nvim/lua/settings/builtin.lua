@@ -57,3 +57,48 @@ vim.opt_global.sessionoptions:append{
     "localoptions", -- Get syntax highlighting loaded in session load
     "globals", -- Keep my own special settings
 }
+
+function SixteenTabs()
+    return string.format("tab %d/%d", vim.fn.tabpagenr(), vim.fn.tabpagenr("$"))
+end
+function SixteenGitInfo()
+    local bufPath = vim.fn.expand("%:p")
+    if bufPath == "" or bufPath:match("^%a+://") then
+        return ""
+    end
+    local cmdOpts = { cwd = vim.fn.expand("%:h"), text = true, }
+    -- Branch
+    local branch = ""
+    local branchCmdObj = vim.system(
+        { "git", "branch", "--show-current", },
+        cmdOpts
+    ):wait()
+    if branchCmdObj.code == 0 then
+        branch = branchCmdObj.stdout:sub(1,-2)
+    else
+        return ""
+    end
+    -- Changes from index
+    local changed = ""
+    local changedCmd = {
+        "git", "diff", "--exit-code", "--no-patch", bufPath,
+    }
+    if vim.system(changedCmd, cmdOpts):wait().code ~= 0 then
+        changed = "[~]"
+    end
+    -- Staged status
+    local staged = ""
+    local stagedCmd = {
+        "git",
+        "diff",
+        "--exit-code",
+        "--cached",
+        "--no-patch",
+        vim.fn.expand("%:p"),
+    }
+    if vim.system(stagedCmd, cmdOpts):wait().code ~= 0 then
+        staged = "[staged]"
+    end
+    return string.format("git: %s %s%s", branch, changed, staged)
+end
+vim.opt_global.statusline = [[%t %m%r%y  %{v:lua.SixteenGitInfo()}%=%<%{v:lua.SixteenTabs()}  %v:%l/%L]]

@@ -1,0 +1,30 @@
+#!/usr/bin/sh
+
+# List of files with staged changes
+STAGED_CHANGES=$(git diff --name-only --cached)
+
+commit_app=
+for file in $STAGED_CHANGES; do
+  app=${file%%/*}
+  # Check we're only committing changes to one app's config at a time
+  if [ -n "$commit_app" ] && [ "$app" != "$commit_app" ]; then
+    echo 'Only commit changes for one app at a time!' >&2
+    exit 1
+  fi
+  commit_app=$app
+done
+
+# Branches named 'APP-*' only accept changes to APP
+BRANCH=$(git branch --show-current)
+case "$BRANCH" in
+  "${commit_app}"-*)
+    :
+    ;;
+  *-*)
+    echo "The current branch only accepts changes for ${BRANCH%%-*}" >&2
+    exit 1
+    ;;
+esac
+
+
+# vim: et sw=2

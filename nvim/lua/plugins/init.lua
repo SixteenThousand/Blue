@@ -31,3 +31,8 @@ vim.opt_global.runtimepath:prepend({
     "/usr/share/vim/vimfiles/after",
 })
 vim.opt_global.runtimepath:prepend(dirs)
+
+-- Allow optional vim plugins
+vim.opt_global.packpath:prepend("/usr/share/vim/vimfiles/pack")
+-- Example of adding an optional plugin
+-- vim.cmd([[packadd! surround]])

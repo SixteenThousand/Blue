@@ -1,6 +1,8 @@
 STOW_IGNORE=--ignore=Makefile --ignore=README.md
+
 install:
-	mkdir -p ${HOME}/.config
+	mv ${HOME}/.config/sway ./OLD-sway-config || :
 	stow -S . -t ${HOME} ${STOW_IGNORE}
+
 uninstall:
 	stow -D . -t ${HOME}

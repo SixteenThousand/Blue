@@ -10,28 +10,6 @@ return {
     "nightfox.nvim",
     "summerfruit256.vim",
     "rose-pine-neovim",
-    {
-        dirname = "lualine.nvim",
-        post = function()
-            require("lualine").setup({
-                options = {
-                    -- note lualine is also mentioned in the <A-r> remap in 
-                    -- remap.lua
-                    -- 
-                    section_separators = { left = "", right = "" },
-                    component_separators = { left = "", right = "" },
-                },
-                sections = {
-                    lualine_a = {"filename"},
-                    lualine_b = {"branch","diff"},
-                    lualine_c = {"diagnostics"},
-                    lualine_x = {"fileformat","filesize"},
-                    lualine_y = {"progress","filetype","tabs"},
-                    lualine_z = {"location"},
-                },
-            })
-        end,
-    },
     -- IDE-like stuff
     "nvim-lspconfig",
     {

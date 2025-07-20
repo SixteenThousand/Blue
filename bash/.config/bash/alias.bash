@@ -14,3 +14,4 @@ alias zathura='zathura --fork'
 alias xcopy='xclip -selection clipboard'
 alias pm=pnpm
 alias px=pnpx
+alias info='info --vi-keys'

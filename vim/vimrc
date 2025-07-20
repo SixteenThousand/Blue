@@ -1,0 +1,21 @@
+colorscheme desert
+
+
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set formatoptions=tcqjo
+set splitright
+set splitbelow
+set laststatus=2
+set showtabline=0
+set number
+set relativenumber
+syntax enable
+
+nnoremap - :Ex<CR>
+nnoremap <C-t> :tabnew %:h<CR>
+
+cnoreabbrev vh vertical help
+
+call input("And It Goes On...")

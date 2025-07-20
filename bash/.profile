@@ -1,9 +1,4 @@
-EDITOR=vim
-if type nvim 2>&1 >/dev/null
-then
-	EDITOR=nvim
-fi
-export EDITOR
+export EDITOR=nvim
 export TERMINAL='kitty -1'
 export BROWSER=firefox
 export MAIL="$TERMINAL aerc"

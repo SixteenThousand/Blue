@@ -6,78 +6,78 @@ case $1 in
 		DEFAULT=$HOME/.config
 		if [ "${XDG_CONFIG_HOME:-XXXX}" = XXXX ]
 		then
-			echo -e "Set: [\e[1mNo\e[0m]"
+			printf "Set: [\e[1mNo\e[0m]\n"
 		else
-			echo -e "Set: [\e[1mYes\e[0m]"
+			printf "Set: [\e[1mYes\e[0m]\n"
 		fi
-		echo -e "Current: [\e[1m${XDG_CONFIG_HOME:-$DEFAULT}\e[0m]"
-		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		printf "Current: [\e[1m${XDG_CONFIG_HOME:-$DEFAULT}\e[0m]\n"
+		printf "Default: [\e[1m$DEFAULT\e[0m]\n"
 		;;
 	XDG_DATA_HOME)
 		DEFAULT=$HOME/.local/share
 		if [ "${XDG_DATA_HOME:-XXXX}" = XXXX ]
 		then
-			echo -e "Set: [\e[1mNo\e[0m]"
+			printf "Set: [\e[1mNo\e[0m]\n"
 		else
-			echo -e "Set: [\e[1mYes\e[0m]"
+			printf "Set: [\e[1mYes\e[0m]\n"
 		fi
-		echo -e "Current: [\e[1m${XDG_DATA_HOME:-$DEFAULT}\e[0m]"
-		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		printf "Current: [\e[1m${XDG_DATA_HOME:-$DEFAULT}\e[0m]\n"
+		printf "Default: [\e[1m$DEFAULT\e[0m]\n"
 		;;
 	XDG_STATE_HOME)
 		DEFAULT=$HOME/.local/state
 		if [ "${XDG_STATE_HOME:-XXXX}" = XXXX ]
 		then
-			echo -e "Set: [\e[1mNo\e[0m]"
+			printf "Set: [\e[1mNo\e[0m]\n"
 		else
-			echo -e "Set: [\e[1mYes\e[0m]"
+			printf "Set: [\e[1mYes\e[0m]\n"
 		fi
-		echo -e "Current: [\e[1m${XDG_STATE_HOME:-$DEFAULT}\e[0m]"
-		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		printf "Current: [\e[1m${XDG_STATE_HOME:-$DEFAULT}\e[0m]\n"
+		printf "Default: [\e[1m$DEFAULT\e[0m]\n"
 		;;
 	XDG_DATA_DIRS)
 		DEFAULT=/usr/local/share:/usr/share/
 		if [ "${XDG_DATA_DIRS:-XXXX}" = XXXX ]
 		then
-			echo -e "Set: [\e[1mNo\e[0m]"
+			printf "Set: [\e[1mNo\e[0m]\n"
 		else
-			echo -e "Set: [\e[1mYes\e[0m]"
+			printf "Set: [\e[1mYes\e[0m]\n"
 		fi
-		echo -e "Current: [\e[1m${XDG_DATA_DIRS:-$DEFAULT}\e[0m]"
-		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		printf "Current: [\e[1m${XDG_DATA_DIRS:-$DEFAULT}\e[0m]\n"
+		printf "Default: [\e[1m$DEFAULT\e[0m]\n"
 		;;
 	XDG_CONFIG_DIRS)
 		DEFAULT=/etc/xdg
 		if [ "${XDG_CONFIG_DIRS:-XXXX}" = XXXX ]
 		then
-			echo -e "Set: [\e[1mNo\e[0m]"
+			printf "Set: [\e[1mNo\e[0m]\n"
 		else
-			echo -e "Set: [\e[1mYes\e[0m]"
+			printf "Set: [\e[1mYes\e[0m]\n"
 		fi
-		echo -e "Current: [\e[1m${XDG_CONFIG_DIRS:-$DEFAULT}\e[0m]"
-		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		printf "Current: [\e[1m${XDG_CONFIG_DIRS:-$DEFAULT}\e[0m]\n"
+		printf "Default: [\e[1m$DEFAULT\e[0m]\n"
 		;;
 	XDG_CACHE_HOME)
 		DEFAULT=$HOME/.cache
 		if [ "${XDG_CACHE_HOME:-XXXX}" = XXXX ]
 		then
-			echo -e "Set: [\e[1mNo\e[0m]"
+			printf "Set: [\e[1mNo\e[0m]\n"
 		else
-			echo -e "Set: [\e[1mYes\e[0m]"
+			printf "Set: [\e[1mYes\e[0m]\n"
 		fi
-		echo -e "Current: [\e[1m${XDG_CACHE_HOME:-$DEFAULT}\e[0m]"
-		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		printf "Current: [\e[1m${XDG_CACHE_HOME:-$DEFAULT}\e[0m]\n"
+		printf "Default: [\e[1m$DEFAULT\e[0m]\n"
 		;;
 	XDG_RUNTIME_DIR)
 		DEFAULT="¯\_ (ツ)_/¯"
 		if [ "${XDG_RUNTIME_DIR:-XXXX}" = XXXX ]
 		then
-			echo -e "Set: [\e[1mNo\e[0m]"
+			printf "Set: [\e[1mNo\e[0m]\n"
 		else
-			echo -e "Set: [\e[1mYes\e[0m]"
+			printf "Set: [\e[1mYes\e[0m]\n"
 		fi
-		echo -e "Current: [\e[1m${XDG_RUNTIME_DIR:-$DEFAULT}\e[0m]"
-		echo -e "Default: [\e[1m$DEFAULT\e[0m]"
+		printf "Current: [\e[1m${XDG_RUNTIME_DIR:-$DEFAULT}\e[0m]\n"
+		printf "Default: [\e[1m$DEFAULT\e[0m]\n"
 		;;
 	-h|--help)
 		cat <<- EOF
