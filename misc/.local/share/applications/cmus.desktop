@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=sh -c 'cd ~/Music && cmus'
+Terminal=true
+Type=Application
+Name=cmus
+GenericName=Music Player
