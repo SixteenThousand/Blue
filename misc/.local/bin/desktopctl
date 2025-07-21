@@ -178,6 +178,7 @@ mount_one_thing() {
 }
 
 mount_stuff() {
+    notify-send -t 1000 'desktopctl' 'Attempting to mount stuff...'
     local named=$(find /mnt -mindepth 1 -maxdepth 1 -type d -not -name 'usb*')
     local successful=
     for dir in $named; do
@@ -194,6 +195,7 @@ mount_stuff() {
 }
 
 unmount_stuff() {
+    notify-send -t 1000 'desktopctl' 'Attempting to unmount stuff...'
     local points=$(find /mnt -mindepth 1 -maxdepth 1 -type d)
     local successful=
     for dir in $points; do
