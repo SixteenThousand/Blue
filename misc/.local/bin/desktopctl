@@ -172,7 +172,7 @@ bt() {
 mount_one_thing() {
     findmnt --mountpoint "$1" || {
         mount --target "$1" && \
-        successful="$successful"$'\n'"$1"
+        successful="$successful"'\n'"$1"
         # This feels like it shouldn't work, but it does
     }
 }
@@ -199,7 +199,7 @@ unmount_stuff() {
     local points=$(find /mnt -mindepth 1 -maxdepth 1 -type d)
     local successful=
     for dir in $points; do
-        umount "$dir" && successful="$successful"$'\n'"$dir"
+        umount "$dir" && successful="$successful"'\n'"$dir"
     done
     if [ -z "$successful" ]; then
         notify-send 'desktopctl' 'Failed to unmount any drives'
