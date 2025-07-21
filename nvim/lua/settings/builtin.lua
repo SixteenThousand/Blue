@@ -63,10 +63,15 @@ function SixteenTabs()
 end
 function SixteenGitInfo()
     local bufPath = vim.fn.expand("%:p")
-    if bufPath == "" or bufPath:match("^%a+://") then
+    local is_not_file = vim.fn.filereadable(bufPath) == 0
+    if bufPath == "" or bufPath:match("^%a+://") or is_not_file then
         return ""
     end
-    local cmdOpts = { cwd = vim.fn.expand("%:h"), text = true, }
+    bufPath = vim.uv.fs_realpath(bufPath)
+    local cmdOpts = {
+        cwd = vim.uv.fs_realpath(vim.fn.expand("%:h")),
+        text = true,
+    }
     -- Branch
     local branch = ""
     local branchCmdObj = vim.system(
