@@ -3,6 +3,7 @@ require("misc")
 require("settings")
 require("nav")
 require("terminal")
+require("folding")
 
 pcall(require,"plugins")
 
