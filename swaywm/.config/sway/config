@@ -196,7 +196,7 @@ bindsym Super+n exec dunstctl close-all
 
 ### AUTOSTART
 # `desktopctl` is a script I wrote. You should be able to find in Blue/misc.
-exec --no-startup-id desktopctl autostart || :
+exec --no-startup-id ( /usr/libexec/pam_kwallet_init & disown ) && ( desktopctl autostart || : )
 exec --no-startup-id dunst & disown
 
 ### RULES
