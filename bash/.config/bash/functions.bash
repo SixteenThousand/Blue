@@ -1,16 +1,24 @@
 # scripts that either can't be separate files or are just too small to be
 
 function book {
-  local old_dir=$PWD
-	cd ~/Documents/Books-and-Things
-	local book=$(fzf)
-	if [[ -n "$book" ]]
-	then
-		xdg-open "file://${PWD}/${book}" & disown
-	else
-		echo "You don't like reading, do you?"
-	fi
-	cd $old_dir
+    local old_dir=$PWD
+    cd ~/Documents/Books-and-Things
+    local book=$(fzf)
+    if [[ -n "$book" ]]
+    then
+        local url="file://${PWD}/${book}" 
+        case $1 in
+            -p|--print)
+                printf "$url"
+                ;;
+            *)
+                xdg-open "$url" & disown
+                ;;
+        esac
+    else
+        echo "You don't like reading, do you?" >&2
+    fi
+    cd $old_dir
 }
 
 function stale {
