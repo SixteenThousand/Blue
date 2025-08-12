@@ -43,9 +43,9 @@ info_help() {
     desktopctl todo
   Open a todo list file.
 
-    desktopctl bt [connect DEVICE|off]
-  Turn on bluetooth and connect to DEVICE or disable bluetooth entirely. See 
-  bluetooth(1) or bluetoothctl(1) for more details.
+    desktopctl bt [connect DEVICE|off|toggle]
+  Turn on bluetooth and connect to DEVICE or disable bluetooth entirely, or 
+  toggle bluetooth. See bluetooth(1) or bluetoothctl(1) for more details.
 
     desktopctl mount|unmount
   Mount stuff just the way I like it ;). Also unmount without a spelling error.
@@ -156,17 +156,22 @@ get_bt_device_uuid() {
 }
 
 bt() {
-    if [ "$1" = connect ]; then
-        bluetooth on
-        # If you try to connect immediately it just fails
-        notify-send 'desktopctl' 'Turning on bluetooth...'
-        sleep 3
-        notify-send 'desktopctl' 'Attemting to connect...'
-        bluetoothctl connect $(get_bt_device_uuid "$2")
-    else
-        bluetoothctl disconnect
-        bluetooth off
-    fi
+    case $1 in
+        connect)
+            bluetooth on
+            # If you try to connect immediately it just fails
+            notify-send 'desktopctl' 'Turning on bluetooth...'
+            sleep 3
+            notify-send 'desktopctl' 'Attemting to connect...'
+            bluetoothctl connect $(get_bt_device_uuid "$2")
+            ;;
+        off)
+            bluetooth off
+            ;;
+        toggle)
+            bluetooth toggle
+            ;;
+    esac
 }
 
 mount_one_thing() {
