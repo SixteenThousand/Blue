@@ -184,11 +184,11 @@ bindsym {
     Super+F4 exec playerctl play-pause
     Super+F6 exec desktopctl mon - 5
     Super+F7 exec desktopctl mon + 5
-}
-# Mount USB sticks and the like
-bindsym {
+    # Mount USB sticks and the like
     Super+c exec desktopctl mount
     Super+Shift+c exec desktopctl unmount
+    # Bluetooth
+    Super+v exec desktopctl bt toggle
 }
 
 ### NOTIFICATIONS
