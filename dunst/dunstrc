@@ -27,7 +27,7 @@
     width = 300
 
     # The maximum height of a single notification, excluding the frame.
-    height = (0,300)
+    height = (0,500)
 
     # Position the notification in the top right corner
     origin = bottom-right
@@ -176,7 +176,7 @@
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
     # Markup is allowed
-    format = "<b>%s</b>\n%b"
+    format = "[ <u><b>%a</b></u> ]\n<i>%s</i>\n%b"
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
@@ -335,7 +335,7 @@
     # Otherwise the "#" and following would be interpreted as a comment.
     background = "#222222"
     foreground = "#888888"
-    timeout = 10
+    timeout = 5
     # Icon for notifications with low urgency, uncomment to enable
     #default_icon = /path/to/icon
 
@@ -343,7 +343,7 @@
     # background = "#285577"
     background = "#222222"
     foreground = "#ffffff"
-    timeout = 10
+    timeout = 5
     override_pause_level = 30
     # Icon for notifications with normal urgency, uncomment to enable
     #default_icon = /path/to/icon
