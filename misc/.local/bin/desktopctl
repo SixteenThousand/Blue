@@ -2,6 +2,7 @@
 
 
 DESKTOPCTL_LOG=${HOME}/.desktopctl.log
+APPNAME=desktopctl
 
 
 info_help() {
@@ -49,6 +50,9 @@ info_help() {
 
     desktopctl mount|unmount
   Mount stuff just the way I like it ;). Also unmount without a spelling error.
+
+    desktopctl lsblk
+  List external drives (/dev/sd*) and their mountpoints in a notfication.
 
  Acknowledgement:
  The code for the volume changing commands is modelled on the volume-helper 
@@ -102,7 +106,7 @@ change_vol() {
     local VOLUME=$(pactl get-sink-volume $SINK \
         | sed -e '/.*balance.*/d;s/.* \([[:digit:]]\+\)%.*/\1/')
     notify-send \
-        --app-name desktopctl \
+        --app-name $APPNAME \
         -t 600 \
         -h string:x-canonical-private-synchronous:volume \
         -h "int:value:$VOLUME" \
@@ -120,7 +124,7 @@ mute() {
             ;;
     esac
     notify-send \
-        --app-name desktopctl \
+        --app-name $APPNAME \
         -t 1000 \
         "$MSG"
 }
@@ -143,7 +147,7 @@ check_battery() {
     if [ "$charge" -lt 20 ]
     then
         notify-send \
-            --app-name desktopctl --urgency=critical \
+            --app-name $APPNAME --urgency=critical \
             --expire-time=30000 --wait \
             "Battery" \
             "Battery VERY LOW: ${charge}%!!!" \
@@ -160,9 +164,9 @@ bt() {
         connect)
             bluetooth on
             # If you try to connect immediately it just fails
-            notify-send 'desktopctl' 'Turning on bluetooth...'
+            notify-send -a $APPNAME 'Turning on bluetooth...'
             sleep 3
-            notify-send 'desktopctl' 'Attemting to connect...'
+            notify-send -a $APPNAME 'Attemting to connect...'
             bluetoothctl connect $(get_bt_device_uuid "$2")
             ;;
         off)
@@ -183,7 +187,7 @@ mount_one_thing() {
 }
 
 mount_stuff() {
-    notify-send -t 1000 'desktopctl' 'Attempting to mount stuff...'
+    notify-send -a $APPNAME -t 1000 'Attempting to mount stuff...'
     local named=$(find /mnt -mindepth 1 -maxdepth 1 -type d -not -name 'usb*')
     local successful=
     for dir in $named; do
@@ -193,24 +197,28 @@ mount_stuff() {
         mount_one_thing "$dir"
     done
     if [ -z "$successful" ]; then
-        notify-send 'desktopctl' 'Failed to mount any drives'
+        notify-send -a $APPNAME 'Failed to mount any drives'
     else
-        notify-send 'desktopctl' "Drives mounted to: $successful"
+        notify-send -a $APPNAME "Drives mounted to: $successful"
     fi
 }
 
 unmount_stuff() {
-    notify-send -t 1000 'desktopctl' 'Attempting to unmount stuff...'
+    notify-send -a $APPNAME -t 1000 'Attempting to unmount stuff...'
     local points=$(find /mnt -mindepth 1 -maxdepth 1 -type d)
     local successful=
     for dir in $points; do
         umount "$dir" && successful="$successful"$'\n'"$dir"
     done
     if [ -z "$successful" ]; then
-        notify-send 'desktopctl' 'Failed to unmount any drives'
+        notify-send -a $APPNAME 'Failed to unmount any drives'
     else
-        notify-send 'desktopctl' "Drives unmounted from: $successful"
+        notify-send -a $APPNAME "Drives unmounted from: $successful"
     fi
+}
+
+list_devices() {
+    notify-send -a $APPNAME 'devices' "$(lsblk -o NAME,MOUNTPOINTS /dev/sd*)"
 }
 
 # "main"
@@ -234,7 +242,8 @@ case $1 in
         shift 1
         brightnessctl -q set $2%$1
         VALUE=$(brightnessctl -q -P get)
-        notify-send -e -t 600 \
+        notify-send -a $APPNAME \
+            -e -t 600 \
             -h string:x-canonical-private-synchronous:brightness \
             -h "int:value:$VALUE" "Brightness: $VALUE%"
         ;;
@@ -259,6 +268,9 @@ case $1 in
         ;;
     unmount)
         unmount_stuff
+        ;;
+    lsblk)
+        list_devices
         ;;
     *)
         info_help
