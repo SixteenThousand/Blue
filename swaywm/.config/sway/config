@@ -187,6 +187,7 @@ bindsym {
     # Mount USB sticks and the like
     Super+c exec desktopctl mount
     Super+Shift+c exec desktopctl unmount
+    Super+Alt+c exec desktopctl lsblk
     # Bluetooth
     Super+v exec desktopctl bt toggle
 }
