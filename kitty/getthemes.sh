@@ -1,28 +1,37 @@
-#!/bin/bash
+# Script to fetch kitty themes that I like
+# Usage:
+#   bash/sh/dash/whatever getthemes.sh [THEMES]
+# with no arguments it just downloads the default list of themes - see below
+
 
 declare -a themes
-themes=(
-	'1984 Dark'
-	'ANSI 1987'
-	'Campbell'
-	'Carbonfox'
-	'Catppuccin-Frappe'
-	'Dawnfox'
-	'Desert'
-	'Everforest Dark Hard'
-	'Everforest Light Hard'
-	'GitHub Light High Contrast'
-	'Gruvbox Dark'
-	'Gruvbox Dark Hard'
-	'Gruvbox Light'
-	'Gruvbox Light Hard'
-	'Gruvbox Material Light Medium'
-	'Neowave'
-	'Nightfox'
-	'purpurite'
-	'Rosé Pine Moon'
-	'Terafox'
-)
+
+if [ -n "$1" ]; then
+    themes=$@
+else
+    themes=(
+        '1984 Dark'
+        'ANSI 1987'
+        'Campbell'
+        'Carbonfox'
+        'Catppuccin-Frappe'
+        'Dawnfox'
+        'Desert'
+        'Everforest Dark Hard'
+        'Everforest Light Hard'
+        'GitHub Light High Contrast'
+        'Gruvbox Dark'
+        'Gruvbox Dark Hard'
+        'Gruvbox Light'
+        'Gruvbox Light Hard'
+        'Gruvbox Material Light Medium'
+        'Neowave'
+        'Nightfox'
+        'purpurite'
+        'Rosé Pine Moon'
+        'Terafox'
+    )
+fi
 
 num_themes=$((${#themes[@]} - 1))
 for i in $(seq 0 $num_themes)

@@ -54,26 +54,3 @@ vim.api.nvim_create_user_command(
     end,
     {nargs = 1}
 )
-
--- folding
-vim.api.nvim_create_user_command(
-	"Fold",
-    function(opts)
-        local cmd = opts.fargs[1]
-        if cmd == "?" or cmd == "help" then
-            for k,_ in custom.fold_actions do
-                print(k)
-            end
-        elseif cmd == "header" then
-            custom.fold_by_header(opts.fargs[2], opts.fargs[3])
-            vim.g.Fold_header = opts.fargs[2]
-            vim.g.Fold_end = opts.fargs[3]
-        else
-            custom.fold_actions[opts.fargs[1]]()
-        end
-    end,
-    {nargs="*"}
-)
-vim.keymap.set("n", "<A-f>", function()
-    custom.fold_by_header(vim.g.Fold_header, vim.g.Fold_end)
-end)

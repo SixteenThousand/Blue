@@ -138,4 +138,5 @@ vim.cmd([[
     cnoreabbrev tm tab Man
     cnoreabbrev vh vertical help
     cnoreabbrev th tab help
+    cnoreabbrev qq belowright copen
 ]])

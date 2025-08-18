@@ -2,6 +2,7 @@
 
 
 DESKTOPCTL_LOG=${HOME}/.desktopctl.log
+APPNAME=desktopctl
 
 
 info_help() {
@@ -43,12 +44,15 @@ info_help() {
     desktopctl todo
   Open a todo list file.
 
-    desktopctl bt [connect DEVICE|off]
-  Turn on bluetooth and connect to DEVICE or disable bluetooth entirely. See 
-  bluetooth(1) or bluetoothctl(1) for more details.
+    desktopctl bt [connect DEVICE|off|toggle]
+  Turn on bluetooth and connect to DEVICE or disable bluetooth entirely, or 
+  toggle bluetooth. See bluetooth(1) or bluetoothctl(1) for more details.
 
     desktopctl mount|unmount
   Mount stuff just the way I like it ;). Also unmount without a spelling error.
+
+    desktopctl lsblk
+  List external drives (/dev/sd*) and their mountpoints in a notfication.
 
  Acknowledgement:
  The code for the volume changing commands is modelled on the volume-helper 
@@ -102,7 +106,7 @@ change_vol() {
     local VOLUME=$(pactl get-sink-volume $SINK \
         | sed -e '/.*balance.*/d;s/.* \([[:digit:]]\+\)%.*/\1/')
     notify-send \
-        --app-name desktopctl \
+        --app-name $APPNAME \
         -t 600 \
         -h string:x-canonical-private-synchronous:volume \
         -h "int:value:$VOLUME" \
@@ -120,7 +124,7 @@ mute() {
             ;;
     esac
     notify-send \
-        --app-name desktopctl \
+        --app-name $APPNAME \
         -t 1000 \
         "$MSG"
 }
@@ -143,7 +147,7 @@ check_battery() {
     if [ "$charge" -lt 20 ]
     then
         notify-send \
-            --app-name desktopctl --urgency=critical \
+            --app-name $APPNAME --urgency=critical \
             --expire-time=30000 --wait \
             "Battery" \
             "Battery VERY LOW: ${charge}%!!!" \
@@ -156,17 +160,22 @@ get_bt_device_uuid() {
 }
 
 bt() {
-    if [ "$1" = connect ]; then
-        bluetooth on
-        # If you try to connect immediately it just fails
-        notify-send 'desktopctl' 'Turning on bluetooth...'
-        sleep 3
-        notify-send 'desktopctl' 'Attemting to connect...'
-        bluetoothctl connect $(get_bt_device_uuid "$2")
-    else
-        bluetoothctl disconnect
-        bluetooth off
-    fi
+    case $1 in
+        connect)
+            bluetooth on
+            # If you try to connect immediately it just fails
+            notify-send -a $APPNAME 'Turning on bluetooth...'
+            sleep 3
+            notify-send -a $APPNAME 'Attemting to connect...'
+            bluetoothctl connect $(get_bt_device_uuid "$2")
+            ;;
+        off)
+            bluetooth off
+            ;;
+        toggle)
+            bluetooth toggle
+            ;;
+    esac
 }
 
 mount_one_thing() {
@@ -178,7 +187,7 @@ mount_one_thing() {
 }
 
 mount_stuff() {
-    notify-send -t 1000 'desktopctl' 'Attempting to mount stuff...'
+    notify-send -a $APPNAME -t 1000 'Attempting to mount stuff...'
     local named=$(find /mnt -mindepth 1 -maxdepth 1 -type d -not -name 'usb*')
     local successful=
     for dir in $named; do
@@ -195,7 +204,7 @@ mount_stuff() {
 }
 
 unmount_stuff() {
-    notify-send -t 1000 'desktopctl' 'Attempting to unmount stuff...'
+    notify-send -a $APPNAME -t 1000 'Attempting to unmount stuff...'
     local points=$(find /mnt -mindepth 1 -maxdepth 1 -type d)
     local successful=
     for dir in $points; do
@@ -206,6 +215,10 @@ unmount_stuff() {
     else
         notify-send 'desktopctl' "Drives unmounted from: $successful"
     fi
+}
+
+list_devices() {
+    notify-send -a $APPNAME 'devices' "$(lsblk -o NAME,MOUNTPOINTS /dev/sd*)"
 }
 
 # "main"
@@ -229,7 +242,8 @@ case $1 in
         shift 1
         brightnessctl -q set $2%$1
         VALUE=$(brightnessctl -q -P get)
-        notify-send -e -t 600 \
+        notify-send -a $APPNAME \
+            -e -t 600 \
             -h string:x-canonical-private-synchronous:brightness \
             -h "int:value:$VALUE" "Brightness: $VALUE%"
         ;;
@@ -254,6 +268,9 @@ case $1 in
         ;;
     unmount)
         unmount_stuff
+        ;;
+    lsblk)
+        list_devices
         ;;
     *)
         info_help

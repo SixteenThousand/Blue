@@ -184,11 +184,12 @@ bindsym {
     Super+F4 exec playerctl play-pause
     Super+F6 exec desktopctl mon - 5
     Super+F7 exec desktopctl mon + 5
-}
-# Mount USB sticks and the like
-bindsym {
+    # Mount USB sticks and the like
     Super+c exec desktopctl mount
     Super+Shift+c exec desktopctl unmount
+    Super+Alt+c exec desktopctl lsblk
+    # Bluetooth
+    Super+v exec desktopctl bt toggle
 }
 
 ### NOTIFICATIONS
@@ -196,7 +197,7 @@ bindsym Super+n exec dunstctl close-all
 
 ### AUTOSTART
 # `desktopctl` is a script I wrote. You should be able to find in Blue/misc.
-exec --no-startup-id desktopctl autostart || :
+exec --no-startup-id ( /usr/libexec/pam_kwallet_init & disown ) && ( desktopctl autostart || : )
 exec --no-startup-id dunst & disown
 
 ### RULES

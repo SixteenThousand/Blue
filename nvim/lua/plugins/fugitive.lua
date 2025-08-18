@@ -1,6 +1,6 @@
 -- vim-fugitive config
 
-vim.keymap.set("n","<leader>gg",":vertical Git ")
+vim.keymap.set("n","<leader>gg",":Git ")
 vim.keymap.set("n","<leader>gs",function () vim.cmd("Git status") end)
 
 vim.keymap.set("n","<leader>ge",function ()
@@ -13,12 +13,12 @@ vim.keymap.set("n","<leader>ga",function ()
 end)
 
 vim.keymap.set("n","<leader>gc",function ()
-    vim.cmd("vertical Git commit")
+    vim.cmd("Git commit")
     vim.cmd.startinsert()
 end)
 
-vim.keymap.set("n","<leader>gd",":vertical Git diff ")
-vim.keymap.set("n","<leader>gf",":vertical Git diff %<CR>")
+vim.keymap.set("n","<leader>gd",":Git diff ")
+vim.keymap.set("n","<leader>gf",":Git diff %<CR>")
 vim.api.nvim_create_user_command(
     "Diff",
     function(opts)
@@ -38,9 +38,9 @@ vim.api.nvim_create_user_command(
 
 vim.keymap.set("n","<leader>gl",function()
     if vim.v.count == 0 then
-        vim.cmd("vertical Git log")
+        vim.cmd("Git log")
     else
-        vim.cmd("vertical Git log -"..vim.v.count)
+        vim.cmd("Git log -"..vim.v.count)
     end
 end)
-vim.keymap.set("n", "<leader>gb", ":vertical Git blame %<CR>")
+vim.keymap.set("n", "<leader>gb", ":Git blame %<CR>")

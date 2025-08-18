@@ -48,3 +48,6 @@ function nnn {
 		source $NNN_TMPFILE
 	fi
 }
+
+# borg backup
+export BORG_PASSCOMMAND='kwallet-query -r gibbous-5.0-borg-password kdewallet'

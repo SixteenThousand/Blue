@@ -6,7 +6,7 @@ local bookmarks = {
     ["p"] = "~/Projects",
     ["t"] = "~/Wiki/To-Do.md",
     ["w"] = "~/Wiki/index.md",
-    ["s"] = "~/Temp",
+    ["s"] = "~/Scratch",
 }
 
 for key,path in pairs(bookmarks) do

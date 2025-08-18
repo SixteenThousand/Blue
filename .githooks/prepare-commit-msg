@@ -1,43 +1,25 @@
-#!/bin/sh
+#!/usr/bin/sh
 
-# List of files with staged changes
-STAGED_CHANGES=$(git diff --name-only --cached)
+# Get the directory name for the files with staged changes
+CHANGED_FILE=$(git diff --name-only --cached | head -n 1)
+APP=${CHANGED_FILE%%/*}
+
 COMMIT_MSG_FILE=$1
 CURRENT_MSG=$(cat "$COMMIT_MSG_FILE")
-BRANCH=$(git branch --show-current)
+
+# Check we're not dealing with changes in toplevel
+if [ "$APP" = "$CHANGED_FILE" ]; then
+  exit 0
+fi
 
 # Check this isn't already using the right style
 if [ "$(head -c 1 ${COMMIT_MSG_FILE})" = '[' ]; then
   exit 0
 fi
 
-commit_app=
-for file in $STAGED_CHANGES; do
-  app=${file%%/*}
-  # Treat stuff outside of an app config as part of the "Blue application"
-  if ! [ -d "$app" ]; then
-    app=Blue
-  fi
-  # Check we're only committing changes to one app's config at a time
-  if [ -n "$commit_app" ] && [ "$app" != "$commit_app" ]; then
-    echo 'Only commit changes for one app at a time!' >&2
-    exit 1
-  fi
-  commit_app=$app
-done
 
-case "$BRANCH" in
-  "${commit_app}"-*)
-    :
-    ;;
-  *-*)
-    echo "The current branch only accepts changes for ${BRANCH%%-*}" >&2
-    exit 1
-    ;;
-esac
-
-echo "[${commit_app}]\n>> " > "$COMMIT_MSG_FILE"
-echo "$CURRENT_MSG" >> "$COMMIT_MSG_FILE"
+printf "[${APP}]\n>> " > "$COMMIT_MSG_FILE"
+printf "$CURRENT_MSG" >> "$COMMIT_MSG_FILE"
 
 
 # vim: et sw=2
