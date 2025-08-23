@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-CSCHEMES_DIR="$HOME/.config/alacritty/external-themes/themes"
+CSCHEMES_DIR="$HOME/.local/share/alacritty/alacritty-theme/themes"
 
 change_cscheme() {
     if [ -z "$1" ]
