@@ -12,7 +12,6 @@ vim.o.expandtab = true -- buffer opt
 vim.opt_local.formatoptions:append("r,o,l")
     -- make vim auto-insert a bunch of comments
 
-
 -- keeps at least {number} lines beneath the cursor (unless at end of file)
 vim.go.scrolloff = 2
 
@@ -109,3 +108,14 @@ function SixteenGitInfo()
     return string.format("git: %s %s%s", branch, changed, staged)
 end
 vim.opt_global.statusline = [[%t %m%r%y  %{v:lua.SixteenGitInfo()}%=%<%{v:lua.SixteenTabs()}  %v:%l/%L]]
+
+vim.go.grepformat = "%f:%l,%f:%l%m,%f  %l%m"
+vim.go.grepprg = table.concat({
+    "grep -RHIn",
+    "--exclude-dir .git",
+    "--exclude-dir node_modules",
+    "--exclude-dir .venv",
+    "--exclude tags",
+    "--exclude .session.vim",
+    "$*"
+}, " ")

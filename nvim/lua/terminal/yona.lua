@@ -35,17 +35,3 @@ end)
 vim.keymap.set({"n","i"},"<A-S-k>",function()
 	utils.terminal_vsplit("yona --run "..vim.fn.expand("%:p"))
 end)
-
--- grep from "project root"
-vim.go.grepformat = "%f:%l,%f:%l%m,%f  %l%m"
--- vim.go.grepprg = "grep -RHIn --exclude-dir .git --exclude-from .gitignore $*"
-vim.go.grepprg = table.concat({
-    "cd %:h &&",
-    "grep -RHIn",
-    "--exclude-dir .git",
-    "--exclude-dir node_modules",
-    "--exclude-dir .venv",
-    "--exclude tags",
-    "--exclude .session.vim",
-    "$* $(yona -s pwd 2>/dev/null)",
-}, " ")
