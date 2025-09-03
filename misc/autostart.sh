@@ -7,5 +7,3 @@ if [ -n "$choice" ] && [ "$choice" != "$NO_OPT" ]; then
     $BROWSER https://web.whatsapp.com https://discordapp.com/channels/@me & disown
     $MAIL & disown
 fi
-
-$TERMINAL --hold $EDITOR "$HOME/Wiki/To-Do.md" & disown
