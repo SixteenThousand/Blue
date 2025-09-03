@@ -201,7 +201,7 @@ awful.screen.connect_for_each_screen(function(s)
         text = "--------",
     }
     awful.spawn.with_line_callback(
-        "i3status -c "..gears.filesystem.get_configuration_dir().."i3status.conf",
+        "i3status",
         {
             stdout = function(line)
                 s.myi3bar:set_markup_silently("<b> "..line.." </b>")
@@ -424,6 +424,20 @@ globalkeys = gears.table.join(
     ),
     awful.key(
         {}, "XF86MonBrightnessUp",
+        function()
+            awful.spawn("desktopctl mon + 10")
+        end,
+        {}
+    ),
+    awful.key(
+        { super, }, "F6",
+        function()
+            awful.spawn("desktopctl mon - 10")
+        end,
+        {}
+    ),
+    awful.key(
+        { super, }, "F7",
         function()
             awful.spawn("desktopctl mon + 10")
         end,
