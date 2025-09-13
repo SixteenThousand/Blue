@@ -30,11 +30,12 @@ export FNM_RESOLVE_ENGINES="true"
 export FNM_ARCH="x64"
 
 # nnn, the file manager
+export ANDROID_MOUNT_POINT=/mnt/android
 export NNN_TRASH=1 # -> use trash-cli. Set to 2 for `gio trash`
 export NNN_OPTS=HQeuC
 export NNN_TMPFILE='/tmp/nnn-lastdir'
 export NNN_OPENER=xdg-open
-export NNN_PLUG='z:changedir;m:mount;p:playlist;b:browser'
+export NNN_PLUG='z:changedir;m:mount;p:playlist;b:browser;a:android-mount;u:android-unmount'
 
 # I hate X11
 export XCURSOR_SIZE=48
