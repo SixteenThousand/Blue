@@ -105,7 +105,8 @@ function project_files {
         -o -path '*.git*' \
         -o -path '*.venv*' \
         -prune -o \
-        -type $item_type -print
+        -type $item_type -print \
+        2>/dev/null
 }
 
 # Choose a file!
