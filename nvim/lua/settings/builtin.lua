@@ -3,8 +3,6 @@ vim.opt_global.path = { ".", "", "./**4", "**4", }
 
 -- indentation & autocommenting
 vim.go.smarttab = false
-vim.opt_global.cpoptions:append("I")
-     -- means autoindenting doesn't get deleted all the time
 -- tab width
 vim.o.shiftwidth = 4 -- buffer opt
 vim.o.tabstop = 4 -- buffer opt
@@ -107,7 +105,7 @@ function SixteenGitInfo()
     end
     return string.format("git: %s %s%s", branch, changed, staged)
 end
-vim.opt_global.statusline = [[%t %m%r%y  %{v:lua.SixteenGitInfo()}%=%<%{v:lua.SixteenTabs()}  %v:%l/%L]]
+vim.opt_global.statusline = [[%t [%n] %m%r%y  %{v:lua.SixteenGitInfo()}%=%<%{v:lua.SixteenTabs()}  %v:%l/%L]]
 
 vim.go.grepformat = "%f:%l,%f:%l%m,%f  %l%m"
 vim.go.grepprg = table.concat({
