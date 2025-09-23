@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env sh
 
 # List of files with staged changes
 STAGED_CHANGES=$(git diff --name-only --cached)

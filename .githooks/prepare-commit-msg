@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env sh
 
 # Get the directory name for the files with staged changes
 CHANGED_FILE=$(git diff --name-only --cached | head -n 1)
