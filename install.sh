@@ -4,7 +4,7 @@
 operation=$1
 toplevel=$PWD
 
-for app in $(find -mindepth 1 -maxdepth 1 -type d -not -name '.git*'); do
+for app in $(find . -mindepth 1 -maxdepth 1 -type d -not -name '.git*'); do
   cd "$app"
   if make "$operation"; then
     printf "\e[1;33m[${app}] configured!\e[0m\n"
