@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 -- leader/<Plug>/plug key
 vim.g.mapleader = " "
 
@@ -42,9 +44,16 @@ vim.keymap.set("i","<C-x><C-p>",function ()
 end)
 
 -- debug comment
-vim.keymap.set({"n","i"},"<A-/>",function()
-    vim.cmd.stopinsert()
-    vim.cmd.normal("gcAdebug")
+vim.keymap.set("n", "gcd", function()
+    vim.cmd.normal(string.format("A "..vim.o.commentstring, "debug"))
+end)
+vim.keymap.set("n", "gct", function()
+    vim.cmd.normal(string.format("o%s", vim.o.commentstring):format("TODO: "))
+    vim.cmd.startinsert({bang=true})
+end)
+vim.keymap.set("n", "gcT", function()
+    vim.cmd.normal(string.format("O%s", vim.o.commentstring):format("TODO: "))
+    vim.cmd.startinsert({bang=true})
 end)
 
 -- toggles whether searches are highlighted or not
