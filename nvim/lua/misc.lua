@@ -55,6 +55,44 @@ vim.keymap.set("n", "gcT", function()
     vim.cmd.normal(string.format("O%s", vim.o.commentstring):format("TODO: "))
     vim.cmd.startinsert({bang=true})
 end)
+vim.keymap.set("v", "gcd", function()
+    local sel_start = vim.fn.getpos(".")[2]
+    local sel_end = vim.fn.getpos("v")[2]
+    if sel_start > sel_end then
+        local tmp = sel_start
+        sel_start = sel_end
+        sel_end = tmp
+    end
+    vim.fn.append(
+        math.max(0, sel_start-1),
+        string.format(
+            utils.indent_string(sel_start)..vim.o.commentstring,
+            "debug {{{"
+        )
+    )
+    vim.fn.append(
+        sel_end+1,
+        string.format(
+            utils.indent_string(sel_end+1)..vim.o.commentstring,
+            "debug }}}"
+        )
+    )
+end)
+vim.keymap.set("n", "gcD", function()
+    local debug_start = vim.fn.search("debug {{{$", "bcW")
+    if debug_start == 0 then
+        return
+    end
+    vim.cmd.normal("V")
+    vim.fn.search("debug }}}$", "W")
+end)
+vim.keymap.set("n", "]d", function()
+    vim.fn.search(vim.o.commentstring:format("debug"))
+end)
+vim.keymap.set("n", "[d", function()
+    vim.fn.search(vim.o.commentstring:format("debug"), "b")
+end)
+
 
 -- toggles whether searches are highlighted or not
 vim.keymap.set("n","<leader>hh",function()

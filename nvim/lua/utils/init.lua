@@ -52,6 +52,9 @@ end
 --     @param extra: int = the number of extra "tabs" to add on the end of the 
 --     resulting string
 function M.indent_string(line_num,extra)
+    if extra == nil then
+        extra = 0
+    end
     if vim.bo.expandtab then
         local indent = vim.fn.indent(line_num) + extra * vim.bo.shiftwidth
         return string.rep(" ",indent)
