@@ -36,7 +36,7 @@ bindsym Super+q kill
 bindsym Alt+F4 kill
 bindsym {
     # Start your launcher
-    Super+a exec rofi -show drun
+    Super+space exec rofi -show drun
     Alt+space exec rofi -show drun
     # other app shortcuts
     Super+b exec $BROWSER
@@ -82,14 +82,11 @@ bindsym {
     Super+8 workspace number 8
     Super+9 workspace number 9
     Super+Backspace workspace back_and_forth
-    Super+Semicolon workspace back_and_forth
     Super+j workspace next
     Super+k workspace prev
     Super+Down workspace next
     Super+Up workspace prev
-    Super+Comma workspace prev
-    Super+Period workspace next
-    Super+space exec $script_dir/new_workspace
+    Super+semicolon exec $script_dir/new_workspace
     # Swap focus between the tiling area and the floating area
     Super+equal focus mode_toggle
 }
@@ -120,7 +117,7 @@ bindsym {
     $moveMod+minus border pixel 5; move scratchpad
     # Cycle through scratchpad windows
     Super+minus scratchpad show
-    Super+Shift+space exec $script_dir/new_workspace with_window
+    Super+Shift+semicolon exec $script_dir/new_workspace with_window
 }
 
 
@@ -129,11 +126,11 @@ bindsym {
 workspace_layout default
 bindsym {
     # Switch the current container between different layout styles
-    $layoutMod+semicolon split horizontal
+    $layoutMod+percent split horizontal; exec notify-send -a 'sway' 'Split made'
     # get rid of a split
-    $layoutMod+apostrophe split none
+    $layoutMod+Backspace split none
     # numbersign = hash/tilde key
-    $layoutMod+numbersign split toggle
+    $layoutMod+slash split toggle
     $layoutMod+Return layout toggle split tabbed
     F11 fullscreen toggle
     Super+f fullscreen toggle
