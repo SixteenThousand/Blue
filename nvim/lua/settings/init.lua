@@ -45,6 +45,15 @@ vim.api.nvim_create_user_command(
     custom.notext,
 	{}
 )
+vim.keymap.set({"n","i"}, "<A-e>", function()
+    if custom.texton() then
+        custom.notext()
+        print("Text mode off.")
+    else
+        custom.text()
+        print("Text mode on!")
+    end
+end)
 
 -- changes tab size
 vim.api.nvim_create_user_command(
