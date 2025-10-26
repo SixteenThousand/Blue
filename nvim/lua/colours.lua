@@ -11,9 +11,10 @@ vim.go.background = "dark"
 
 vim.api.nvim_create_autocmd("ColorScheme",{
     callback = function()
+        vim.g.sixteen_colourscheme = vim.fn.expand("<amatch>")
         local colourschemeFp = io.open(COLOUR_SCHEME_FILE,"w")
         if colourschemeFp then
-            colourschemeFp:write(vim.fn.expand("<amatch>"))
+            colourschemeFp:write(vim.g.sixteen_colourscheme)
             colourschemeFp:close()
         end
     end,
