@@ -16,6 +16,7 @@ general {
 order += "read_file THEME"
 order += "volume default"
 order += "wireless _first_"
+order += "ethernet _first_"
 order += "battery all"
 order += "memory"
 order += "load"
@@ -24,6 +25,11 @@ order += "tztime local"
 
 wireless _first_ {
     format_up = "  %essid %bitrate"
+}
+
+ethernet _first_ {
+    format_up = "E: %ip (%speed)"
+    format_down = "E: down"
 }
 
 battery all {
