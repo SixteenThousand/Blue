@@ -247,7 +247,7 @@ ${HOME}/Documents
 "
 
 function get_bookmark_dirs {
-    find $SIXTEEN_BOOKMARKS -maxdepth 2 -type d -not -path '*/.*' 2>/dev/null
+    find $SIXTEEN_BOOKMARKS -maxdepth 3 -type d -not -path '*/.*' 2>/dev/null
 }
 
 function z {

@@ -1,5 +1,5 @@
 export EDITOR=nvim
-export TERMINAL='kitty -1'
+export TERMINAL=alacritty
 export BROWSER=firefox
 export MAIL="$TERMINAL aerc"
 
