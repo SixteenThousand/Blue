@@ -82,13 +82,18 @@ bindsym {
     Super+8 workspace number 8
     Super+9 workspace number 9
     Super+Backspace workspace back_and_forth
-    Super+j workspace next
-    Super+k workspace prev
-    Super+Down workspace next
-    Super+Up workspace prev
+    Super+j workspace next_on_output
+    Super+k workspace prev_on_output
+    Super+Down workspace next_on_output
+    Super+Up workspace prev_on_output
     Super+semicolon exec $script_dir/new_workspace
     # Swap focus between the tiling area and the floating area
     Super+equal focus mode_toggle
+    Control+Super+h focus output left
+    Control+Super+j focus output down
+    Control+Super+k focus output up
+    Control+Super+l focus output right
+    Control+Super+Space $script_dir/switch_output
 }
 
 

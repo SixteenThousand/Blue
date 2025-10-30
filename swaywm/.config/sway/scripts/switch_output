@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+
+error() {
+  notify-send -a 'sway config' "$1"
+  exit 1
+}
+
+
+# Check dependencies are installed
+type jq || type rofi || error 'Please install jq & rofi!'
+
+outputs=$(swaymsg -r -t get_outputs | jq -r '.[]|.name')
+
+chosen_output=$(rofi -dmenu "$outputs")
+
+if [ -z "$chosen_output" ]; then
+  error 'No output chosen'
+  exit 1
+fi
+
+# Make sure the monitor we want is on & focused
+swaymsg output "$chosen_output" enable || error "Could not connect to output ${chosen_output}!"
+swaymsg focus output "$chosen_output" || error "Could not focus output ${chosen_output}"
+
+# Disable everything else
+for output in $outputs; do
+  [ ! "$output" = "$chosen_output" ] && swaymsg output "$output" disable
+done
