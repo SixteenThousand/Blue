@@ -7,6 +7,7 @@ vim.api.nvim_create_autocmd(
         pattern = {
             "css",
             "html",
+            "htmldjango",
             "javascript",
             "javascriptreact",
             "vue",

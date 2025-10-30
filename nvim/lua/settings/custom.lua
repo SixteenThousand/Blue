@@ -113,7 +113,7 @@ function M.tag_mode()
         end,
         {buffer = true}
     )
-    vim.keymap.set("i","<C-.>",
+    vim.keymap.set("i","<M-.>",
         function()
             local line = vim.fn.getline(".")
             local startpos = vim.fn.getpos(".")
