@@ -43,7 +43,7 @@ bindsym {
     Super+Shift+Return exec desktopctl todo
     Super+Return exec $TERMINAL
     # open a file
-    Super+o exec $TERMINAL -e desktopctl open --fm
+    Super+o exec rofi -show filebrowser
     Super+Shift+o exec $TERMINAL -e desktopctl open
 
     Super+p exec sh -c "$TERMINAL -T sixteen-python -e python3"
@@ -53,6 +53,7 @@ for_window [title="sixteen-python"] floating enable; resize set 60ppt 80ppt
 
 ### META STUFF
 bindsym {
+    Control+Super+q swaylock
     Super+Shift+q exit
     Super+Shift+Delete exec brightnessctl set 100%; exec systemctl poweroff 
     Super+Shift+r reload; exec notify-send sway 'Reloaded!'
