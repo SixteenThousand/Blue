@@ -1,7 +1,6 @@
 export EDITOR=nvim
-export TERMINAL=alacritty
+export TERMINAL=alacwrapper
 export BROWSER=firefox
-export MAIL="$TERMINAL aerc"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_SCREENSHOTS_DIR="$HOME/Pictures/Screenshots"
