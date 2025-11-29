@@ -1,6 +1,4 @@
-// This config is in the KDL format: https://kdl.dev
-// "/-" comments out the following node.
-// Check the wiki for a full description of the configuration:
+// This config is in the KDL format: https://kdl.dev "/-" comments out the following node. Check the wiki for a full description of the configuration:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
 
 // Input device configuration.
@@ -366,8 +364,8 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "sh" "-c" "$TERMINAL"; }
     Mod+B hotkey-overlay-title="Open a Browser" { spawn "sh" "-c" "$BROWSER"; }
-    Mod+A hotkey-overlay-title="App Launcher" { spawn "rofi" "-show" "drun"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Mod+Space hotkey-overlay-title="App Launcher" { spawn "rofi" "-show" "drun"; }
+    Control+Mod+Q hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // Close a notification
     Super+N { spawn "dunstctl" "close"; }
@@ -378,17 +376,27 @@ binds {
 
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02-"; }
-    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    XF86AudioMute        allow-when-locked=true { spawn "desktopctl" "mute"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "desktopctl" "vol" "-" "2"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "desktopctl" "vol" "+" "2"; }
     XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "play-pause"; }
     XF86MonBrightnessUp  allow-when-locked=true { spawn "desktopctl" "mon" "+" "5"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "desktopctl" "mon" "-" "5"; }
+    Mod+F1 allow-when-locked=true { spawn "desktopctl" "mute"; }
+    Mod+F2 allow-when-locked=true { spawn "desktopctl" "vol" "-" "2"; }
+    Mod+F3 allow-when-locked=true { spawn "desktopctl" "vol" "+" "2"; }
+    Mod+F4 allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    Mod+F5 allow-when-locked=true { spawn "desktopctl" "mon" "-" "5"; }
+    Mod+F6 allow-when-locked=true { spawn "desktopctl" "mon" "+" "5"; }
+
 
     // Mount stuff
     Mod+C { spawn "desktopctl" "mount"; }
     Mod+Shift+C { spawn "desktopctl" "unmount"; }
+    
+    // Bluetooth
+    Mod+V { spawn "desktopctl" "bt" "toggle"; }
     
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
@@ -397,12 +405,13 @@ binds {
 
     Mod+Q { close-window; }
 
-    Mod+Space { focus-column-right-or-first; }
+    Alt+Tab { focus-column-right-or-first; }
     Mod+L { focus-column-right-or-first; }
     Mod+Right { focus-column-right-or-first; }
     Mod+E { focus-column-left-or-last; }
     Mod+H { focus-column-left-or-last; }
     Mod+Left { focus-column-left-or-last; }
+    Alt+Shift+Tab { focus-column-left-or-last; }
 
     Mod+Shift+Space { move-column-right; }
     Mod+Shift+L { move-column-right; }
@@ -544,17 +553,15 @@ binds {
     // Mod+Shift+Equal { set-window-height "+10%"; }
 
     // Move the focused window between the floating and the tiling layout.
-    Mod+V       { toggle-window-floating; }
-    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    Mod+Alt+Equal       { toggle-window-floating; }
+    Mod+Equal { switch-focus-between-floating-and-tiling; }
 
     // Toggle tabbed column display mode.
     // Windows in this column will appear as vertical tabs,
     // rather than stacked on top of each other.
     Mod+Alt+Return { toggle-column-tabbed-display; }
     Mod+W { focus-window-down-or-top; }
-    Alt+Tab { focus-window-down-or-top; }
     Mod+X { focus-window-up-or-bottom; }
-    Alt+Shift+Tab { focus-window-up-or-bottom; }
 
     // Actions to switch layouts.
     // Note: if you uncomment these, make sure you do NOT have
