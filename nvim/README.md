@@ -3,25 +3,24 @@
 This is my configuration of neovim, the editor that makes it feel like you 
 built it yourself.
 
-It's probably not the most slick config out there, but it works and if you're
-interested in writing one yourself it might be useful - feel free to contact
-me with questions, although I make no promises about responding quickly!
+It's not the most slick thing out there, but it works and if you're
+interested in writing one yourself it might be useful - feel free to email me 
+if you want to know more, though I can't make any promises about responding.
 
 ---
 
 ## Features
 
-- A session manager (see `lua/amber`)
-- Hand-written HTML tag completion (see `./lua/settings/custom.lua -> 
-  tag_mode` for the code)
-- Key bindings to run unit tests or build a project (uses 
-  [Yona](https://github.com/SixteenThousand/Yona))
+- Hand-written HTML tag completion (see `./lua/settings/custom.lua -> tag_mode` 
+  for the code)
+- Key bindings to run unit tests or build a project
 - Good error checking for plugin loading (always good if you want to drop 
   your config onto a new machine)
 
 ---
 
-## Installing Language Servers
+## Notes
+### Installing Language Servers
 For future reference, here is how I installed the language servers that I 
 use:
 - [pyright](https://github.com/Microsoft/pyright) was installed globally via 
@@ -33,3 +32,16 @@ use:
 - [clangd](https://clangd.llvm.org/installation) was installed by my system 
   package manager; the package is `clang-tools-extra` on Fedora, `clangd` on 
   Debian
+
+### Spell Check And Acronyms
+It should be possible to turn off spell check just for acronyms with the 
+following line:
+```vim
+syntax match '\<[A-Z]\+\>' contains=@NoSpell
+```
+But unfortunately this only seems to work if you also have set
+```vim
+syntax spell default
+```
+And it seems that a plugin (most likely vimwiki) has set this to `toplevel` 
+instead.
