@@ -18,6 +18,7 @@ hc keyunbind --all
 Alt=Mod1
 Super=Mod4
 
+hc keybind Super-Control-q spawn "i3lock --nofork -c 226622"
 hc keybind $Super-Shift-q quit
 hc keybind Super-Shift-Delete spawn systemctl poweroff
 hc keybind $Super-Shift-r reload
@@ -25,20 +26,25 @@ hc keybind $Super-q close_or_remove
 
 # applications
 hc keybind $Super-Return spawn $TERMINAL
-hc keybind $Super-Shift-Return spawn $TERMINAL -e tmux
-hc keybind $Super-a spawn rofi -show drun
+hc keybind $Super-Space spawn rofi -show drun
+hc keybind $Alt-Space spawn rofi -show drun
 hc keybind $Super-b spawn $BROWSER
-hc keybind $Super-t spawn $MAIL
-hc keybind $Super-g spawn $TERMINAL -e nnn
-hc keybind $Super-Shift-g spawn dolphin
+hc keybind $Super-o spawn rofi -show filebrowser
 
 # hardware stuff
-hc keybind XF86AudioPlay spawn playerctl play-pause
 hc keybind XF86AudioMute spawn desktopctl mute
-hc keybind XF86AudioRaiseVolume spawn desktopctl vol + 2
 hc keybind XF86AudioLowerVolume spawn desktopctl vol - 2
-hc keybind XF86MonBrightnessUp   spawn desktopctl mon + 5
+hc keybind XF86AudioRaiseVolume spawn desktopctl vol + 2
+hc keybind XF86AudioPlay spawn playerctl play-pause
 hc keybind XF86MonBrightnessDown spawn desktopctl mon - 5
+hc keybind XF86MonBrightnessUp   spawn desktopctl mon + 5
+hc keybind Super+F1 spawn desktopctl mute
+hc keybind Super+F2 spawn desktopctl vol - 2
+hc keybind Super+F3 spawn desktopctl vol + 2
+hc keybind Super+F4 spawn playerctl play-pause
+hc keybind Super+F5 spawn desktopctl mon - 5
+hc keybind Super+F6 spawn desktopctl mon + 5
+hc keybind Super+V spawn desktopctl bt toggle
 # turn off "screen locking"
 xset -dpms
 xset s off
@@ -56,8 +62,8 @@ hc keybind $Super-Shift-l     shift right
 
 # splitting frames
 # create an empty frame at the specified direction
-hc keybind Super-o and / split bottom 0.5 / cycle_all
-hc keybind Super-i and / split right  0.5 / cycle_all
+hc keybind Super-Alt-j and / split bottom 0.5 / cycle_all
+hc keybind Super-Alt-l and / split right  0.5 / cycle_all
 
 # resizing frames and floating clients
 resizestep=0.02
@@ -109,9 +115,9 @@ hc keybind Super-space use_previous
 hc keybind Super-Alt-space set_attr clients.focus.floating toggle
 hc keybind $Super-f fullscreen toggle
 # hc keybind $Super-Shift-m set_attr clients.focus.minimized true
-hc keybind $Super-Control-q remove
+hc keybind $Super-Alt-BackSpace remove
 update_layout_panel_widget='polybar-msg action hblwm-layout hook 0'
-hc keybind Super-Alt-Return and , \
+hc keybind Super-Alt-Space and , \
 	cycle_layout +1 max horizontal grid , \
 	spawn $update_layout_panel_widget
 herbstclient --count 0 --wait 'tag_changed|focus_changed' | \
@@ -129,13 +135,14 @@ hc mousebind $Super-Button2 zoom
 hc mousebind $Super-Button3 resize
 
 # focus
-hc keybind Super-BackSpace   cycle_monitor
+hc keybind Control-Super-Space cycle_monitor
+hc keybind Super-Tab spawn rofi -show window
 hc keybind Alt-Tab         cycle_all +1
 hc keybind Alt-Shift-Tab   cycle_all -1
-hc keybind Super-Tab spawn rofi -show window
 hc keybind Super-w cycle +1
 hc keybind Super-Shift-w cycle -1
 hc keybind Super-e cycle_frame +1
+hc keybind Super-Shift-e cycle_frame -1
 hc keybind Super-u jumpto urgent
 
 # theme
