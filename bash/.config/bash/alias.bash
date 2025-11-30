@@ -4,6 +4,8 @@ alias f=nnn
 # The --gitignore option isn't used here as I don't want files in 
 # $GIT_DIR/info/exclude to be excluded
 alias t='tree -C -a -I .git -I node_modules -I .venv'
+# this breaks if you try to add line breaks
+alias g="grep --color=always -RnHI --exclude-dir .git --exclude-dir '*venv*' --exclude-dir node_modules "
 alias sbcl='rlwrap sbcl'
 alias shell='rlwrap xargs -L 1'
 alias zathura='zathura --fork'

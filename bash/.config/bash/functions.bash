@@ -177,10 +177,6 @@ function lsproc {
 	done
 }
 
-function yg {
-    project_files | xargs grep -nHI --color=always $@
-}
-
 function mvt {
     local search_depth=8
     local search_directory=/
