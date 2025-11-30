@@ -13,12 +13,6 @@ return {
     -- IDE-like stuff
     "nvim-lspconfig",
     {
-        dirname = "LuaSnip",
-        post = function()
-            require("plugins.luasnip")
-        end,
-    },
-    {
         dirname = "Comment.nvim",
         post = function()
             require("Comment").setup()
