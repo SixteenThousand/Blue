@@ -11,5 +11,7 @@ pcall(require,"plugins")
 require("colours")
 require("lsp")
 
-sessions.setup()
+if vim.fn.argc() == 0 then
+    sessions.setup()
+end
 print("And It Goes On...")
