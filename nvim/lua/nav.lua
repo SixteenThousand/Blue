@@ -4,7 +4,7 @@ vim.keymap.set("n","<leader>ef",":find ")
 
 local bookmarks = {
     ["p"] = "~/Projects",
-    ["t"] = "~/Wiki/soon.md",
+    ["t"] = "~/Wiki/To-Do.md",
     ["s"] = "~/Scratch",
 }
 
