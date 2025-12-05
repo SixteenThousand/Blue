@@ -7,15 +7,6 @@ TAB: menu-complete
 
 set echo-control-characters off
 
-# \e is escape, but in this case is equivalent to Alt
-# [1;3D/C are the left & right arrow keys
-Control-g: "mvt\r"
-"\eg": "mvt -c\r"
-"\e[1;3D": "cd -\r"
-"\e[1;3C": "mvt -c\r"
-"\e-": "cd ..\r"
-Control-o: "pick --fzf $EDITOR\r"
-"\eo": "pick "
-Control-k: " $(pick)"
+Control-o: "pick\r"
 Control-t: "tmux attach || tmux\r"
 Control-r: "\C-l\C-p\r"

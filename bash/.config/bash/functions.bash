@@ -1,24 +1,15 @@
 # scripts that either can't be separate files or are just too small to be
 
 function book {
-    local old_dir=$PWD
-    cd ~/Documents/Books-and-Things
-    local book=$(fzf)
-    if [[ -n "$book" ]]
-    then
-        local url="file://${PWD}/${book}" 
-        case $1 in
-            -p|--print)
-                printf "$url"
-                ;;
-            *)
-                xdg-open "$url" & disown
-                ;;
-        esac
-    else
-        echo "You don't like reading, do you?" >&2
-    fi
-    cd $old_dir
+  local old_dir=$PWD
+  cd ${1:-~/Documents/Books-and-Things}
+  local book=$(fzf)
+  if [[ -n "$book" ]]; then
+    xdg-open "file://${PWD}/${book}" & disown
+  else
+    echo "You don't like reading, do you?" >&2
+  fi
+  cd $old_dir
 }
 
 function stale {
@@ -103,7 +94,7 @@ function project_files {
     find \
         -path '*node_modules*' \
         -o -path '*.git*' \
-        -o -path '*.venv*' \
+        -o -path '*venv*' \
         -prune -o \
         -type $item_type -print \
         2>/dev/null
@@ -111,61 +102,44 @@ function project_files {
 
 # Choose a file!
 function pick {
-    local program=
-    local choice=
-    local old_ps3="$PS3"
-    PS3=$(printf '\x1b[1;33mChoose a file> \x1b[0m')
-    for arg in $@
-    do
-        case $arg in
-            -h|--help)
-                cat <<- EOF
+  local choice=
+  local old_ps3="$PS3"
+  PS3=$(printf '\x1b[1;33mChoose a file> \x1b[0m')
+  case $1 in
+    -h|--help)
+      cat <<- EOF
 Pick a file!
 Ignores anything within .git, node_modules, etc. directories.
-Echoes file name to stdout by default if no PROGRAM is specified
-(see below).
+Opens with \$EDITOR
 
 Usage:
     pick -h|--help
 Show this message
-    pick -f|--fzf [PROGRAM]
-Fuzzy find a file (requires fzf). Opens file with PROGRAM.
-    pick -s|--select [PROGRAM]
-Use bash built-in select to pick a file to open (with PROGRAM).
+    pick
+Pick file with fzf, or select if fzf is not available
     pick [PATH_FRAGMENT]
 Grep through all the file paths in the current directory for one whose path 
 contains PATH_FRAGMENT. Opens with \$EDITOR.
 EOF
-                return 0
-                ;;
-            -f|--fzf)
-                choice="$(project_files | fzf --prompt="$PS3")"
-                ;;
-            -s|--select)
-                select file in $(project_files)
-                do
-                    [ -z "$file" ] && return 1
-                    choice="$file"
-                    break
-                done
-                ;;
-            *) program="$arg";;
-        esac
+      return 0
+      ;;
+    *)
+      choice="$(project_files | grep ".*$1.*" | head -n 1)"
+      ;;
+  esac
+  if type fzf >/dev/null 2>&1; then
+    choice="$(project_files | fzf --prompt="$PS3")"
+  else
+    select file in $(project_files); do
+      choice="$file"
+      break
     done
-    if [ -z "${choice}${program}" ]; then
-        echo -e "\e[1;33mGuess we're not doing that then...\e[0m"
-        return 1
-    fi
-    if [ -z "$choice" ]; then
-        choice="$(project_files | grep ".*${program}.*" | head -n 1)"
-        $EDITOR "$choice"
-    elif [ -n "$program" ]; then
-        $program "$choice"
-        history -s $program "$choice"
-    else
-        echo "$choice"
-    fi
-    PS3="$old_ps3"
+  fi
+  if [ -z "$choice" ]; then
+      printf "\e[1;33mGuess we're not doing that then...\e[0m\n"
+      return 1
+  fi
+  PS3="$old_ps3"
 }
 
 function lsproc {
@@ -175,64 +149,6 @@ function lsproc {
 		cat /proc/${pid}/cmdline
 		echo ''
 	done
-}
-
-function mvt {
-    local search_depth=8
-    local search_directory=/
-    local print_dir=
-    local new_dir=
-    while [ "$#" -gt 0 ]
-    do
-        case $1 in
-            -c|--cwd)
-                search_directory=$(pwd)
-                ;;
-            -d|--depth)
-                search_depth=$2
-                shift
-                ;;
-            -h|--help)
-                cat <<- EOF
-Move To! v1.4 (bash)
-Options:
-    -h,--help
-        Show this help message
-    -d,--depth DEPTH
-        Specify how deep within the directory tree you want to search.
-        Defaults to 8.
-    -s,--search_directory DIRECTORY
-        Specify the directory to search within. Can be relative.
-        Defaults to /.
-    -c,--cwd
-        Search within the current working directory. Equivalent to
-          -s \$(PWD)
-    -p,--print
-        Instead of changing the working directory, just print the chosen
-        directory
-EOF
-                return
-                ;;
-            -s|--search-directory)
-                search_directory=$2
-                shift
-                ;;
-            -p|--print) print_dir=TRUE;;
-            *)
-                echo "mvt: Error: invalid option $1" >&2
-                return;;
-        esac
-        shift
-    done
-    new_dir="$(find ${search_directory} -maxdepth ${search_depth} -type d \
-        2>/dev/null | fzf)"
-    # check fzf wasn't cancelled before changing directory
-    if [ -n "$new_dir" -a -z "$print_dir" ]
-    then
-        cd "$new_dir"
-    else
-        echo $new_dir
-    fi
 }
 
 SIXTEEN_BOOKMARKS="
