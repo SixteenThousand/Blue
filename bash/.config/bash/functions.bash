@@ -136,8 +136,10 @@ EOF
     done
   fi
   if [ -z "$choice" ]; then
-      printf "\e[1;33mGuess we're not doing that then...\e[0m\n"
-      return 1
+    printf "\e[1;33mGuess we're not doing that then...\e[0m\n"
+    return 1
+  else
+    $EDITOR "$choice"
   fi
   PS3="$old_ps3"
 }
