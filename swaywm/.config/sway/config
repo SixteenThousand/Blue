@@ -9,11 +9,10 @@ set $mod Mod4
 
 ### KEYBOARD SETTINGS
 input * {
-    xkb_layout "gb"
+    xkb_layout "gb,gb(dvorak)"
     xkb_options caps:escape
-    # run the following to set layout at runtime
-    # swaymsg input type:keyboard xkb_layout gb
 }
+bindsym $peripheralMod+Space input type:keyboard xkb_switch_layout next
 
 
 ### MOUSE/POINTER/CURSOR SETTINGS
