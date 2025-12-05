@@ -1,6 +1,7 @@
 ### VARIABLES
 set $layoutMod Super+Alt
 set $moveMod Super+Shift
+set $peripheralMod Control+Super
 set $script_dir $HOME/.config/sway/scripts
 # this must be set for use in system wide config files
 set $mod Mod4
@@ -38,14 +39,11 @@ bindsym {
     # Start your launcher
     Super+space exec rofi -show drun
     Alt+space exec rofi -show drun
-    # other app shortcuts
-    Super+b exec $BROWSER
-    Super+Shift+Return exec desktopctl todo
-    Super+Return exec $TERMINAL
     # open a file
     Super+o exec rofi -show filebrowser
-    Super+Shift+o exec $TERMINAL -e desktopctl open
-
+    # other app shortcuts
+    Super+b exec $BROWSER
+    Super+Return exec $TERMINAL
     Super+p exec sh -c "$TERMINAL -T sixteen-python -e python3"
 }
 for_window [title="sixteen-python"] floating enable; resize set 60ppt 80ppt
@@ -62,17 +60,12 @@ bindsym {
 
 ### MOVE FOCUS
 bindsym {
-    # windows
-    Super+Tab exec 'rofi -show window'
-    Alt+Tab focus next
-    Alt+Shift+Tab focus prev
-    Super+w focus next
-    Super+Shift+w focus prev
-    Super+x focus prev
-    Super+e focus parent
-    Super+Shift+e focus child
-    Super+u [urgent=newest] focus
     # workspaces
+    Super+Tab exec 'rofi -show window'
+    Alt+Tab workspace next_on_output
+    Alt+Shift+Tab workspace prev_on_output
+    Super+semicolon exec $script_dir/new_workspace
+    Super+Backspace workspace back_and_forth
     Super+1 workspace number 1
     Super+2 workspace number 2
     Super+3 workspace number 3
@@ -82,19 +75,24 @@ bindsym {
     Super+7 workspace number 7
     Super+8 workspace number 8
     Super+9 workspace number 9
-    Super+Backspace workspace back_and_forth
-    Super+j workspace next_on_output
-    Super+k workspace prev_on_output
-    Super+Down workspace next_on_output
-    Super+Up workspace prev_on_output
-    Super+semicolon exec $script_dir/new_workspace
+    Super+u [urgent=newest] focus
+    # windows
     # Swap focus between the tiling area and the floating area
     Super+equal focus mode_toggle
-    Control+Super+h focus output left
-    Control+Super+j focus output down
-    Control+Super+k focus output up
-    Control+Super+l focus output right
-    Control+Super+Space $script_dir/switch_output
+    Super+h focus left
+    Super+j focus down
+    Super+k focus up
+    Super+l focus right
+    Super+left  focus left
+    Super+down  focus down
+    Super+up    focus up
+    Super+right focus right
+    # Change output
+    $peripheralMod+h focus output left
+    $peripheralMod+j focus output down
+    $peripheralMod+k focus output up
+    $peripheralMod+l focus output right
+    $peripheralMod+Return $script_dir/switch_output
 }
 
 
@@ -104,11 +102,11 @@ bindsym {
     $moveMod+j move down
     $moveMod+k move up
     $moveMod+l move right
-    # Ditto, with arrow keys
     $moveMod+Left move left
     $moveMod+Down move down
     $moveMod+Up move up
     $moveMod+Right move right
+    $moveMod+Backspace move workspace back_and_forth; workspace back_and_forth
     # Move focused container to workspace
     $moveMod+1 move container to workspace number 1; workspace 1
     $moveMod+2 move container to workspace number 2; workspace 2
@@ -121,7 +119,6 @@ bindsym {
     $moveMod+9 move container to workspace number 9; workspace 9
     # scratchpad workspace
     $moveMod+minus border pixel 5; move scratchpad
-    # Cycle through scratchpad windows
     Super+minus scratchpad show
     Super+Shift+semicolon exec $script_dir/new_workspace with_window
 }
@@ -188,11 +185,10 @@ bindsym {
     Super+F6 exec desktopctl mon - 5
     Super+F7 exec desktopctl mon + 5
     # Mount USB sticks and the like
-    Super+c exec desktopctl mount
-    Super+Shift+c exec desktopctl unmount
-    Super+Alt+c exec desktopctl lsblk
+    $peripheralMod+m exec desktopctl mount
+    $peripheralMod+u exec desktopctl unmount
     # Bluetooth
-    Super+v exec desktopctl bt toggle
+    $peripheralMod+b exec desktopctl bt toggle
 }
 
 ### NOTIFICATIONS
@@ -205,6 +201,7 @@ exec --no-startup-id dunst & disown
 
 ### RULES
 for_window [title=".*Video Bridge.*"] kill
+for_window [all] exec $script_dir/new_workspace with_window
 
 
 ### IMPORTS
