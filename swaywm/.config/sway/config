@@ -200,7 +200,7 @@ exec --no-startup-id dunst & disown
 
 ### RULES
 for_window [title=".*Video Bridge.*"] kill
-for_window [all] exec $script_dir/new_workspace with_window
+for_window [tiling] exec $script_dir/new_workspace with_window
 
 
 ### IMPORTS
