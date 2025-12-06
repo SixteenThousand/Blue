@@ -167,7 +167,7 @@ function z {
         $HOME \
         $HOME/Documents \
         -maxdepth 3 -type d -not -path '*/.*' 2>/dev/null \
-        | grep -i "$1")
+        | grep -i "$1" | head -n 1)
   fi
   if [[ -n $2 ]]; then
     target=$(project_files d "$target" | grep -i "$2" | head -n 1)
