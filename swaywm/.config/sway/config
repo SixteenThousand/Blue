@@ -43,7 +43,7 @@ bindsym {
     # other app shortcuts
     Super+b exec $BROWSER
     Super+Return exec $TERMINAL
-    Super+p exec sh -c "$TERMINAL -T sixteen-python -e python3"
+    Super+y exec sh -c "$TERMINAL -T sixteen-python -e python3"
 }
 for_window [title="sixteen-python"] floating enable; resize set 60ppt 80ppt
 
@@ -61,10 +61,11 @@ bindsym {
 bindsym {
     # workspaces
     Super+Tab exec 'rofi -show window'
-    Alt+Tab workspace next_on_output
+    Alt+Tab workspace back_and_forth
     Alt+Shift+Tab workspace prev_on_output
+    Super+p workspace prev_on_output
+    Super+n workspace next_on_output
     Super+semicolon exec $script_dir/new_workspace
-    Super+Backspace workspace back_and_forth
     Super+1 workspace number 1
     Super+2 workspace number 2
     Super+3 workspace number 3
@@ -191,7 +192,7 @@ bindsym {
 }
 
 ### NOTIFICATIONS
-bindsym Super+n exec dunstctl close-all
+bindsym Super+d exec dunstctl close-all
 
 ### AUTOSTART
 # `desktopctl` is a script I wrote. You should be able to find in Blue/misc.
