@@ -89,15 +89,17 @@ function pathgrep {
 
 # Pass argument 'd' to get project directories
 function project_files {
-    local item_type=f
-    [[ -n $1 ]] && item_type=$1
-    find \
-        -path '*node_modules*' \
-        -o -path '*.git*' \
-        -o -path '*venv*' \
-        -prune -o \
-        -type $item_type -print \
-        2>/dev/null
+  local item_type=f
+  local search_dir=.
+  [[ -n $1 ]] && item_type=$1
+  [[ -n $2 ]] && search_dir=$2
+  find "$search_dir" \
+    -path '*/node_modules/*' \
+    -o -path '*/.git*' \
+    -o -path '*venv/*' \
+    -prune -o \
+    -type $item_type -print \
+    2>/dev/null
 }
 
 # Choose a file!
@@ -153,30 +155,27 @@ function lsproc {
 	done
 }
 
-SIXTEEN_BOOKMARKS="
-/mnt
-${HOME}
-${HOME}/Documents
-/usr
-"
-
-function get_bookmark_dirs {
-    find $SIXTEEN_BOOKMARKS -maxdepth 3 -type d -not -path '*/.*' 2>/dev/null
-}
-
 function z {
-    if [[ -z $1 ]]; then
-        cd
-        return
-    fi
-    cd "$(get_bookmark_dirs | grep -i "$1.*$2" | head -n 1)"
-}
-
-function zi {
-    cd "$(get_bookmark_dirs | fzf)"
+  local target=
+  if [[ -z $1 ]]; then
+    cd
+    return
+  else
+    target=$(
+      find \
+        /mnt \
+        $HOME \
+        $HOME/Documents \
+        -maxdepth 3 -type d -not -path '*/.*' 2>/dev/null \
+        | grep -i "$1")
+  fi
+  if [[ -n $2 ]]; then
+    target=$(project_files d "$target" | grep -i "$2" | head -n 1)
+  fi
+  cd "$target"
 }
 
 function zz {
-    [[ -z $1 ]] && return 1
-    cd "$(project_files d | grep -i "$1.*$2" | head -n 1)"
+  [[ -z $1 ]] && return 1
+  cd "$(project_files d | grep -i "$1.*$2" | head -n 1)"
 }
