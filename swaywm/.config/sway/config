@@ -47,7 +47,6 @@ bindsym {
     Super+Return exec $TERMINAL
     Super+y exec sh -c "$TERMINAL -T sixteen-python -e python3"
 }
-for_window [title="sixteen-python"] floating enable; resize set 60ppt 80ppt
 
 
 ### META STUFF
@@ -64,6 +63,7 @@ bindsym {
     # workspaces
     Super+Tab exec 'rofi -show window'
     Alt+Tab workspace back_and_forth
+    Super+Backspace workspace back_and_forth
     Alt+Shift+Tab workspace prev_on_output
     Super+p workspace prev_on_output
     Super+n workspace next_on_output
@@ -202,6 +202,7 @@ exec --no-startup-id ( /usr/libexec/pam_kwallet_init & disown ) && ( desktopctl 
 exec --no-startup-id dunst & disown
 
 ### RULES
+for_window [title="sixteen-python"] floating enable; resize set 60ppt 80ppt
 for_window [title=".*Video Bridge.*"] kill
 for_window [tiling] exec $script_dir/new_workspace with_window
 
