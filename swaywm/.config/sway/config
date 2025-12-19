@@ -25,9 +25,11 @@ focus_follows_mouse no
 ### OUTPUT CONFIGURATION
 # Wallpaper. Requires: desktop-backgrounds-compat, swaybg
 exec --no-startup-id ~/.swaybg
-
 # fixing the zoom
 output * scale 1
+set $laptop eDP-1
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
 
 
 ### LAUNCH/CLOSE APPS
