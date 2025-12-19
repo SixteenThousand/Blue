@@ -47,8 +47,6 @@ vim.go.showtabline = 0
 vim.o.number = true
 vim.o.relativenumber = true
 
-vim.go.winborder = "single"
-
 vim.go.splitright = true
 vim.go.splitbelow = true
 

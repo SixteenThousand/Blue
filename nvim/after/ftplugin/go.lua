@@ -1,5 +1,4 @@
 vim.bo.expandtab = false
-vim.bo.formatexpr = "go fmt"
 
 require("snippets").sixteen_snippets = {
     ["boiler"] = [[package $1
