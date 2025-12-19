@@ -50,9 +50,9 @@ for_window [title="sixteen-python"] floating enable; resize set 60ppt 80ppt
 
 ### META STUFF
 bindsym {
-    Control+Super+q swaylock
+    Control+Super+q exec swaylock
     Super+Shift+q exit
-    Super+Shift+Delete exec brightnessctl set 100%; exec systemctl poweroff 
+    Super+Shift+Delete exec systemctl poweroff
     Super+Shift+r reload; exec notify-send sway 'Reloaded!'
 }
 
@@ -182,8 +182,8 @@ bindsym {
     Super+F2 exec desktopctl vol - 2
     Super+F3 exec desktopctl vol + 2
     Super+F4 exec playerctl play-pause
-    Super+F6 exec desktopctl mon - 5
-    Super+F7 exec desktopctl mon + 5
+    Super+F5 exec desktopctl mon - 5
+    Super+F6 exec desktopctl mon + 5
     # Mount USB sticks and the like
     $peripheralMod+m exec desktopctl mount
     $peripheralMod+u exec desktopctl unmount
