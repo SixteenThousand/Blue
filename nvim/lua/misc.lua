@@ -4,9 +4,6 @@ local utils = require("utils")
 vim.g.mapleader = " "
 
 
--- Stops some anoying autoindent behaviour
-vim.keymap.set("i","<CR>","<leader><BS><CR>")
-
 -- System Copy & Paste
 vim.keymap.set({"n","v"},"<leader>y","\"+y")
 vim.keymap.set({"n","v"},"<leader>p","\"+p")
