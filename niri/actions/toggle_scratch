@@ -1,7 +1,0 @@
-#!/bin/sh
-
-if niri msg workspaces | grep '\*.*scratch'; then
-    niri msg action focus-workspace-previous
-else
-    niri msg action focus-workspace scratch
-fi
