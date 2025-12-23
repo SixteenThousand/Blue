@@ -45,7 +45,7 @@ vim.o.spelllang = "en_gb"
 vim.go.showtabline = 0
 
 vim.o.number = true
-vim.o.relativenumber = true
+vim.o.relativenumber = false
 
 vim.go.splitright = true
 vim.go.splitbelow = true

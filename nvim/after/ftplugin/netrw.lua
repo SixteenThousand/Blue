@@ -1,5 +1,4 @@
 vim.wo.number = true
-vim.wo.relativenumber = true
 
 vim.keymap.set(
     "n",
