@@ -179,3 +179,7 @@ function zz {
   [[ -z $1 ]] && return 1
   cd "$(project_files d | grep -i "$1.*$2" | head -n 1)"
 }
+
+function scpx {
+  scp -r "$1" "$2:~/$(realpath --relative-to $HOME "$1")"
+}

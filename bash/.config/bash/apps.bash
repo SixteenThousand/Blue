@@ -51,3 +51,6 @@ function nnn {
 
 # borg backup
 export BORG_PASSCOMMAND='kwallet-query -r gibbous-5.0-borg-password kdewallet'
+
+# mpv
+alias mpvv='mpv --vid=no'
