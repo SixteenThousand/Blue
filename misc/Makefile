@@ -10,5 +10,6 @@ install:
 	stow -S . -t ${HOME} ${IGNORE}
 uninstall:
 	stow -D . -t ${HOME} ${IGNORE}
+	rm ${AUTOSTART_DIR}/autostart.sh
 build:
 	cp -f ./autostart.sh ${AUTOSTART_DIR}

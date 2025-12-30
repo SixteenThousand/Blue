@@ -28,7 +28,7 @@ case $choice in
             'https://web.whatsapp.com' \
             'https://discordapp.com/channels/@me' \
             'https://mail.google.com/mail/u/0/#inbox' \
-            'https://mail.google.com/mail/u/1/#inbox'
+            'https://mail.google.com/mail/u/1/#inbox' \
             & disown
         $MAIL & disown
         ;;
