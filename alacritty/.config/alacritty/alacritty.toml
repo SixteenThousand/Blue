@@ -24,6 +24,9 @@ size = 13
 style = { shape = "Block", blinking = "On" }
 vi_mode_style = { shape = "Block", blinking = "On" }
 
+[colors]
+cursor = { text = "CellBackground", cursor = "CellForeground" }
+
 [mouse]
 hide_when_typing = true
 
