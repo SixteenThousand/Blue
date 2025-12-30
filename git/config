@@ -1,0 +1,13 @@
+[init]
+	defaultBranch = main
+	templateDir = ~/.config/git/template
+[user]
+	name = Thomas Lindop
+	email = thomsixteenthousand@gmail.com
+[alias]
+	root = rev-parse --show-toplevel
+	diffs = diff --cached
+	taglist = tag --format=\"%(refname:strip=2) -> %(objectname)\" --sort=-refname
+[credential]
+	helper = cache --timeout 21600
+	helper = oauth
