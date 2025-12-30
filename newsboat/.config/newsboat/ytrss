@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+rss_url() {
+    curl "https://www.youtube.com/@$1" |
+        grep -o '<link [^>]* type="application/rss+xml" [^>]*>' |
+        sed 's/.*href="\([^"]\+\)".*/\1/'
+}
+
+URLS_FILE=urls.md
+if [ "$#" -gt 0 ]; then
+    for channel in $@; do
+        echo "$channel" >> $URLS_FILE
+        rss_url "$channel" >> $URLS_FILE
+    done
+fi

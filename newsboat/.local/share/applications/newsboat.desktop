@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Newsboat
+Exec=newsboat
+GenericName=RSS feed reader
+Icon=newsboat
+Type=Application
+Terminal=true
+StartupNotify=true
