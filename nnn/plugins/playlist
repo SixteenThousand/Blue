@@ -1,0 +1,5 @@
+#!/bin/sh
+
+SEL_FILE=$HOME/.config/nnn/.selection
+
+cat "$SEL_FILE" | xargs -0 mpv --vid=no -

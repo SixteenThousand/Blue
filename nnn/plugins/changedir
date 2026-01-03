@@ -1,0 +1,11 @@
+#!/bin/sh
+
+
+if [ ! -p "$NNN_PIPE" ]; then
+	echo -e "\e[1;31mError: NNN_PIPE not defined!\e[0m" >&2
+  read -p "Press enter to return to nnn..."
+	exit 1
+fi
+
+read -p "Go to: " directory
+printf "%s" "0c$directory" > "$NNN_PIPE"
