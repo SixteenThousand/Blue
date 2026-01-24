@@ -1,4 +1,4 @@
-IGNORE=--ignore=Makefile --ignore=.md --ignore=.gitignore
+IGNORE=--ignore=Makefile --ignore=.md --ignore=.gitignore --ignore=.bak
 
 install:
 	mkdir -p ${HOME}/.local/share/bash
