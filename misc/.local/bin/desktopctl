@@ -33,9 +33,8 @@ info_help() {
     desktopctl autostart
   Open all apps specified by the desktop files in ~/.config/autostart
  
-    desktopctl open [--fm]
-  Select a file (with fzf) and open it. With --fm option, use nnn. Note files must 
-  be selected, not simply hovered over.
+    desktopctl open-file
+  Select a file to open with rofi
   
     desktopctl check_battery
   Checks /sys/class/power_supply/BAT1 for current battery charge. Useful for
@@ -61,41 +60,29 @@ info_help() {
 EOF
 }
 
-swaybg_wrap() {
-    killall swaybg
-    swaybg --mode fill --image $1 & disown
-    echo "swaybg --mode fill --image $1 & disown" > ~/.swaybg
-    chmod +x ~/.swaybg
-}
-
 rewallpaper() {
-    # cursed
-    # resolution="$(xrandr | grep -F '*' | cut -d' ' -f 4)"
-    # decide how to set wallpaper
     local new_wallpaper="$1"
-    local cmd='feh --bg-fill'
-    if [ "$XDG_CURRENT_DESKTOP" = KDE ]
-    then
-        cmd='plasma-apply-wallpaperimage --fill-mode preserveAspectCrop'
-    elif pgrep swaybg >/dev/null 2>&1 || pgrep sway >/dev/null 2>&1
-    then
-        cmd=swaybg_wrap
-    fi
     # detect whether new wallpaper has been set manually, and if not, find it
-    if [ -z "$new_wallpaper" ]
-    then
+    if [ -z "$new_wallpaper" ]; then
         local personal=$(find -L $HOME/Pictures/Wallpapers -type f)
         local desktops=$(find -L /usr/share/wallpapers -type f -name '1920x1080*' -o -name '5120x2880*')
         # this line broke when split
         new_wallpaper=$(printf "$personal\n$desktops\n" | fzf)
     fi
     # set wallpaper, if possible
-    if [ -z "$new_wallpaper" ]
-    then
+    if [ -z "$new_wallpaper" ]; then
         echo "No wallpaper selected!" >&2
         exit 1
     else
-        $cmd $new_wallpaper
+        # decide how to set wallpaper
+        if [ "$XDG_CURRENT_DESKTOP" = KDE ]; then
+            plasma-apply-wallpaperimage --fill-mode preserveAspectCrop "$new_wallpaper"
+        elif pgrep swaybg >/dev/null 2>&1 || pgrep sway >/dev/null 2>&1; then
+            killall swaybg
+            swaybg --mode fill --image "$new_wallpaper" & disown
+        fi
+        # preserve choice
+        ln -sf "$new_wallpaper" ~/.wallpaper
         printf "Wallpaper set to >>\e[1m$new_wallpaper\e[0m<<\n"
     fi
 }
@@ -130,16 +117,8 @@ mute() {
 }
 
 open_file() {
-    if [ "$1" = --fm ]
-    then
-        for file in $(nnn -p - $HOME/Documents)
-        do
-            nohup xdg-open "$file" > $DESKTOPCTL_LOG
-        done
-    else
-        cd $HOME/Documents
-        nohup xdg-open $(fzf) > $DESKTOPCTL_LOG
-    fi
+  local file=$(find $HOME -maxdepth 4 -type f -not -path '*/.*' | rofi -dmenu)
+  nohup xdg-open "$file" > $DESKTOPCTL_LOG
 }
 
 check_battery() {
@@ -162,7 +141,7 @@ get_bt_device_uuid() {
 bt() {
     case $1 in
         connect)
-            bluetooth on
+            rfkill unblock bluetooth
             # If you try to connect immediately it just fails
             notify-send -a $APPNAME 'Turning on bluetooth...'
             sleep 3
@@ -170,10 +149,10 @@ bt() {
             bluetoothctl connect $(get_bt_device_uuid "$2")
             ;;
         off)
-            bluetooth off
+            rfkill block bluetooth
             ;;
         toggle)
-            bluetooth toggle
+            rfkill toggle bluetooth
             ;;
     esac
 }
@@ -241,7 +220,7 @@ case $1 in
     mon)
         shift 1
         brightnessctl -q set $2%$1
-        VALUE=$(brightnessctl -q -P get)
+        VALUE=$(( $(brightnessctl get) * 100 / $(brightnessctl max) ))
         notify-send -a $APPNAME \
             -e -t 600 \
             -h string:x-canonical-private-synchronous:brightness \
@@ -250,9 +229,8 @@ case $1 in
     autostart)
         $HOME/.config/autostart/autostart.sh
         ;;
-    open)
-        shift 1
-        open_file $@
+    open-file)
+        open_file
         ;;
     check_battery)
         check_battery
@@ -276,3 +254,5 @@ case $1 in
         info_help
         ;;
 esac
+
+# vim: sw=4 ts=4
