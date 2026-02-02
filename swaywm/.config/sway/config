@@ -41,7 +41,7 @@ bindsym {
     Super+space exec rofi -show drun
     Alt+space exec rofi -show drun
     # open a file
-    Super+o exec rofi -show filebrowser
+    Super+o exec desktopctl open-file
     # other app shortcuts
     Super+b exec $BROWSER
     Super+Return exec $TERMINAL
@@ -176,8 +176,6 @@ client.focused #1d6432cc #1d6432cc #ffffff #1d6432ee
 
 
 ### MEDIA/HARDWARE CONTROLS
-# this is used in the system config; included below
-set $volume_step 2
 bindsym {
     # for non-laptops
     Super+F1 exec desktopctl mute
@@ -186,6 +184,12 @@ bindsym {
     Super+F4 exec playerctl play-pause
     Super+F5 exec desktopctl mon - 5
     Super+F6 exec desktopctl mon + 5
+    XF86AudioMute exec desktopctl mute
+    XF86AudioLowerVolume exec desktopctl vol - 5
+    XF86AudioRaiseVolume exec desktopctl vol + 5
+    XF86AudioPause exec playerctl play-pause
+    XF86MonBrightnessDown exec desktopctl mon - 5
+    XF86MonBrightnessUp exec desktopctl mon + 5
     # Mount USB sticks and the like
     $peripheralMod+m exec desktopctl mount
     $peripheralMod+u exec desktopctl unmount
@@ -198,7 +202,7 @@ bindsym Super+d exec dunstctl close-all
 
 ### AUTOSTART
 # `desktopctl` is a script I wrote. You should be able to find in Blue/misc.
-exec --no-startup-id ( /usr/libexec/pam_kwallet_init & disown ) && ( desktopctl autostart || : )
+exec --no-startup-id ( /usr/share/libpam-kwallet-common/pam_kwallet_init & disown ) && ( desktopctl autostart || : )
 exec --no-startup-id dunst & disown
 
 ### RULES
@@ -229,4 +233,6 @@ for_window [tiling] exec $script_dir/new_workspace with_window
 # important to make the magic work. And if you want to learn the secret behind
 # the trick, it's all in the `wordexp(3)`.
 #
-include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+include "/usr/share/sway/config.d/*.conf"
+include "/etc/sway/config.d/*.conf"
+include "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf"
