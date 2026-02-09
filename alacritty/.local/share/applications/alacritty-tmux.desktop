@@ -1,6 +1,0 @@
-[Desktop Entry]
-Exec=alacritty -e tmux
-Name=Alacritty with Tmux
-NoDisplay=false
-Type=Application
-Icon=Tmux
