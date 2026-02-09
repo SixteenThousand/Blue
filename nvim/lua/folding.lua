@@ -1,6 +1,11 @@
 --- FOLDING SETTINGS
 function sixteen_fold_text()
-	return "+--- "..(vim.v.foldend-vim.v.foldstart+1).." lines: "..vim.fn.getline(vim.v.foldstart).." ..."
+    return string.format(
+        "+%d lines: %s ... %s",
+        vim.v.foldend - vim.v.foldstart + 1,
+        vim.fn.getline(vim.v.foldstart),
+        vim.fn.getline(vim.v.foldend)
+    )
 end
 
 --[[
@@ -52,7 +57,7 @@ function wipe_folds()
 end
         
 vim.wo.foldcolumn = "0"
-vim.go.foldtext = "v:lua.sixteen_fold_text()"
+vim.o.foldtext = "v:lua.sixteen_fold_text()"
 vim.opt_global.fillchars:append{ fold = " " }
 
 -- stop folds being highlighted
@@ -77,7 +82,7 @@ vim.api.nvim_create_user_command(
         if cmd == "py" then
             fold_by_pattern("^\\S", "\\n\\n\\n", 2)
         elseif cmd == "c" then
-            fold_by_pattern([[^\S.*[({[]$]], "^[])}]$")
+            fold_by_pattern([[^\S.*[({[]$]], [=[^[]})]]=])
         elseif cmd == "lua" then
             fold_by_pattern([[^\S]], "^end$")
         end
