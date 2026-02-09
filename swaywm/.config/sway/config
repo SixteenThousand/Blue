@@ -23,8 +23,6 @@ focus_follows_mouse no
 
 
 ### OUTPUT CONFIGURATION
-# Wallpaper. Requires: desktop-backgrounds-compat, swaybg
-exec --no-startup-id ~/.swaybg
 # fixing the zoom
 output * scale 1
 set $laptop eDP-1
@@ -204,6 +202,7 @@ bindsym Super+d exec dunstctl close-all
 # `desktopctl` is a script I wrote. You should be able to find in Blue/misc.
 exec --no-startup-id ( /usr/share/libpam-kwallet-common/pam_kwallet_init & disown ) && ( desktopctl autostart || : )
 exec --no-startup-id dunst & disown
+exec --no-startup-id blueman-applet & disown
 
 ### RULES
 for_window [title="sixteen-python"] floating enable; resize set 60ppt 80ppt
