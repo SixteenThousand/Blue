@@ -122,6 +122,8 @@ http://feeds.soundcloud.com/users/soundcloud:users:315640457/sounds.rss
 https://feeds.acast.com/public/shows/646b293a1848550012cb049c?_gl=1*18hun03*_gcl_au*ODY2ODQyNjMyLjE3MzgyMTM5NTM.
 **romance of the 3 kingdoms**
 https://johnzhu.podbean.com/feed.xml
+**Empire**
+https://feeds.megaphone.fm/empirepodcast
 
 ## entertainment
 **horne section**
