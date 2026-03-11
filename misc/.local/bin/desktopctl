@@ -34,7 +34,7 @@ info_help() {
   Open all apps specified by the desktop files in ~/.config/autostart
  
     desktopctl open-file
-  Select a file to open with rofi
+  Select a file to open
   
     desktopctl check_battery
   Checks /sys/class/power_supply/BAT1 for current battery charge. Useful for
@@ -117,7 +117,7 @@ mute() {
 }
 
 open_file() {
-  local file=$(find $HOME -maxdepth 4 -type f -not -path '*/.*' | rofi -dmenu)
+  local file=$(find $HOME -maxdepth 4 -type f -not -path '*/.*' | fuzzel --dmenu)
   nohup xdg-open "$file" > $DESKTOPCTL_LOG
 }
 

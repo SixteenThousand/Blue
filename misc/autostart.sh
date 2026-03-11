@@ -3,7 +3,7 @@
 DEFAULT_OPT="open internet stuff"
 NO_OPT="don't do that"
 MAKERS_OPT=makers
-choice=$(printf "${DEFAULT_OPT}\n${NO_OPT}\n${MAKERS_OPT}" | rofi -dmenu)
+choice=$(printf "${DEFAULT_OPT}\n${NO_OPT}\n${MAKERS_OPT}" | fuzzel -dmenu)
 
 [ -z "$choice" ] && exit 0
 
