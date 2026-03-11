@@ -1,0 +1,9 @@
+#!/bin/sh
+
+notify-send -a 'swayconfig' 'Powering off in 40m'
+
+sleep 2400
+
+swaymsg kill
+
+systemctl poweroff

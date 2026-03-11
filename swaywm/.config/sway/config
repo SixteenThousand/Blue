@@ -32,12 +32,12 @@ bindswitch --reload --locked lid:off output $laptop enable
 
 ### LAUNCH/CLOSE APPS
 # kill focused window
-bindsym Super+q kill
-bindsym Alt+F4 kill
+bindsym Super+q kill; workspace back_and_forth
+bindsym Alt+F4 kill; workspace back_and_forth
 bindsym {
     # Start your launcher
-    Super+space exec rofi -show drun
-    Alt+space exec rofi -show drun
+    Super+space exec fuzzel
+    Alt+space exec fuzzel
     # open a file
     Super+o exec desktopctl open-file
     # other app shortcuts
@@ -52,6 +52,7 @@ bindsym {
     Control+Super+q exec swaylock
     Super+Shift+q exit
     Super+Shift+Delete exec systemctl poweroff
+    Control+Super+x exec $script_dir/timed_poweroff
     Super+Shift+r reload; exec notify-send sway 'Reloaded!'
 }
 
@@ -59,7 +60,6 @@ bindsym {
 ### MOVE FOCUS
 bindsym {
     # workspaces
-    Super+Tab exec 'rofi -show window'
     Alt+Tab workspace back_and_forth
     Super+Backspace workspace back_and_forth
     Alt+Shift+Tab workspace prev_on_output
@@ -79,6 +79,7 @@ bindsym {
     # windows
     # Swap focus between the tiling area and the floating area
     Super+equal focus mode_toggle
+    Super+w focus left
     Super+h focus left
     Super+j focus down
     Super+k focus up
