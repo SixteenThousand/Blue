@@ -1,6 +1,8 @@
 # news
 **Its foss**
 https://news.itsfoss.com/rss/
+**Linuxiac**
+https://linuxiac.com/feed/
 
 # comics
 ## work
