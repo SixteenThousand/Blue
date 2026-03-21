@@ -32,8 +32,8 @@ bindswitch --reload --locked lid:off output $laptop enable
 
 ### LAUNCH/CLOSE APPS
 # kill focused window
-bindsym Super+q kill; workspace back_and_forth
-bindsym Alt+F4 kill; workspace back_and_forth
+bindsym Super+q kill
+bindsym Alt+F4 kill
 bindsym {
     # Start your launcher
     Super+space exec fuzzel
