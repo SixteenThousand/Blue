@@ -26,7 +26,7 @@ vim.o.textwidth = 79
 
 -- search stuff, incl. file & buffer search
 vim.go.hlsearch = false
-vim.go.ignorecase = false
+vim.go.ignorecase = true
 vim.go.fileignorecase = true
 
 -- change what "b" & "w" consider "words"
