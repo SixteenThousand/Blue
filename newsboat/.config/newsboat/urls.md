@@ -75,7 +75,7 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCzfyYtgvkx5mLy8nlLlayYg
 https://www.youtube.com/feeds/videos.xml?channel_id=UCVXYr7yCUsfamWMf1N1qRJQ
 ## news
 **BoldPoliticswithZack**
-https://www.youtube.com/feeds/videos.xml?channel_id=UCUwr0AobHlGvzI31669OyXQ
+https://feeds.acast.com/public/shows/bold-politics-with-zack-polanski
 
 
 # podcasts
@@ -86,15 +86,11 @@ https://www.relay.fm/cortex/feed
 https://anchor.fm/s/f39e007c/podcast/rss
 **martin lewis**
 https://podcasts.files.bbci.co.uk/p02pc9xt.rss
-**bookskill**
-https://feeds.buzzsprout.com/2040953.rss
 **complement**
 https://www.twoscomplement.org/podcast/feed.xml
 ### news
 **wales**
 https://feeds.buzzsprout.com/2410605.rss
-**mol**
-https://podcasts.files.bbci.co.uk/p02nrss1.rss
 **tldr**
 https://rss.art19.com/world-leader-leaderboard
 
@@ -122,8 +118,6 @@ https://feeds.soundcloud.com/users/soundcloud:users:173948481/sounds.rss
 http://feeds.soundcloud.com/users/soundcloud:users:315640457/sounds.rss
 **aotearoa**
 https://feeds.acast.com/public/shows/646b293a1848550012cb049c?_gl=1*18hun03*_gcl_au*ODY2ODQyNjMyLjE3MzgyMTM5NTM.
-**romance of the 3 kingdoms**
-https://johnzhu.podbean.com/feed.xml
 **Empire**
 https://feeds.megaphone.fm/empirepodcast
 
