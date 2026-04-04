@@ -9,7 +9,6 @@ lspconf.rust_analyzer.setup{
     cmd = {"rust-analyzer"},
 }
 lspconf.gopls.setup{}
-lspconf.ts_ls.setup{}
 lspconf.clangd.setup{}
 
 --- Get Information & Hover
@@ -25,8 +24,10 @@ vim.api.nvim_create_autocmd("LspAttach",{
         end
         vim.keymap.set("n","gd",vim.lsp.buf.definition,{buffer=true})
         vim.keymap.set({"n","i"},"<F2>",vim.lsp.buf.rename,{buffer=true})
+        vim.keymap.set({"n","i"},"gr",vim.lsp.buf.rename,{buffer=true})
         vim.opt_global.completeopt:remove("preview")
         vim.keymap.set("n", "<F3>", vim.lsp.buf.code_action)
+        vim.keymap.set("n", "gi", vim.lsp.buf.code_action)
     end,
 })
 
