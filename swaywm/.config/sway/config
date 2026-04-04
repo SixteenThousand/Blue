@@ -14,9 +14,9 @@ input * {
 }
 bindsym $peripheralMod+Space input type:keyboard xkb_switch_layout next
 
-
 ### MOUSE/POINTER/CURSOR SETTINGS
 seat seat0 xcursor_theme default 36
+seat seat0 xcursor_theme LHackneyed-Magenta-Mono-Animated 48
 # may need to turn off this setting if I ever use blender
 seat seat0 hide_cursor when-typing enable
 focus_follows_mouse no
