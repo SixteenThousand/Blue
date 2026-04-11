@@ -5,6 +5,8 @@
 	name = Thomas Lindop
 	email = thomsixteenthousand@gmail.com
 [alias]
+    st = status
+    ci = commit
 	root = rev-parse --show-toplevel
 	diffs = diff --cached
 	taglist = tag --format=\"%(refname:strip=2) -> %(objectname)\" --sort=-refname
