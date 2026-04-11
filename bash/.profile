@@ -8,6 +8,7 @@ export XDG_SCREENSHOTS_DIR="$HOME/Pictures/Screenshots"
 if [ "$XDG_CURRENT_DESKTOP" != "KDE" ]
 then
     export QT_QPA_PLATFORMTHEME=qt6ct
+    export SAL_USE_VCLPLUGIN=qt6
 fi
 
 # java windows on wayland
