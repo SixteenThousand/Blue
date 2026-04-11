@@ -35,9 +35,6 @@ info_help() {
     desktopctl autostart
   Open all apps specified by the desktop files in ~/.config/autostart
  
-    desktopctl open-file
-  Select a file to open
-  
     desktopctl check_battery
   Checks /sys/class/power_supply/BAT1 for current battery charge. Useful for
   an anacron job.
@@ -54,6 +51,9 @@ info_help() {
 
     desktopctl lsblk
   List external drives (/dev/sd*) and their mountpoints in a notfication.
+
+    desktops toggle-theme
+  Swap between light & dark themes. Experimental; will likely never work perfectly.
 
  Acknowledgement:
  The code for the volume changing commands is modelled on the volume-helper 
@@ -116,11 +116,6 @@ mute() {
         --app-name $APPNAME \
         -t 1000 \
         "$MSG"
-}
-
-open_file() {
-  local file=$(find $HOME -maxdepth 4 -type f -not -path '*/.*' | fuzzel --dmenu)
-  nohup xdg-open "$file" > $DESKTOPCTL_LOG
 }
 
 check_battery() {
@@ -201,6 +196,18 @@ list_devices() {
     notify-send -a $APPNAME 'devices' "$(lsblk -o NAME,MOUNTPOINTS /dev/sd*)"
 }
 
+toggle_theme() {
+    local current=$(
+        gsettings get org.gnome.desktop.interface color-scheme)
+    if [ "$current" = "'prefer-dark'" ]; then
+        notify-send -a desktopctl 'Switching to light mode...'
+        gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+    else
+        notify-send -a desktopctl 'Switching to dark mode...'
+        gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    fi
+}
+
 # "main"
 case $1 in
     -h|--help)
@@ -230,9 +237,6 @@ case $1 in
     autostart)
         $HOME/.config/autostart/autostart.sh
         ;;
-    open-file)
-        open_file
-        ;;
     check_battery)
         check_battery
         ;;
@@ -250,6 +254,9 @@ case $1 in
         ;;
     lsblk)
         list_devices
+        ;;
+    toggle-theme)
+        toggle_theme
         ;;
     *)
         info_help
