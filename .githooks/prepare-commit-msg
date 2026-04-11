@@ -18,7 +18,7 @@ if [ "$(head -c 1 ${COMMIT_MSG_FILE})" = '[' ]; then
 fi
 
 
-printf "[${APP}]\n>> " > "$COMMIT_MSG_FILE"
+printf "[${APP}] " > "$COMMIT_MSG_FILE"
 printf "$CURRENT_MSG" >> "$COMMIT_MSG_FILE"
 
 
