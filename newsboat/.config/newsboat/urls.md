@@ -120,6 +120,10 @@ http://feeds.soundcloud.com/users/soundcloud:users:315640457/sounds.rss
 https://feeds.acast.com/public/shows/646b293a1848550012cb049c?_gl=1*18hun03*_gcl_au*ODY2ODQyNjMyLjE3MzgyMTM5NTM.
 **Empire**
 https://feeds.megaphone.fm/empirepodcast
+**osp**
+https://feeds.transistor.fm/overly-sarcastic-podcast
+**how to invent a country**
+https://podcasts.files.bbci.co.uk/p0683ms3.rss
 
 ## entertainment
 **horne section**
