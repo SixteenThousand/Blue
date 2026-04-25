@@ -41,5 +41,7 @@ export XCURSOR_SIZE=48
 
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep.conf
 
+export GPG_TTY=$(tty)
+
 
 export PATH="$HOME/.local/bin:$HOME/bin:/usr/sbin:$PATH"
