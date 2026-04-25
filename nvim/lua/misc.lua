@@ -4,46 +4,12 @@ local utils = require("utils")
 vim.g.mapleader = " "
 
 
--- System Copy & Paste
+-- system copy & paste
 vim.keymap.set({"n","v"},"<leader>y","\"+y")
 vim.keymap.set({"n","v"},"<leader>p","\"+p")
 vim.keymap.set({"n","v"},"<leader>P","\"+P")
 
--- Sometimes I just can't be arsed to write stuff, y'know?
-local print_statements = {
-    ["c"] = "printf(",
-    ["cs"] = "Console.WriteLine(",
-    ["go"] = "fmt.Println(",
-    ["haskell"] = "putStrLn ",
-    ["html"] = "console.log(",
-    ["java"] = "System.out.println(",
-    ["javascript"] = "console.log(",
-    ["javascriptreact"] = "console.log(",
-    ["lua"] = "print(",
-    ["ocaml"] = "Printf.printf ",
-    ["ps1"] = "echo ",
-    ["python"] = "print(",
-    ["ruby"] = "print ",
-    ["rust"] = "println!(",
-    ["sh"] = "echo -e ",
-    ["typescript"] = "console.log(",
-    ["typescriptreact"] = "console.log(",
-}
-vim.keymap.set("i","<C-x><C-p>",function ()
-    local print_statement = print_statements[vim.bo.filetype]
-    if not print_statement then
-        vim.cmd.echoerr("\"No print statement defined for this filetype!\"")
-        return
-    end
-    vim.cmd.normal("i"..print_statement)
-    local startpos = vim.fn.getpos(".")
-    vim.fn.cursor(startpos[2],startpos[3]+1)
-end)
-
--- debug comment
-vim.keymap.set("n", "gcd", function()
-    vim.cmd.normal(string.format("A "..vim.o.commentstring, "debug"))
-end)
+-- debug comments
 vim.keymap.set("n", "gct", function()
     vim.cmd.normal(string.format("o%s", vim.o.commentstring):format("TODO: "))
     vim.cmd.startinsert({bang=true})
@@ -51,6 +17,9 @@ end)
 vim.keymap.set("n", "gcT", function()
     vim.cmd.normal(string.format("O%s", vim.o.commentstring):format("TODO: "))
     vim.cmd.startinsert({bang=true})
+end)
+vim.keymap.set("n", "gcd", function()
+    vim.cmd.normal(string.format("A  "..vim.o.commentstring, "debug"))
 end)
 vim.keymap.set("v", "gcd", function()
     local sel_start = vim.fn.getpos(".")[2]
@@ -83,12 +52,6 @@ vim.keymap.set("n", "gcD", function()
     vim.cmd.normal("V")
     vim.fn.search("debug }}}$", "W")
 end)
-vim.keymap.set("n", "]d", function()
-    vim.fn.search(vim.o.commentstring:format("debug"))
-end)
-vim.keymap.set("n", "[d", function()
-    vim.fn.search(vim.o.commentstring:format("debug"), "b")
-end)
 
 
 -- toggles whether searches are highlighted or not
@@ -102,18 +65,15 @@ vim.keymap.set("t","<Esc>","<C-\\><C-N>")
 vim.keymap.set("t","<C-PageUp>","<C-\\><C-N><C-PageUp>")
 vim.keymap.set("t","<C-PageDown>","<C-\\><C-N><C-PageDown>")
 
---- WINDOW STUFF
--- exiting a buffer/window
+-- window stuff
 vim.keymap.set({"n","i","t"},"<A-w>",function ()
     local id = vim.fn.win_getid()
     vim.cmd.wincmd("j")
     if vim.fn.win_getid() == id then
         vim.cmd.wincmd("l")
     end
-    if vim.fn.win_getid() == id then
-        vim.cmd.wincmd("k")
-    end
     vim.cmd.quit()
+    vim.fn.win_gotoid(id)
 end)
 vim.keymap.set("n","<C-w>v",function()
     vim.cmd.vsplit(vim.fn.expand("%:h"))
@@ -145,15 +105,6 @@ vim.keymap.set("i", "<A-BS>", function() bs_tab("i") end)
 -- Rename the thing under the cursor
 vim.keymap.set("n", "<A-8>", "*:%s/<C-r>///gc<Left><Left><Left>")
 vim.keymap.set("n", "<A-7>", "*:%s/<C-r>///g<Left><Left>")
-
--- open current file in broswer (i.e. firefox)
-vim.api.nvim_create_user_command(
-    "Fox",
-    function()
-        vim.cmd("!$BROWSER --new-tab %")
-    end,
-    {}
-)
 
 -- get path of current buffer
 vim.api.nvim_create_user_command(
