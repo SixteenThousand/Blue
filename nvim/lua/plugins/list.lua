@@ -39,6 +39,9 @@ return {
         dirname = "vimwiki",
         pre = function()
             vim.g.vimwiki_markdown_link_ext = 1
+            -- Remove header key bindings so `-` works as normal
+            -- See after/ftplugin/markdown.lua for more information
+            vim.g.vimwiki_key_mappings = { headers = 0 }
             vim.g.vimwiki_list = {
                 { path = "~/Wiki", syntax = "markdown", ext = ".md", },
             }
@@ -54,9 +57,6 @@ return {
                     auto_toc = 1,
                 },
             }
-            -- Remove header key bindings so `-` works as normal
-            -- See after/ftplugin/markdown.lua for more information
-            vim.g.vimwiki_key_mappings = { headers = 0 }
         end,
     },
 }
