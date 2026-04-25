@@ -3,7 +3,7 @@ local M = {}
 
 M.sixteen_snippets = {}
 
-vim.keymap.set("i", "<C-d>", function()
+vim.keymap.set("i", "<C-l>", function()
     if vim.snippet.active({direction=1}) then
         vim.snippet.jump(1)
         return
@@ -16,6 +16,9 @@ vim.keymap.set("i", "<C-d>", function()
         end
     end
 end)
+
+-- ersatz snippets
+vim.keymap.set("i", "<C-k>", "->")
 
 
 return M
