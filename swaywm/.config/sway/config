@@ -36,8 +36,8 @@ bindsym Super+q kill
 bindsym Alt+F4 kill
 bindsym {
     # Start your launcher
-    Super+space exec fuzzel
-    Alt+space exec fuzzel
+    Super+space exec rofi -show drun
+    Alt+space exec rofi -show drun
     # open a file
     Super+o exec desktopctl open-file
     # other app shortcuts
