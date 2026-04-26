@@ -39,6 +39,10 @@ If you are me in the future, you may be able to skip all of that by just
 running `make install` from without `cd`'ing first, which just runs `make 
 install` for all of the apps that I currently use.
 
+## Notes
+- have assumed sound card is `1` or `hw:1` because one laptop is weird like 
+  that. This either needs changing manually, or I need to get pulseaudio to 
+  understand how to do sampling
 
 ---
 
