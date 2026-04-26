@@ -90,9 +90,9 @@ rewallpaper() {
 }
 
 change_vol() {
-    local SINK="@DEFAULT_SINK@"
-    pactl set-sink-volume $SINK "${1}${2}%"
-    local VOLUME=$(pactl get-sink-volume $SINK \
+    local sink="@DEFAULT_SINK@"
+    pactl set-sink-volume $sink "${1}${2}%"
+    local VOLUME=$(pactl get-sink-volume $sink \
         | sed -e '/.*balance.*/d;s/.* \([[:digit:]]\+\)%.*/\1/')
     notify-send \
         --app-name $APPNAME \
@@ -104,18 +104,18 @@ change_vol() {
 }
 
 mute() {
-    local SINK="@DEFAULT_SINK@"
-    amixer sset Master toggle
-    local MSG="Audio Unmuted!! Play that music, buddy!"
-    case $(pactl get-sink-mute "$SINK") in
+    local sink="@DEFAULT_SINK@"
+    pactl set-sink-mute "$sink" toggle
+    local msg="Audio Unmuted!! Play that music, buddy!"
+    case $(pactl get-sink-mute "$sink") in
         *yes)
-            MSG="Audio Muted."
+            msg="Audio Muted."
             ;;
     esac
     notify-send \
         --app-name $APPNAME \
         -t 1000 \
-        "$MSG"
+        "$msg"
 }
 
 check_battery() {
