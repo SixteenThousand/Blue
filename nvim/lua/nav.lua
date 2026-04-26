@@ -1,6 +1,4 @@
 --- Key Bindings
-vim.keymap.set("n","<leader>ee",":buffer ")
-vim.keymap.set("n","<leader>ef",":find ")
 
 local bookmarks = {
     ["p"] = "~/Projects",
