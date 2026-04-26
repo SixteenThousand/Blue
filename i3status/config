@@ -69,7 +69,6 @@ tztime local {
 }
 
 volume default {
-    device = "hw:1"
     format = "  %volume"
 }
 
