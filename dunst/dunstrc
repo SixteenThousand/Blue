@@ -136,7 +136,8 @@
 
     ### Text ###
 
-    font = FantasqueSansM Nerd Font 12, Monospace 12
+    # font = FantasqueSansM Nerd Font 16, Monospace 12
+    font = Monospace 12, FantasqueSansM Nerd Font 16
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
