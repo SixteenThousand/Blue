@@ -4,6 +4,7 @@ install:
 	mkdir -p ${HOME}/.local/share/bash
 	mv ${HOME}/.bashrc ${HOME}/.bashrc.bak || :
 	mv ${HOME}/.profile ${HOME}/.profile.bak || :
+	mv ${HOME}/.bash_profile ${HOME}/.bash_profile.bak || :
 	stow -S . -t ${HOME} ${IGNORE}
 
 uninstall:
