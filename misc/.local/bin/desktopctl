@@ -91,7 +91,7 @@ rewallpaper() {
 
 change_vol() {
     local SINK="@DEFAULT_SINK@"
-    amixer sset Master "$2%$1"
+    pactl set-sink-volume $SINK "${1}${2}%"
     local VOLUME=$(pactl get-sink-volume $SINK \
         | sed -e '/.*balance.*/d;s/.* \([[:digit:]]\+\)%.*/\1/')
     notify-send \
