@@ -1,10 +1,9 @@
 -- telescope.nvim configuration
 local tlscp = require("telescope.builtin")
-local popup = require("utils.popup")
-local utils = require("utils")
 
 vim.keymap.set("n","<leader>ff",function ()
 	tlscp.find_files({
+        hidden = true,
 		no_ignore = true,
         previewer = false,
 	})
@@ -21,7 +20,7 @@ vim.keymap.set("n","<leader>fg",function ()
         vim.cmd.echohl("None")
     end
 end)
-vim.keymap.set("n","<leader>fb",function()
+vim.keymap.set("n","<leader>ee",function()
     tlscp.buffers({previewer = false})
 end)
 vim.keymap.set("n","<leader>fh",function()
