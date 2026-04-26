@@ -13,16 +13,6 @@ return {
     -- IDE-like stuff
     "nvim-lspconfig",
     {
-        dirname = "Comment.nvim",
-        post = function()
-            require("Comment").setup()
-            local commapi = require("Comment.api")
-            -- for some reason, "<C-_>" translates to "Ctrl+/"
-            vim.keymap.set({"n","i","v"},"<C-_>",commapi.toggle.linewise.current)
-            vim.keymap.set({"n","i","v"},"<C-/>",commapi.toggle.linewise.current)
-        end,
-    },
-    {
 	    dirname = "telescope.nvim",
 	    post = function()
 		    require("plugins.telescope")
