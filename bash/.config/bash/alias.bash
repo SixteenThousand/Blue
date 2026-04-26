@@ -6,6 +6,7 @@ alias f=nnn
 alias t='tree -C -a -I .git -I node_modules -I .venv'
 # this breaks if you try to add line breaks
 alias g="grep --color=always -RnHI --exclude-dir .git --exclude-dir '*venv*' --exclude-dir node_modules "
+alias grepc='grep --color=always'
 alias sbcl='rlwrap sbcl'
 alias shell='rlwrap xargs -L 1'
 alias zathura='zathura --fork'
