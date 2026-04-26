@@ -90,17 +90,24 @@ rewallpaper() {
 }
 
 change_vol() {
-    local SINK="@DEFAULT_SINK@"
-    pactl set-sink-volume $SINK "${1}${2}%"
-    local VOLUME=$(pactl get-sink-volume $SINK \
-        | sed -e '/.*balance.*/d;s/.* \([[:digit:]]\+\)%.*/\1/')
+    local volume
+    if systemctl --user status pulseaudio >/dev/null 2>&1; then
+        local SINK="@DEFAULT_SINK@"
+        pactl set-sink-volume $SINK "${1}${2}%"
+        volume=$(pactl get-sink-volume $SINK |
+            sed -e '/.*balance.*/d;s/.* \([[:digit:]]\+\)%.*/\1/')
+    else
+        volume=$(amixer -c 1 -- sset Master "${2}%${1}" |
+            tail -n 1 |
+            sed -e 's/  Mono: Playback [[:digit:]]* \[\([[:digit:]]\+\)%\] .*/\1/')
+    fi
     notify-send \
         --app-name $APPNAME \
         -t 600 \
         -h string:x-canonical-private-synchronous:volume \
-        -h "int:value:$VOLUME" \
+        -h "int:value:$volume" \
         -e \
-        "Volume: $VOLUME%"
+        "Volume: $volume%"
 }
 
 mute() {
