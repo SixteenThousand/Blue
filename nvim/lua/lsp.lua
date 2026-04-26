@@ -4,14 +4,12 @@ if not lspconfOn then
 end
 
 --- Servers
-lspconf.pyright.setup{}
 lspconf.rust_analyzer.setup{
     cmd = {"rust-analyzer"},
 }
 lspconf.gopls.setup{}
 lspconf.clangd.setup{}
 
---- Get Information & Hover
 vim.api.nvim_create_autocmd("LspAttach",{
     callback = function(evt)
         local client = vim.lsp.get_client_by_id(evt.data.client_id)
@@ -23,15 +21,13 @@ vim.api.nvim_create_autocmd("LspAttach",{
             end)
         end
         vim.keymap.set("n","gd",vim.lsp.buf.definition,{buffer=true})
-        vim.keymap.set({"n","i"},"<F2>",vim.lsp.buf.rename,{buffer=true})
-        vim.keymap.set({"n","i"},"gr",vim.lsp.buf.rename,{buffer=true})
-        vim.opt_global.completeopt:remove("preview")
-        vim.keymap.set("n", "<F3>", vim.lsp.buf.code_action)
+        vim.keymap.set({"n","i"},"gr",vim.lsp.buf.references,{buffer=true})
+        vim.keymap.set({"n","i"},"gn",vim.lsp.buf.rename,{buffer=true})
         vim.keymap.set("n", "gi", vim.lsp.buf.code_action)
+        vim.opt_global.completeopt:remove("preview")
     end,
 })
 
---- Key Bindings
 vim.keymap.set("n","]e",function()
     vim.diagnostic.goto_next({
         severity = vim.diagnostic.severity.ERROR
