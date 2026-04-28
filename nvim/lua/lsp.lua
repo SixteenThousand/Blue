@@ -4,7 +4,6 @@ if not lspconfOn then
 end
 
 --- Servers
-lspconf.pyright.setup{}
 lspconf.rust_analyzer.setup{
     cmd = {"rust-analyzer"},
 }
