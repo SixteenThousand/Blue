@@ -5,8 +5,6 @@ https://news.itsfoss.com/rss/
 https://linuxiac.com/feed/
 
 # comics
-## work
-## educational
 ## fiction
 https://yellowbrickramble.com/comic/rss
 https://www.questionablecontent.net/QCRSS.xml
