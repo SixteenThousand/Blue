@@ -171,7 +171,8 @@ bindsym Super+r mode "resize"
 default_border pixel 4
 font FantasqueSansM Nerd Font 12
 smart_borders on
-client.focused #1d6432cc #1d6432cc #ffffff #1d6432ee
+# client.focused #1d6432cc #1d6432cc #ffffff #1d6432ee
+client.focused #44cc44cc #44cc44cc #ffffff #44cc44ee
 
 
 ### MEDIA/HARDWARE CONTROLS
