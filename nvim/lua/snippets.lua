@@ -17,8 +17,4 @@ vim.keymap.set("i", "<C-l>", function()
     end
 end)
 
--- ersatz snippets
-vim.keymap.set("i", "<C-k>", "->")
-
-
 return M
