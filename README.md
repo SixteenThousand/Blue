@@ -3,25 +3,28 @@
 *It is unusual tonight. The moon is blue. The system is changing. It is time 
 to start again.*
 
-This is Blue, where I store all of my dotfiles<sup>1</sup>, i.e., things I 
-might need when using a new system, once in a Blue Moon.
+This is Blue, where I store all of my configuration files, i.e., things I might 
+need when using a new system, once in a Blue Moon.
+
+**Theoretically everything here is public. No API keys, no passwords, or 
+anything like that is stored here.**
 
 
 ## Interesting Features
 
 - Hand written shell prompts for bash, fish, zsh...and python 
-- A Command-line colour scheme switcher for WezTerm
-- A complete failure to set a colour scheme in tmux (seriously, if you know 
-  how to do that, please contact me)
-- A hand-rolled neovim configuration
+- A complete failure to set a colour scheme in tmux (seriously, if you know how 
+  to do that, please contact me)
+- A custom neovim configuration with few plugins
 - A shell history search tool for bash (search for `stale`)
 
-More interesting features can be found by reading the `README.md` files in 
-each of the subdirectories of this repository.
+Some of the subdirectories have their own readme's with more information, 
+though they are out of date.
 
 
-## Dependencies & Using This Repository
+## Setup
 
+This requires:
 - GNU stow
 - GNU make
 
@@ -35,13 +38,10 @@ make install
 This will then run a script that uses Stow to make symlinks between the 
 files here and where the actual configuration files should go.
 
-If you are me in the future, you may be able to skip all of that by just 
-running `make install` from without `cd`'ing first, which just runs `make 
-install` for all of the apps that I currently use.
+You can also skip all of that by just running `make install` without `cd`'ing 
+first, which just runs `make install` for all of the directories here.
 
-
----
-
-## Footnotes
-
-1. https://www.freecodecamp.org/news/dotfiles-what-is-a-dot-file-and-how-to-create-it-in-mac-and-linux/
+For adding new changes to this repo, you should also run
+```
+git config --local commit.template commitmsg.txt
+```
