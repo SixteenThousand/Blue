@@ -9,6 +9,9 @@ vim.keymap.set({"n","v"},"<leader>y","\"+y")
 vim.keymap.set({"n","v"},"<leader>p","\"+p")
 vim.keymap.set({"n","v"},"<leader>P","\"+P")
 
+-- ersatz snippets
+vim.keymap.set("i", "<C-k>", "->")
+
 -- debug comments
 vim.keymap.set("n", "gct", function()
     vim.cmd.normal(string.format("o%s", vim.o.commentstring):format("TODO: "))
