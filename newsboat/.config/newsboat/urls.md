@@ -3,6 +3,8 @@
 https://news.itsfoss.com/rss/
 **Linuxiac**
 https://linuxiac.com/feed/
+**Greenwich Wire**
+https://greenwichwire.co.uk/feed/
 
 # comics
 ## fiction
