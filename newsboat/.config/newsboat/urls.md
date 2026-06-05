@@ -124,6 +124,8 @@ https://feeds.megaphone.fm/empirepodcast
 https://feeds.transistor.fm/overly-sarcastic-podcast
 **how to invent a country**
 https://podcasts.files.bbci.co.uk/p0683ms3.rss
+**revolutions**
+http://feeds.libsyn.com/47475/rss
 **when science finds a way**
 https://feeds.libsyn.com/476853/rss
 
