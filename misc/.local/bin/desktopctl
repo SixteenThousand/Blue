@@ -202,9 +202,17 @@ toggle_theme() {
     if [ "$current" = "'prefer-dark'" ]; then
         notify-send -a desktopctl 'Switching to light mode...'
         gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+        colourscheme=dawnfox
     else
         notify-send -a desktopctl 'Switching to dark mode...'
         gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+        colourscheme=nightfox
+    fi
+    alaconf -c $colourscheme || echo 'Alacritty config not installed' >&2
+    if stat ~/.config/nvim/state >/dev/null 2>&1; then
+        echo $colourscheme > ~/.config/nvim/state/colourscheme
+    else
+        echo 'Neovim config not installed' >&2
     fi
 }
 
