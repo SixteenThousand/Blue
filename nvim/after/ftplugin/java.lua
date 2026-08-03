@@ -8,4 +8,5 @@ public class $3 {
         $4
     }
 }]],
+    ["sys"] = [[System.out.println($1);]],
 }
