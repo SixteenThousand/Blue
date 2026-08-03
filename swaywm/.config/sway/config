@@ -40,12 +40,11 @@ bindsym {
     # Start your launcher
     Super+space exec fuzzel
     Alt+space exec fuzzel
-    # open a file
-    Super+o exec desktopctl open-file
     # other app shortcuts
     Super+b exec $BROWSER
     Super+Return exec $TERMINAL
     Super+y exec sh -c "$TERMINAL -T sixteen-python -e python3"
+    Super+o exec sxtt-book
 }
 
 

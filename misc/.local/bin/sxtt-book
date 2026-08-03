@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+cd ~/Documents/Books-and-Things
+book=$(find . -type f | fuzzel --dmenu -w 180 --font='FantasqueSansM Nerd Font:size=7')
+if [ -n "$book" ]; then
+  gio open "file://${PWD}/${book}"
+else
+  notify-send -a "sxtt-book" "You don't like reading, do you?"
+fi
