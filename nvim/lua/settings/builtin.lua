@@ -7,7 +7,7 @@ vim.go.smarttab = false
 vim.o.shiftwidth = 4 -- buffer opt
 vim.o.tabstop = 4 -- buffer opt
 vim.o.expandtab = true -- buffer opt
-vim.opt_local.formatoptions:append("r,o,l,/")
+vim.opt_local.formatoptions:append("r,o,l,/,c")
     -- make vim auto-insert a bunch of comments
 vim.opt.cpoptions:append("I")
 
@@ -27,6 +27,7 @@ vim.o.textwidth = 79
 -- search stuff, incl. file & buffer search
 vim.go.hlsearch = false
 vim.go.ignorecase = true
+vim.go.smartcase = true
 vim.go.fileignorecase = true
 
 -- change what "b" & "w" consider "words"
@@ -116,3 +117,6 @@ vim.go.grepprg = table.concat({
     "--exclude .session.vim",
     "$*"
 }, " ")
+
+vim.o.cursorline = true -- window opt
+vim.o.colorcolumn = "80" -- window opt
