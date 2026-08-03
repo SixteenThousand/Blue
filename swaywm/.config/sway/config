@@ -207,10 +207,6 @@ bindsym {
 ### NOTIFICATIONS
 bindsym Super+d exec dunstctl close-all
 
-### AUTOSTART
-# Do not put `--no-setup-id` here, it breaks dolphin mime cache command somehow
-exec sxtt-setup.sh
-
 ### RULES
 for_window [title="sixteen-python"] floating enable; resize set 60ppt 80ppt
 for_window [title=".*Video Bridge.*"] kill
@@ -242,3 +238,8 @@ for_window [tiling] exec $script_dir/new_workspace with_window
 include "/usr/share/sway/config.d/*.conf"
 include "/etc/sway/config.d/*.conf"
 include "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf"
+
+### AUTOSTART
+# Do not put `--no-setup-id` here, it breaks dolphin mime cache command somehow
+exec sxtt-setup.sh
+
