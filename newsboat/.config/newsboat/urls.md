@@ -11,6 +11,7 @@ https://greenwichwire.co.uk/feed/
 https://yellowbrickramble.com/comic/rss
 https://www.questionablecontent.net/QCRSS.xml
 https://comicaurora.com/feed
+https://elephant.town/comic/rss
 ## comedy
 **Saturday Morning Breakfast Cereal**
 https://www.smbc-comics.com/comic/rss
@@ -23,7 +24,9 @@ https://www.smbc-comics.com/comic/rss
 https://ludic.mataroa.blog/rss/
 https://ochagavia.nl/blog/index.xml
 https://deadsimpletech.com/rss
-
+https://two-ko86.moe/blog/rssupdates
+https://nigeltao.github.io/feed.xml
+https://hackaday.com/blog/feed/
 
 
 # You Tube
@@ -91,8 +94,8 @@ https://www.twoscomplement.org/podcast/feed.xml
 ### news
 **wales**
 https://feeds.buzzsprout.com/2410605.rss
-**tldr**
-https://rss.art19.com/world-leader-leaderboard
+%%**tldr**
+%%https://rss.art19.com/world-leader-leaderboard
 
 ## educational
 **lingthusiasm**
@@ -126,14 +129,16 @@ https://feeds.transistor.fm/overly-sarcastic-podcast
 https://podcasts.files.bbci.co.uk/p0683ms3.rss
 **revolutions**
 http://feeds.libsyn.com/47475/rss
-**when science finds a way**
-https://feeds.libsyn.com/476853/rss
+**inside science**
+https://podcasts.files.bbci.co.uk/b036f7w2.rss
 
 ## entertainment
 **horne section**
 https://feeds.acast.com/public/shows/the-horne-section-podcast
 **the froth**
 https://feeds.acast.com/public/shows/the-froth
+**final v3**
+https://feeds.megaphone.fm/finalexportv3final
 ### fiction
 **pratchat**
 https://pratchatpodcast.com/feed/podcast/
@@ -147,3 +152,5 @@ https://feeds.simplecast.com/b7dgNp7A
 https://www.drabblecast.org/feed/podcast/
 **lost terminal**
 https://www.spreaker.com/show/4488937/episodes/feed
+**quest for the best**
+https://feeds.acast.com/public/shows/quest-for-the-best
