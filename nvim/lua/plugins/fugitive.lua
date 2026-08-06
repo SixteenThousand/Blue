@@ -1,24 +1,26 @@
 -- vim-fugitive config
 
-vim.keymap.set("n","<leader>gg",":Git ")
-vim.keymap.set("n","<leader>gs",function () vim.cmd("Git status") end)
+vim.keymap.set("n","<leader>gg",function() vim.cmd("tab Git") end)
+vim.keymap.set("n","<leader>gs",function() vim.cmd("Git status") end)
 
-vim.keymap.set("n","<leader>ge",function ()
+vim.keymap.set("n","<leader>ge",function()
     vim.cmd("Git add -A")
     print("All Changes Staged! Proceed to commit!")
 end)
-vim.keymap.set("n","<leader>ga",function ()
+vim.keymap.set("n","<leader>ga",function()
     vim.cmd("Git add "..vim.fn.expand("%:p"))
     print("This buffer has been staged!")
 end)
 
-vim.keymap.set("n","<leader>gc",function ()
+vim.keymap.set("n","<leader>gc",function()
     vim.cmd("Git commit")
     vim.cmd.startinsert()
 end)
 
 vim.keymap.set("n","<leader>gd",":Git diff ")
-vim.keymap.set("n","<leader>gf",":Git diff %<CR>")
+vim.keymap.set("n","<leader>gf", function()
+    vim.cmd("vert Git diff %")
+end)
 vim.api.nvim_create_user_command(
     "Diff",
     function(opts)
@@ -43,4 +45,6 @@ vim.keymap.set("n","<leader>gl",function()
         vim.cmd("Git log -"..vim.v.count)
     end
 end)
-vim.keymap.set("n", "<leader>gb", ":Git blame %<CR>")
+vim.keymap.set("n", "<leader>gb", function()
+    vim.cmd("1 | set scrollbind | vert Git blame %")
+end)
