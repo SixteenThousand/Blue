@@ -30,6 +30,11 @@ function M.texton()
     return true
 end
 
+function M.set_tabwidth(num)
+    vim.bo.shiftwidth = num
+    vim.bo.tabstop = num
+end
+
 -- tag mode: for files which will use xml-like syntax at any point
 function M.tag_mode()
     -- lets % toggle between start & end tags
