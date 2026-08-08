@@ -14,15 +14,15 @@ local M = {}
 -- bug: append cannot take a table of more than 3 things; this is why there
 -- is no variable to hold the formatoptions being set
 function M.text()
-    vim.opt_local.formatoptions:append("taw2")
+    vim.opt_local.formatoptions:append("aw2")
     vim.wo.spell = true
 end
 function M.notext()
-    vim.opt_local.formatoptions:remove({ "t", "a", "w", "2", })
+    vim.opt_local.formatoptions:remove({ "a", "w", "2", })
     vim.wo.spell = false
 end
 function M.texton()
-    for _,opt in pairs({ "t", "a", "w", "2", }) do
+    for _,opt in pairs({ "a", "w", "2", }) do
         if vim.bo.formatoptions:find(opt) == nil then
             return false
         end
