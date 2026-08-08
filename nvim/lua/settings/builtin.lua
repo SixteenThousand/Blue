@@ -1,14 +1,19 @@
 -- default places :find & co will look
 vim.opt_global.path = { ".", "", "./**4", "**4", }
 
--- indentation & autocommenting
+-- Touches:
+--  * line wrapping/width
+--  * auto formatting
+--  * comment formatting
+--  * and more
+-- See `:h fo-table` for more info
+vim.opt_local.formatoptions:append("tco/qbj")
+
+-- indentation
 vim.go.smarttab = false
--- tab width
 vim.o.shiftwidth = 4 -- buffer opt
 vim.o.tabstop = 4 -- buffer opt
 vim.o.expandtab = true -- buffer opt
-vim.opt_local.formatoptions:append("r,o,l,/,c")
-    -- make vim auto-insert a bunch of comments
 vim.opt.cpoptions:append("I")
 
 -- keeps at least {number} lines beneath the cursor (unless at end of file)
@@ -22,7 +27,8 @@ vim.go.autowriteall = true
 -- allow h & l to take you to a new line
 vim.opt_global.whichwrap:append("h,l")
 vim.o.wrap = false -- window opt
-vim.o.textwidth = 79
+vim.o.textwidth = 80
+vim.o.colorcolumn = "80" -- window opt
 
 -- search stuff, incl. file & buffer search
 vim.go.hlsearch = false
@@ -56,6 +62,8 @@ vim.opt_global.sessionoptions:append{
     "localoptions", -- Get syntax highlighting loaded in session load
     "globals", -- Keep my own special settings
 }
+
+vim.o.cursorline = true -- window opt
 
 function SixteenTabs()
     return string.format("tab %d/%d", vim.fn.tabpagenr(), vim.fn.tabpagenr("$"))
@@ -117,6 +125,3 @@ vim.go.grepprg = table.concat({
     "--exclude .session.vim",
     "$*"
 }, " ")
-
-vim.o.cursorline = true -- window opt
-vim.o.colorcolumn = "80" -- window opt
