@@ -91,16 +91,26 @@ rewallpaper() {
 
 change_vol() {
     local SINK="@DEFAULT_SINK@"
-    pactl set-sink-volume $SINK "${1}${2}%"
     local VOLUME=$(pactl get-sink-volume $SINK \
         | sed -e '/.*balance.*/d;s/.* \([[:digit:]]\+\)%.*/\1/')
+    local NEW_VOLUME="$((${VOLUME}${1}${2}))"
+    pactl set-sink-volume $SINK "${NEW_VOLUME}%"
     notify-send \
         --app-name $APPNAME \
         -t 600 \
         -h string:x-canonical-private-synchronous:volume \
         -h "int:value:$VOLUME" \
         -e \
-        "Volume: $VOLUME%"
+        "Volume: ${NEW_VOLUME}%"
+}
+
+change_brightness() {
+    brightnessctl -q set $2%$1
+    VALUE=$(( $(brightnessctl get) * 100 / $(brightnessctl max) ))
+    notify-send -a $APPNAME \
+        -e -t 600 \
+        -h string:x-canonical-private-synchronous:brightness \
+        -h "int:value:$VALUE" "Brightness: $VALUE%"
 }
 
 mute() {
@@ -235,12 +245,7 @@ case $1 in
         ;;
     mon)
         shift 1
-        brightnessctl -q set $2%$1
-        VALUE=$(( $(brightnessctl get) * 100 / $(brightnessctl max) ))
-        notify-send -a $APPNAME \
-            -e -t 600 \
-            -h string:x-canonical-private-synchronous:brightness \
-            -h "int:value:$VALUE" "Brightness: $VALUE%"
+        change_brightness $@
         ;;
     autostart)
         $HOME/.config/autostart/autostart.sh
