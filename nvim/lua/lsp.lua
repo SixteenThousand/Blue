@@ -10,6 +10,17 @@ lspconf.rust_analyzer.setup{
 lspconf.gopls.setup{}
 lspconf.clangd.setup{}
 
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "python",
+    callback = function(evt)
+        vim.lsp.start({
+            name = "pyrefly",
+            cmd = { "pyrefly", "lsp", },
+            root_dir = vim.fs.root(evt.buf, ".git"),
+        })
+    end,
+})
+
 --- Get Information & Hover
 vim.api.nvim_create_autocmd("LspAttach",{
     callback = function(evt)
