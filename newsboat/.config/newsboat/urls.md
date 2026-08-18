@@ -82,6 +82,12 @@ https://feeds.acast.com/public/shows/bold-politics-with-zack-polanski
 
 
 # podcasts
+**heaving bosoms**
+https://feeds.simplecast.com/33RQJXv_
+**fated mates**
+https://mf.fatedmates.net/rssfeed
+**wicked wallflowers**
+https://feeds.simplecast.com/_br0FuMp
 ## work
 **cortex**
 https://www.relay.fm/cortex/feed
