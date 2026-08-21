@@ -27,6 +27,8 @@ https://deadsimpletech.com/rss
 https://two-ko86.moe/blog/rssupdates
 https://nigeltao.github.io/feed.xml
 https://hackaday.com/blog/feed/
+**systems programming**
+https://eblog.fly.dev/feed.rss.xml
 
 
 # You Tube
