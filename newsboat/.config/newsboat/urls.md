@@ -3,14 +3,15 @@
 https://news.itsfoss.com/rss/
 **Linuxiac**
 https://linuxiac.com/feed/
+**Greenwich Wire**
+https://greenwichwire.co.uk/feed/
 
 # comics
-## work
-## educational
 ## fiction
 https://yellowbrickramble.com/comic/rss
 https://www.questionablecontent.net/QCRSS.xml
 https://comicaurora.com/feed
+https://elephant.town/comic/rss
 ## comedy
 **Saturday Morning Breakfast Cereal**
 https://www.smbc-comics.com/comic/rss
@@ -23,7 +24,13 @@ https://www.smbc-comics.com/comic/rss
 https://ludic.mataroa.blog/rss/
 https://ochagavia.nl/blog/index.xml
 https://deadsimpletech.com/rss
-
+https://two-ko86.moe/blog/rssupdates
+https://nigeltao.github.io/feed.xml
+https://hackaday.com/blog/feed/
+**systems programming**
+https://eblog.fly.dev/feed.rss.xml
+**shape of code (accu)**
+https://shape-of-code.com/feed/
 
 
 # You Tube
@@ -79,6 +86,12 @@ https://feeds.acast.com/public/shows/bold-politics-with-zack-polanski
 
 
 # podcasts
+**heaving bosoms**
+https://feeds.simplecast.com/33RQJXv_
+**fated mates**
+https://mf.fatedmates.net/rssfeed
+**wicked wallflowers**
+https://feeds.simplecast.com/_br0FuMp
 ## work
 **cortex**
 https://www.relay.fm/cortex/feed
@@ -91,8 +104,8 @@ https://www.twoscomplement.org/podcast/feed.xml
 ### news
 **wales**
 https://feeds.buzzsprout.com/2410605.rss
-**tldr**
-https://rss.art19.com/world-leader-leaderboard
+%%**tldr**
+%%https://rss.art19.com/world-leader-leaderboard
 
 ## educational
 **lingthusiasm**
@@ -124,12 +137,18 @@ https://feeds.megaphone.fm/empirepodcast
 https://feeds.transistor.fm/overly-sarcastic-podcast
 **how to invent a country**
 https://podcasts.files.bbci.co.uk/p0683ms3.rss
+**revolutions**
+http://feeds.libsyn.com/47475/rss
+**inside science**
+https://podcasts.files.bbci.co.uk/b036f7w2.rss
 
 ## entertainment
 **horne section**
 https://feeds.acast.com/public/shows/the-horne-section-podcast
 **the froth**
 https://feeds.acast.com/public/shows/the-froth
+**final v3**
+https://feeds.megaphone.fm/finalexportv3final
 ### fiction
 **pratchat**
 https://pratchatpodcast.com/feed/podcast/
@@ -143,3 +162,5 @@ https://feeds.simplecast.com/b7dgNp7A
 https://www.drabblecast.org/feed/podcast/
 **lost terminal**
 https://www.spreaker.com/show/4488937/episodes/feed
+**quest for the best**
+https://feeds.acast.com/public/shows/quest-for-the-best

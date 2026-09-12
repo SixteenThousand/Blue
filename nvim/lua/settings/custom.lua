@@ -9,34 +9,20 @@
 local utils = require("utils")
 local M = {}
 
--- Collaboration Mode; for screensharing neovim with someone else,
--- especially someone unfamiliar with vim
-function M.collab()
-    vim.o.relativenumber = false
-    vim.o.wrap = true
-    vim.wo.foldlevel = 0
-    vim.cmd.colorscheme("slate")
-end
-function M.nocollab()
-    vim.o.relativenumber = true
-    vim.o.wrap = false
-end
-
-
 -- enter "Text mode"; enable a bunch of options that make writing long blocks of
 -- text much easier
 -- bug: append cannot take a table of more than 3 things; this is why there
 -- is no variable to hold the formatoptions being set
 function M.text()
-    vim.opt_local.formatoptions:append("taw2")
+    vim.opt_local.formatoptions:append("aw2")
     vim.wo.spell = true
 end
 function M.notext()
-    vim.opt_local.formatoptions:remove({ "t", "a", "w", "2", })
+    vim.opt_local.formatoptions:remove({ "a", "w", "2", })
     vim.wo.spell = false
 end
 function M.texton()
-    for _,opt in pairs({ "t", "a", "w", "2", }) do
+    for _,opt in pairs({ "a", "w", "2", }) do
         if vim.bo.formatoptions:find(opt) == nil then
             return false
         end
@@ -44,10 +30,9 @@ function M.texton()
     return true
 end
 
--- actually set the tab width
 function M.set_tabwidth(num)
-    vim.bo.tabstop = num
     vim.bo.shiftwidth = num
+    vim.bo.tabstop = num
 end
 
 -- tag mode: for files which will use xml-like syntax at any point

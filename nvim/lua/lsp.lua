@@ -10,9 +10,23 @@ lspconf.rust_analyzer.setup{
 lspconf.gopls.setup{}
 lspconf.clangd.setup{}
 
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "python",
+    callback = function(evt)
+        vim.lsp.start({
+            name = "pyrefly",
+            cmd = { "pyrefly", "lsp", },
+            root_dir = vim.fs.root(evt.buf, ".git"),
+        })
+    end,
+})
+
+--- Get Information & Hover
 vim.api.nvim_create_autocmd("LspAttach",{
     callback = function(evt)
         local client = vim.lsp.get_client_by_id(evt.data.client_id)
+        -- Turn off the damn semantic highlighting
+        client.server_capabilities.semanticTokensProvider = nil
         if client.server_capabilities.hoverProvider then
             vim.keymap.set("n","gh",vim.lsp.buf.hover)
         else

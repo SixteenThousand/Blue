@@ -90,17 +90,27 @@ rewallpaper() {
 }
 
 change_vol() {
-    local sink="@DEFAULT_SINK@"
-    pactl set-sink-volume $sink "${1}${2}%"
-    local VOLUME=$(pactl get-sink-volume $sink \
+    local SINK="@DEFAULT_SINK@"
+    local VOLUME=$(pactl get-sink-volume $SINK \
         | sed -e '/.*balance.*/d;s/.* \([[:digit:]]\+\)%.*/\1/')
+    local NEW_VOLUME="$((${VOLUME}${1}${2}))"
+    pactl set-sink-volume $SINK "${NEW_VOLUME}%"
     notify-send \
         --app-name $APPNAME \
         -t 600 \
         -h string:x-canonical-private-synchronous:volume \
         -h "int:value:$VOLUME" \
         -e \
-        "Volume: $VOLUME%"
+        "Volume: ${NEW_VOLUME}%"
+}
+
+change_brightness() {
+    brightnessctl -q set $2%$1
+    VALUE=$(( $(brightnessctl get) * 100 / $(brightnessctl max) ))
+    notify-send -a $APPNAME \
+        -e -t 600 \
+        -h string:x-canonical-private-synchronous:brightness \
+        -h "int:value:$VALUE" "Brightness: $VALUE%"
 }
 
 mute() {
@@ -197,14 +207,29 @@ list_devices() {
 }
 
 toggle_theme() {
+    local nightfox_variant
+    local plasma_variant
     local current=$(
         gsettings get org.gnome.desktop.interface color-scheme)
     if [ "$current" = "'prefer-dark'" ]; then
         notify-send -a desktopctl 'Switching to light mode...'
         gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+        nightfox_variant=dawnfox
+        plasma_variant=BreezeLight
     else
         notify-send -a desktopctl 'Switching to dark mode...'
         gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+        nightfox_variant=nightfox
+        plasma_variant=BreezeDark
+    fi
+    alaconf -c $nightfox_variant || echo 'Alacritty config not installed' >&2
+    if stat ~/.config/nvim/state >/dev/null 2>&1; then
+        echo $nightfox_variant > ~/.config/nvim/state/colourscheme
+    else
+        echo 'Neovim config not installed' >&2
+    fi
+    if [ "$XDG_CURRENT_DESKTOP" = 'KDE' ]; then
+        plasma-apply-colorscheme "$plasma_variant"
     fi
 }
 
@@ -227,12 +252,7 @@ case $1 in
         ;;
     mon)
         shift 1
-        brightnessctl -q set $2%$1
-        VALUE=$(( $(brightnessctl get) * 100 / $(brightnessctl max) ))
-        notify-send -a $APPNAME \
-            -e -t 600 \
-            -h string:x-canonical-private-synchronous:brightness \
-            -h "int:value:$VALUE" "Brightness: $VALUE%"
+        change_brightness $@
         ;;
     autostart)
         $HOME/.config/autostart/autostart.sh

@@ -171,11 +171,12 @@ bindsym Super+r mode "resize"
 default_border pixel 4
 font FantasqueSansM Nerd Font 12
 smart_borders on
-client.focused #1d6432cc #1d6432cc #ffffff #1d6432ee
+# client.focused #1d6432cc #1d6432cc #ffffff #1d6432ee
+client.focused #44cc44cc #44cc44cc #ffffff #44cc44ee
 
 
 ### MEDIA/HARDWARE CONTROLS
-bindsym {
+bindsym --locked {
     # for non-laptops
     Super+F1 exec desktopctl mute
     Super+F2 exec desktopctl vol - 2
@@ -191,6 +192,8 @@ bindsym {
     XF86AudioMicMute exec playerctl play-pause
     XF86MonBrightnessDown exec desktopctl mon - 5
     XF86MonBrightnessUp exec desktopctl mon + 5
+}
+bindsym {
     # Mount USB sticks and the like
     $peripheralMod+m exec desktopctl mount
     $peripheralMod+u exec desktopctl unmount
@@ -204,10 +207,8 @@ bindsym {
 bindsym Super+d exec dunstctl close-all
 
 ### AUTOSTART
-# `desktopctl` is a script I wrote. You should be able to find in Blue/misc.
-exec --no-startup-id ( /usr/share/libpam-kwallet-common/pam_kwallet_init & disown ) && ( desktopctl autostart || : )
-exec --no-startup-id dunst & disown
-exec --no-startup-id blueman-applet & disown
+# Do not put `--no-setup-id` here, it breaks dolphin mime cache command somehow
+exec sxtt-setup.sh
 
 ### RULES
 for_window [title="sixteen-python"] floating enable; resize set 60ppt 80ppt

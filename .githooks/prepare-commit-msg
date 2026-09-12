@@ -1,25 +1,45 @@
 #!/usr/bin/sh
 
-# Get the directory name for the files with staged changes
-CHANGED_FILE=$(git diff --name-only --cached | head -n 1)
-APP=${CHANGED_FILE%%/*}
 
-COMMIT_MSG_FILE=$1
-CURRENT_MSG=$(cat "$COMMIT_MSG_FILE")
+# see githooks(5) for more detail
+commit_msg_file=$1
+current_msg=$(cat "$commit_msg_file")
+msg_source=$2
 
-# Check we're not dealing with changes in toplevel
-if [ "$APP" = "$CHANGED_FILE" ]; then
-  exit 0
-fi
+# Get the directories of files with staged changes
+changed_apps=
+for path in $(git diff --name-only --cached); do
+  app=${path%%/*}
+  case $changed_apps in
+    *${app}*)
+      ;;
+    *)
+      changed_apps="${changed_apps}${app},"
+      ;;
+  esac
+done
 
 # Check this isn't already using the right style
-if [ "$(head -c 1 ${COMMIT_MSG_FILE})" = '[' ]; then
+case $msg_source in
+  template|merge|squash|commit)
+    exit 0
+    ;;
+esac
+if [ "$(head -c 1 ${commit_msg_file})" = '[' ]; then
   exit 0
 fi
 
+# Note the extra space at the end of the first line and the lack of space
+# before the default msg are intentional
+cat << EOF > "$commit_msg_file"
+[:${changed_apps}] 
 
-printf "[${APP}] " > "$COMMIT_MSG_FILE"
-printf "$CURRENT_MSG" >> "$COMMIT_MSG_FILE"
+# The put the distro/OS that this commit affects before the colon above to
+# indicate that this commit will only work on that system.
+# e.g. [debian:bash] change to an sh-script that is POSIX/dash specific
+# vs [arch:misc] change to an sh-script that uses a bash add-on
+${current_msg}
+EOF
 
 
 # vim: et sw=2

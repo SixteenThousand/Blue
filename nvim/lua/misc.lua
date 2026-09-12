@@ -138,3 +138,6 @@ vim.cmd([[
     cnoreabbrev th tab help
     cnoreabbrev qq belowright copen
 ]])
+
+-- ersatz snippets
+vim.keymap.set("i", "<C-k>", "->")
