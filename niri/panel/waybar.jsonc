@@ -69,7 +69,7 @@
         "format-icons": [" ", " ", " ", " ", " "]
     },
     "network": {
-        "format-wifi": "{essid} {bandwidthDownOctets}B/s  ",
+        "format-wifi": "{essid} {bandwidthDownOctets}  ",
         "format-ethernet": "{essid} {bandwidthDownOctets}B/s ETH",
         "tooltip-format": "{ifname} via {gwaddr}",
         "format-linked": "{ifname} (No IP)",
