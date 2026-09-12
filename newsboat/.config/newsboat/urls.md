@@ -29,6 +29,8 @@ https://nigeltao.github.io/feed.xml
 https://hackaday.com/blog/feed/
 **systems programming**
 https://eblog.fly.dev/feed.rss.xml
+**shape of code (accu)**
+https://shape-of-code.com/feed/
 
 
 # You Tube
