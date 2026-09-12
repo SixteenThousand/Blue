@@ -207,22 +207,29 @@ list_devices() {
 }
 
 toggle_theme() {
+    local nightfox_variant
+    local plasma_variant
     local current=$(
         gsettings get org.gnome.desktop.interface color-scheme)
     if [ "$current" = "'prefer-dark'" ]; then
         notify-send -a desktopctl 'Switching to light mode...'
         gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
-        colourscheme=dawnfox
+        nightfox_variant=dawnfox
+        plasma_variant=BreezeLight
     else
         notify-send -a desktopctl 'Switching to dark mode...'
         gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-        colourscheme=nightfox
+        nightfox_variant=nightfox
+        plasma_variant=BreezeDark
     fi
-    alaconf -c $colourscheme || echo 'Alacritty config not installed' >&2
+    alaconf -c $nightfox_variant || echo 'Alacritty config not installed' >&2
     if stat ~/.config/nvim/state >/dev/null 2>&1; then
-        echo $colourscheme > ~/.config/nvim/state/colourscheme
+        echo $nightfox_variant > ~/.config/nvim/state/colourscheme
     else
         echo 'Neovim config not installed' >&2
+    fi
+    if [ "$XDG_CURRENT_DESKTOP" = 'KDE' ]; then
+        plasma-apply-colorscheme "$plasma_variant"
     fi
 }
 
