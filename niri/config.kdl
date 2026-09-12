@@ -1,3 +1,4 @@
+// vim: cms=//\ %s
 // This config is in the KDL format: https://kdl.dev "/-" comments out the following node. Check the wiki for a full description of the configuration:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
 
@@ -10,9 +11,6 @@ input {
             // You can set rules, model, layout, variant and options.
             // For more information, see xkeyboard-config(7).
 
-            // For example:
-            // layout "us,ru"
-            // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
             layout "gb"
             options "caps:escape"
         }
@@ -30,7 +28,7 @@ input {
         // dwtp
         // drag false
         // drag-lock
-        natural-scroll
+        // natural-scroll
         // accel-speed 0.2
         // accel-profile "flat"
         // scroll-method "two-finger"
@@ -56,7 +54,7 @@ input {
     }
 
     // Uncomment this to make the mouse warp to the center of newly focused windows.
-    // warp-mouse-to-focus
+    warp-mouse-to-focus
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
@@ -87,7 +85,7 @@ cursor {
     mode "1920x1080@120.030"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    scale 2
+    scale 1.5
 
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
@@ -270,7 +268,7 @@ workspace "work" {}
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "sh" "-c" "waybar -c $HOME/.config/niri/panel/waybar.jsonc -s $HOME/.config/niri/panel/waybar.css"
 spawn-at-startup "dunst"
-spawn-at-startup "sh" "-c" "$HOME/.swaybg"
+spawn-at-startup "swaybg" "--fill" "--image" "$HOME/.wallpaper"
 spawn-at-startup "sh" "-c" "$HOME/.config/niri/actions/check_idle"
 spawn-at-startup "niri" "msg" "action" "focus-workspace" "work"
 
@@ -364,18 +362,13 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "sh" "-c" "$TERMINAL"; }
     Mod+B hotkey-overlay-title="Open a Browser" { spawn "sh" "-c" "$BROWSER"; }
-    Mod+Space hotkey-overlay-title="App Launcher" { spawn "rofi" "-show" "drun"; }
+    // Mod+Space hotkey-overlay-title="App Launcher" { spawn "rofi" "-show" "drun"; }
+    Mod+Space hotkey-overlay-title="App Launcher" { spawn "fuzzel"; }
     Control+Mod+Q hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // Close a notification
     Super+N { spawn "dunstctl" "close"; }
 
-    // You can also use a shell. Do this if you need pipes, multiple commands, etc.
-    // Note: the entire command goes as a single argument in the end.
-    // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }
-
-    // Example volume keys mappings for PipeWire & WirePlumber.
-    // The allow-when-locked=true property makes them work even when the session is locked.
     XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
     XF86AudioMute        allow-when-locked=true { spawn "desktopctl" "mute"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn "desktopctl" "vol" "-" "2"; }
@@ -390,13 +383,12 @@ binds {
     Mod+F5 allow-when-locked=true { spawn "desktopctl" "mon" "-" "5"; }
     Mod+F6 allow-when-locked=true { spawn "desktopctl" "mon" "+" "5"; }
 
-
     // Mount stuff
     Mod+C { spawn "desktopctl" "mount"; }
     Mod+Shift+C { spawn "desktopctl" "unmount"; }
     
     // Bluetooth
-    Mod+V { spawn "desktopctl" "bt" "toggle"; }
+    Control+Mod+B { spawn "desktopctl" "bt" "toggle"; }
     
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
@@ -405,7 +397,7 @@ binds {
 
     Mod+Q { close-window; }
 
-    Alt+Tab { focus-column-right-or-first; }
+    // Alt+Tab { focus-window-previous; }
     Mod+L { focus-column-right-or-first; }
     Mod+Right { focus-column-right-or-first; }
     Mod+E { focus-column-left-or-last; }
@@ -574,6 +566,7 @@ binds {
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
+    Super+s { screenshot; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
