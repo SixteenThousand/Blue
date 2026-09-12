@@ -25,6 +25,8 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("LspAttach",{
     callback = function(evt)
         local client = vim.lsp.get_client_by_id(evt.data.client_id)
+        -- Turn off the damn semantic highlighting
+        client.server_capabilities.semanticTokensProvider = nil
         if client.server_capabilities.hoverProvider then
             vim.keymap.set("n","gh",vim.lsp.buf.hover)
         else

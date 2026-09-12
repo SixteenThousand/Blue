@@ -351,12 +351,12 @@ def_key "h"
 #def_key "backspace"
 #  play
 #
-#def_key "f"
-#  seek_forward
-#
-#def_key "b"
-#  seek_backward
-#
+def_key "f"
+ seek_forward
+
+def_key "b"
+ seek_backward
+
 #def_key "r"
 #  toggle_repeat
 #
