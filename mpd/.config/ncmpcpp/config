@@ -403,7 +403,7 @@ visualizer_type = ellipse
 #
 #header_text_scrolling = yes
 #
-#cyclic_scrolling = no
+cyclic_scrolling = yes
 #
 #lyrics_fetchers = azlyrics, genius, musixmatch, sing365, metrolyrics, justsomelyrics, jahlyrics, plyrics, tekstowo, zeneszoveg, internet
 #
@@ -445,7 +445,7 @@ visualizer_type = ellipse
 ##
 ## Note: You can define startup screen by choosing screen from the list above.
 ##
-#startup_screen = playlist
+startup_screen = browser
 #
 ##
 ## Note: You can define startup slave screen by choosing screen from the list

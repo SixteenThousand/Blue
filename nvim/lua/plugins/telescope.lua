@@ -1,4 +1,13 @@
 -- telescope.nvim configuration
+require("telescope").setup({
+    defaults = {
+        layout_config = {
+            width = 0.6,
+            height = 0.4,
+        },
+    },
+})
+
 local tlscp = require("telescope.builtin")
 
 vim.keymap.set("n","<leader>ff",function ()
