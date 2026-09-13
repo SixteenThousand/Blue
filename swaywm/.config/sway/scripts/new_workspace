@@ -7,6 +7,7 @@ import sys
 from datetime import datetime
 
 def core(args):
+    with_window = len(args) > 1 and args[1] == "with_window"
     proc = subprocess.run(
         ["swaymsg", "-r", "-t", "get_workspaces"],
         capture_output=True
@@ -14,7 +15,7 @@ def core(args):
     workspaces = json.loads(proc.stdout)
     new_ws_num = -1
     for ws in workspaces:
-        if ws["focused"]:
+        if with_window and ws["focused"]:
             # Check if the workspace was empty before this window
             if ws["representation"].find(" ") == -1:
                 return
@@ -24,7 +25,7 @@ def core(args):
             new_ws_num = ws["num"]
     new_ws_num += 1
     cmd = f"workspace {new_ws_num}"
-    if len(args) > 1 and args[1] == "with_window":
+    if with_window:
         cmd = f"move window to workspace {new_ws_num}; " + cmd
     subprocess.run(["swaymsg", cmd])
 
