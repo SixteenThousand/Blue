@@ -9,6 +9,8 @@ if you want to know more, though I can't make any promises about responding.
 
 ---
 
+
+
 ## Features
 
 - Hand-written HTML tag completion (see `./lua/settings/custom.lua -> tag_mode` 
@@ -19,12 +21,15 @@ if you want to know more, though I can't make any promises about responding.
 
 ---
 
+
+
 ## Notes
+
 ### Installing Language Servers
+
 For future reference, here is how I installed the language servers that I 
 use:
-- [pyright](https://github.com/Microsoft/pyright) was installed globally via 
-  pnpm
+- pyrefly has been built from source code
 - [typescript-language-server](https://github.com/typescript-language-server/typescript-language-server) 
   was installed globally via pnpm
 - [gopls](https://github.com/golang/tools) was installed using my system 
@@ -33,7 +38,9 @@ use:
   package manager; the package is `clang-tools-extra` on Fedora, `clangd` on 
   Debian
 
+
 ### Spell Check And Acronyms
+
 It should be possible to turn off spell check just for acronyms with the 
 following line:
 ```vim
@@ -45,3 +52,11 @@ syntax spell default
 ```
 And it seems that a plugin (most likely vimwiki) has set this to `toplevel` 
 instead.
+
+
+### Installing new plugins
+
+This should be as simple as putting the git repo for a plugin in the right 
+folder (see `lua/plugins`) and restarting vim.
+
+You will need to run `:helptags {plugin name}|ALL` to get the docs up though.
