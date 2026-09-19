@@ -155,29 +155,43 @@ function lsproc {
 	done
 }
 
+# with thanks to
+# https://stackoverflow.com/questions/5917576/sort-a-text-file-by-line-length-including-spaces
+# for the sorting trick
 function z {
+  local high_dir=$1
+  shift 1
   local target=
-  if [[ -z $1 ]]; then
+  if [[ -z $high_dir ]]; then
     cd
     return
-  else
-    target=$(
-      find \
-        /mnt \
-        $HOME \
-        $HOME/Documents \
-        -maxdepth 3 -type d -not -path '*/.*' 2>/dev/null \
-        | grep -i "$1" | head -n 1)
   fi
-  if [[ -n $2 ]]; then
-    target=$(project_files d "$target" | grep -i "$2" | head -n 1)
+  target=$(find $HOME $HOME/Documents \
+    -maxdepth 3 -type d -not -path '*/.*' 2>/dev/null \
+    | grep -i "$high_dir" | head -n 1)
+  if [[ -n $1 ]]; then
+    local pattern=
+    for arg in $@; do
+      pattern="${pattern}.*${arg}"
+    done
+    target=$(
+      find $target -maxdepth 3 -type d -not -path '*/.*' 2>/dev/null \
+        | awk '{ print length, $0 }' \
+        | sort -n -s \
+        | cut -d' ' -f 2 \
+        | grep -i "$pattern" \
+        | head -n 1)
   fi
   cd "$target"
 }
 
 function zz {
   [[ -z $1 ]] && return 1
-  cd "$(project_files d | grep -i "$1.*$2" | head -n 1)"
+  local pattern=
+  for arg in $@; do
+    pattern="${pattern}.*${arg}"
+  done
+  cd "$(project_files d | grep -i "$pattern" | head -n 1)"
 }
 
 function scpx {
