@@ -123,6 +123,8 @@ bindsym {
     $moveMod+minus border pixel 5; move scratchpad
     Super+minus scratchpad show
     Super+Shift+semicolon exec $script_dir/new_workspace with_window
+    Super+Shift+m focus parent
+    Super+m focus child
 }
 
 
@@ -131,7 +133,7 @@ bindsym {
 workspace_layout default
 bindsym {
     # Switch the current container between different layout styles
-    $layoutMod+percent split horizontal; exec notify-send -a 'sway' 'Split made'
+    $layoutMod+h split horizontal; exec notify-send -a 'sway' 'Split made'
     # get rid of a split
     $layoutMod+Backspace split none
     # numbersign = hash/tilde key
@@ -172,8 +174,7 @@ bindsym Super+r mode "resize"
 default_border pixel 4
 font FantasqueSansM Nerd Font 12
 smart_borders on
-# client.focused #1d6432cc #1d6432cc #ffffff #1d6432ee
-client.focused #44cc44cc #44cc44cc #ffffff #44cc44ee
+client.focused #448844cc #448844cc #ffffff #448844ee
 
 
 ### MEDIA/HARDWARE CONTROLS
@@ -209,6 +210,8 @@ bindsym Super+d exec dunstctl close-all
 
 ### RULES
 for_window [title="sixteen-python"] floating enable; resize set 60ppt 80ppt
+for_window [app_id="libreoffice-startcenter"] floating enable; resize set 60ppt 80ppt
+for_window [app_id=".*firefox.*" title="File Upload"] floating enable; resize set 60ppt 80ppt
 for_window [title=".*Video Bridge.*"] kill
 for_window [tiling] exec $script_dir/new_workspace with_window
 
