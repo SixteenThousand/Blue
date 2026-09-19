@@ -35,7 +35,7 @@ export NNN_TRASH=2 # see `man nnn` for more info
 export NNN_OPTS=HQeuC
 export NNN_TMPFILE='/tmp/nnn-lastdir'
 export NNN_OPENER=xdg-open
-export NNN_PLUG='z:changedir;p:playlist'
+export NNN_PLUG='z:changedir;p:playlist;d:nmount;m:mtpmount'
 
 # I hate X11
 export XCURSOR_SIZE=48
