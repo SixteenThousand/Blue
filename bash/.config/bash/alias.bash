@@ -16,3 +16,4 @@ alias xcopy='xclip -selection clipboard'
 alias pm=pnpm
 alias px=pnpx
 alias bat=batcat
+alias imv=imv-wayland
