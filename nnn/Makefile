@@ -9,7 +9,7 @@ install:
 	ln -s ${HOME}/.local/share ${BOOKMARK_DIR}/local-share || :
 	ln -s ${HOME}/Downloads ${BOOKMARK_DIR}/Downloads || :
 	ln -s ${HOME}/Scratch ${BOOKMARK_DIR}/Scratch || :
-	mv ${CONFIG_DIR}/plugins ./OLD-plugins || :
+	mv ${CONFIG_DIR}/plugins ./plugins.bak || :
 	ln -s ${PWD}/plugins ${CONFIG_DIR}
 
 uninstall:
