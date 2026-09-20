@@ -60,6 +60,7 @@ bindsym {
 
 ### MOVE FOCUS
 bindsym {
+    Super+Tab exec rofi -show window
     # workspaces
     Alt+Tab workspace back_and_forth
     Super+Backspace workspace back_and_forth
