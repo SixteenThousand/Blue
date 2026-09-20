@@ -363,7 +363,7 @@ binds {
     Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "sh" "-c" "$TERMINAL"; }
     Mod+B hotkey-overlay-title="Open a Browser" { spawn "sh" "-c" "$BROWSER"; }
     // Mod+Space hotkey-overlay-title="App Launcher" { spawn "rofi" "-show" "drun"; }
-    Mod+Space hotkey-overlay-title="App Launcher" { spawn "fuzzel"; }
+    Mod+Space hotkey-overlay-title="App Launcher" { spawn "rofi -show drun"; }
     Control+Mod+Q hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // Close a notification

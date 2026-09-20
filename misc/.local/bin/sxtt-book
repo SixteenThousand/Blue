@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 cd ~/Documents/Books-and-Things
-book=$(find . -type f | fuzzel --dmenu -w 180 --font='FantasqueSansM Nerd Font:size=7')
+book=$(find . -type f | rofi -dmenu -theme-str 'window {width: 80%;}')
 if [ -n "$book" ]; then
   gio open "file://${PWD}/${book}"
 else
