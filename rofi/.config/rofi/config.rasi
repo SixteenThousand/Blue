@@ -1,6 +1,5 @@
 configuration {
-    modes: "window,drun,run,ssh,filebrowser";
-    terminal: "kitty";
+    modes: "window,drun,filebrowser";
     run-shell-command: "{terminal} -e {cmd}";
     // if only one item is left in the list, automatically select it
     auto-select: true;
@@ -15,8 +14,8 @@ configuration {
         sorting-method: "name";
         show-hidden: true;
     }
+    drun-match-fields: "name,generic";
     window-thumbnail: true;
 }
 
-// run rofi-theme-selector from the terminal to change theme
 @theme "./themes/mysidebar.rasi"
