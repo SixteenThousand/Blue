@@ -82,9 +82,12 @@ function stale {
 }
 
 function pathgrep {
+  printf '\x1b[1mFrom PATH:\x1b[0m\n'
 	find $(echo $PATH | sed -e 's/:/ /g') -maxdepth 1 -type f,l 2>/dev/null |
 		xargs stat --format=%N |
 		grep $@
+  printf '\x1b[1mFrom shell:\x1b[0m\n'
+  alias | sed 's/^alias //' | grep $@
 }
 
 # Pass argument 'd' to get project directories
@@ -194,6 +197,7 @@ function zz {
   cd "$(project_files d | grep -i "$pattern" | head -n 1)"
 }
 
-function scpx {
-  scp -r "$1" "$2:~/$(realpath --relative-to $HOME "$1")"
+function mkcd {
+  mkdir -p $1
+  cd $1
 }
