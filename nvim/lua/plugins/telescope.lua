@@ -20,7 +20,7 @@ vim.keymap.set("n","<leader>ff",function ()
 end)
 
 -- search in PWD of vim
-vim.keymap.set("n","<leader>fp",function ()
+vim.keymap.set("n", "<leader>fp", function()
 	tlscp.find_files({
         hidden = true,
 		no_ignore = true,
@@ -28,31 +28,22 @@ vim.keymap.set("n","<leader>fp",function ()
 	})
 end)
 
-vim.keymap.set("n","<leader>fg",function ()
-	local ok,_ = pcall(tlscp.git_files,{
-		no_ignore = true,
-        use_file_path = true,
-        previewer = false,
-	})
-    if not ok then
-        vim.cmd.echohl("WarningMsg")
-        vim.cmd.echo("\"Not in a git repo (sorry)\"")
-        vim.cmd.echohl("None")
-    end
+vim.keymap.set("n", "<leader>fg", function()
+    tlscp.live_grep({previewer = false})
 end)
 
-vim.keymap.set("n","<leader>ee",function()
+vim.keymap.set("n", "<leader>ee", function()
     tlscp.buffers({previewer = false})
 end)
 
-vim.keymap.set("n","<leader>fh",function()
+vim.keymap.set("n", "<leader>fh", function()
     tlscp.help_tags({previewer = true})
 end)
 
-vim.keymap.set("n","<leader>fq",function()
+vim.keymap.set("n", "<leader>fq", function()
     tlscp.quickfix({previewer = false})
 end)
 
-vim.keymap.set("n","<leader>fl",function()
+vim.keymap.set("n", "<leader>fl", function()
     tlscp.loclist({previewer = false})
 end)

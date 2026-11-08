@@ -16,6 +16,7 @@ configuration {
     }
     drun-match-fields: "name,generic";
     window-thumbnail: true;
+    case-smart: true;
 }
 
 @theme "./themes/mysidebar.rasi"
