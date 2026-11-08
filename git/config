@@ -10,9 +10,7 @@
 	root = rev-parse --show-toplevel
 	diffs = diff --cached
 	taglist = tag --format=\"%(refname:strip=2) -> %(objectname)\" --sort=-refname
-; [credential]
-; 	helper = cache --timeout 21600
-; 	helper = oauth
+    l = log --oneline --graph --all ^main
 [credential "https://github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
