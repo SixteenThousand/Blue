@@ -10,16 +10,8 @@ vim.keymap.set({"n","v"},"<leader>p","\"+p")
 vim.keymap.set({"n","v"},"<leader>P","\"+P")
 
 -- debug comments
-vim.keymap.set("n", "gct", function()
-    vim.cmd.normal(string.format("o%s", vim.o.commentstring):format("TODO: "))
-    vim.cmd.startinsert({bang=true})
-end)
-vim.keymap.set("n", "gcT", function()
-    vim.cmd.normal(string.format("O%s", vim.o.commentstring):format("TODO: "))
-    vim.cmd.startinsert({bang=true})
-end)
 vim.keymap.set("n", "gcd", function()
-    vim.cmd.normal(string.format("A  "..vim.o.commentstring, "debug"))
+    vim.cmd.normal(string.format("A  "..vim.o.commentstring, "sxtt:debug"))
 end)
 vim.keymap.set("v", "gcd", function()
     local sel_start = vim.fn.getpos(".")[2]
@@ -33,24 +25,16 @@ vim.keymap.set("v", "gcd", function()
         math.max(0, sel_start-1),
         string.format(
             utils.indent_string(sel_start)..vim.o.commentstring,
-            "debug {{{"
+            "sxtt:debug {{{"
         )
     )
     vim.fn.append(
         sel_end+1,
         string.format(
             utils.indent_string(sel_end+1)..vim.o.commentstring,
-            "debug }}}"
+            "sxtt:debug }}}"
         )
     )
-end)
-vim.keymap.set("n", "gcD", function()
-    local debug_start = vim.fn.search("debug {{{$", "bcW")
-    if debug_start == 0 then
-        return
-    end
-    vim.cmd.normal("V")
-    vim.fn.search("debug }}}$", "W")
 end)
 
 
@@ -138,3 +122,9 @@ vim.cmd([[
 
 -- ersatz snippets
 vim.keymap.set("i", "<C-k>", "->")
+
+vim.keymap.set("n", "<A-d>", function()
+    local datestamp = os.date("Date: %a %d %b %Y")
+    vim.fn.append(vim.fn.line("."), datestamp)
+    vim.cmd([[normal j]])
+end)
