@@ -6,22 +6,6 @@ to start again.*
 This is Blue, where I store all of my configuration files, i.e., things I might 
 need when using a new system, once in a Blue Moon.
 
-**Theoretically everything here is public. No API keys, no passwords, or 
-anything like that is stored here.**
-
-
-## Interesting Features
-
-- Hand written shell prompts for bash, fish, zsh...and python 
-- A complete failure to set a colour scheme in tmux (seriously, if you know how 
-  to do that, please contact me)
-- A custom neovim configuration with few plugins
-- A shell history search tool for bash (search for `stale`)
-
-Some of the subdirectories have their own readme's with more information, 
-though they are out of date.
-
-
 ## Setup
 
 This requires:
