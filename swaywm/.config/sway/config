@@ -1,3 +1,5 @@
+# `desktopctl` is a script I wrote. You should be able to find in Blue/misc.
+
 ### VARIABLES
 set $layoutMod Super+Alt
 set $moveMod Super+Shift
