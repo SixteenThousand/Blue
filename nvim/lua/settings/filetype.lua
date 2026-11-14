@@ -25,7 +25,6 @@ vim.api.nvim_create_autocmd(
     }
 )
 
--- markdown; the 'spell' option is annoying
 vim.api.nvim_create_autocmd(
     {"BufEnter"},
     {
@@ -44,3 +43,10 @@ vim.api.nvim_create_autocmd(
         end,
     }
 )
+vim.g.filetype_md = "pandoc"
+vim.g["pandoc#syntax#conceal#urls"] = 1
+vim.g["pandoc#syntax#conceal#blacklist"] = {
+    "list",
+    "definition",
+    "atx",  -- headers
+}

@@ -1,13 +1,10 @@
 -- default places :find & co will look
 vim.opt_global.path = { ".", "", "./**4", "**4", }
 
--- Touches:
---  * line wrapping/width
---  * auto formatting
---  * comment formatting
---  * and more
 -- See `:h fo-table` for more info
-vim.opt_local.formatoptions:append("tco/qbj")
+-- other options may also be set; see "text mode"
+-- See settings/init.lua to see the value of sxtt_formatoptions
+vim.o.formatoptions = vim.g.sxtt_formatoptions
 
 -- indentation
 vim.go.smarttab = false
