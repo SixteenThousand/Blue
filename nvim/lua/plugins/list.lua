@@ -1,7 +1,6 @@
 return {
     --- DEPENDENCIES
     "plenary.nvim",
-    "nvim-web-devicons",
     --- EXTENSIONS PROPER
     -- colourschemes
     "everforest",

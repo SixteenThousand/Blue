@@ -3,8 +3,8 @@
  [Lazy.nvim](https://github.com/folke/lazy.nvim) in that it adds plugins by
  adding folders to runtimepath.
 
-  A plugin can be installed by cloning its repository into
- stdpath("data")/sixteen-plugins. You can then load it by adding an entry to
+ A plugin can be installed by putting its contents (minus the git repo) in
+ `plugin_dir`. You can then load it by adding an entry to
  the big table in list.lua. The entry must either be a string, equal to the
  name of its subfolder in sixteen-plugins, or a table, with keys:
      dirname: The name of the plugin's subfolder in sixteen-plugins.
@@ -16,10 +16,12 @@
 ]]--
 local plugin_list = require("plugins.list")
 
+local plugin_dir = vim.fn.stdpath("config").."/sxtt-plugins/"
+
 local dirs = {}
 for _, plugin in ipairs(plugin_list) do
     local dirname = (type(plugin) == "string" and plugin) or plugin.dirname
-    dirs[#dirs+1] = vim.fn.stdpath("config").."/sxtt-plugins/"..dirname
+    dirs[#dirs+1] = plugin_dir..dirname
     if plugin.pre then
         plugin.pre()
     end
