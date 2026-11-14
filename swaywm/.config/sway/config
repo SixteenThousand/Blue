@@ -28,6 +28,7 @@ focus_follows_mouse no
 # fixing the zoom
 output * scale 1
 set $laptop eDP-1
+set $pywintitle sxtt-python
 bindswitch --reload --locked lid:on output $laptop disable
 bindswitch --reload --locked lid:off output $laptop enable
 
@@ -43,7 +44,7 @@ bindsym {
     # other app shortcuts
     Super+b exec $BROWSER
     Super+Return exec $TERMINAL
-    Super+y exec sh -c "$TERMINAL -T sixteen-python -e python3"
+    Super+y exec sh -c "$TERMINAL -T $pywintitle -e python3"
     Super+o exec sxtt-book
 }
 
@@ -173,6 +174,7 @@ bindsym Super+r mode "resize"
 ## WINDOW DECORATIONS
 # get rid of those damn titlebars (except in tabbed mode)
 default_border pixel 4
+default_floating_border normal 5
 font FantasqueSansM Nerd Font 12
 smart_borders on
 client.focused #448844cc #448844cc #ffffff #448844ee
@@ -210,7 +212,7 @@ bindsym {
 bindsym Super+d exec dunstctl close-all
 
 ### RULES
-for_window [title="sixteen-python"] floating enable; resize set 60ppt 80ppt
+for_window [title=$pywintitle] floating enable; resize set 60ppt 80ppt; border normal 5
 for_window [app_id="libreoffice-startcenter"] floating enable; resize set 60ppt 80ppt
 for_window [app_id=".*firefox.*" title="File Upload"] floating enable; resize set 60ppt 80ppt
 for_window [title=".*Video Bridge.*"] kill
