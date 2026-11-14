@@ -19,7 +19,7 @@ local plugin_list = require("plugins.list")
 local dirs = {}
 for _, plugin in ipairs(plugin_list) do
     local dirname = (type(plugin) == "string" and plugin) or plugin.dirname
-    dirs[#dirs+1] = vim.fn.stdpath("data").."/sixteen-plugins/"..dirname
+    dirs[#dirs+1] = vim.fn.stdpath("config").."/sxtt-plugins/"..dirname
     if plugin.pre then
         plugin.pre()
     end
