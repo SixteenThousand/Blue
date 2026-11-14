@@ -1,6 +1,11 @@
-import sys
-import os
+# vim: ft=python
+
 import datetime as dt
+import math
+import os
+import sys
 
 sys.ps1 = "\x01\x1b[1;33m\x02 python3> \x01\x1b[0m\x02"
 sys.ps2 = "\x01\x1b[1;36m\x02       -> \x01\x1b[0m\x02"
+
+print("You access to datetime as dt, math, od, sys")
