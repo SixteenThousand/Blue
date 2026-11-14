@@ -227,6 +227,8 @@ def_key "k"
 #
 #def_key "delete"
 #  delete_playlist_items
+def_key "x"
+  delete_playlist_items
 #
 #def_key "delete"
 #  delete_browser_items
@@ -497,12 +499,16 @@ def_key "r"
 #
 #def_key "m"
 #  move_sort_order_up
+def_key "K"
+  move_sort_order_up
 #
 #def_key "m"
 #  move_selected_items_up
 #
 #def_key "n"
 #  move_sort_order_down
+def_key "J"
+  move_sort_order_down
 #
 #def_key "n"
 #  move_selected_items_down
