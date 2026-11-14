@@ -7,26 +7,13 @@ local M = {}
 -- plugins adding stuff to formatoptions that breaks vim somehow.
 -- conceallevel is set because it's useful for markdown; it should cause no
 -- issues in other file formats though.
-local formatOpts = { "a", "w", }
 function M.text()
-    vim.o.formatoptions = vim.g.sxtt_formatoptions
-    vim.opt_local.formatoptions:append(formatOpts)
+    vim.bo.formatoptions = vim.g.sxtt_formatoptions.."aw"
     vim.wo.conceallevel = 1
 end
 function M.notext()
     vim.o.formatoptions = vim.g.sxtt_formatoptions
     vim.cmd([[set conceallevel<]])
-end
-function M.texton()
-    if vim.o.spell then
-        return true
-    end
-    for _,opt in pairs(formatOpts) do
-        if vim.bo.formatoptions:find(opt) == nil then
-            return false
-        end
-    end
-    return true
 end
 
 function M.set_tabwidth(num)
