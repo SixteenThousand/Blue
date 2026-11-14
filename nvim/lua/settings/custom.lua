@@ -1,28 +1,27 @@
---- CUSTOM "SETTINGS"
-
---[[
--- This module holds functions that change a group of related settings at  
--- once, effectively creating my own custom settings.
--- Any commands to invoke these "settings" should be in settings/init.lua
---]]
-
 local utils = require("utils")
 local M = {}
 
--- enter "Text mode"; enable a bunch of options that make writing long blocks of
--- text much easier
--- bug: append cannot take a table of more than 3 things; this is why there
--- is no variable to hold the formatoptions being set
+-- text mode: for editing long blocks of text
+-- bug: append cannot take a table of more than 3 things
+-- We set formatoptions here manually because I am sick and tired of random
+-- plugins adding stuff to formatoptions that breaks vim somehow.
+-- conceallevel is set because it's useful for markdown; it should cause no
+-- issues in other file formats though.
+local formatOpts = { "a", "w", }
 function M.text()
-    vim.opt_local.formatoptions:append("aw2")
-    vim.wo.spell = true
+    vim.o.formatoptions = vim.g.sxtt_formatoptions
+    vim.opt_local.formatoptions:append(formatOpts)
+    vim.wo.conceallevel = 1
 end
 function M.notext()
-    vim.opt_local.formatoptions:remove({ "a", "w", "2", })
-    vim.wo.spell = false
+    vim.o.formatoptions = vim.g.sxtt_formatoptions
+    vim.cmd([[set conceallevel<]])
 end
 function M.texton()
-    for _,opt in pairs({ "a", "w", "2", }) do
+    if vim.o.spell then
+        return true
+    end
+    for _,opt in pairs(formatOpts) do
         if vim.bo.formatoptions:find(opt) == nil then
             return false
         end

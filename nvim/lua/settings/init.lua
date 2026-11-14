@@ -1,3 +1,6 @@
+-- See builtin.lua for more info
+vim.g.sxtt_formatoptions =  "cro/qnb1j"
+
 require("settings.builtin")
 require("settings.filetype")
 local custom = require("settings.custom")
