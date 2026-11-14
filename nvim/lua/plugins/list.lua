@@ -5,8 +5,10 @@ return {
     --- EXTENSIONS PROPER
     -- colourschemes
     "everforest",
+    "catppuccin",
     "kanagawa.nvim",
     "nightfox.nvim",
+    "summerfruit256.vim",
     "rose-pine-neovim",
     -- IDE-like stuff
     "nvim-lspconfig",
