@@ -19,16 +19,9 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export ANDROID_HOME="$HOME/.android-studio/sdk"
 export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
 
-# fnm
-export PATH="/run/user/1000/fnm_multishells/41738_1733769755361/bin":"$PATH"
-export FNM_MULTISHELL_PATH="/run/user/1000/fnm_multishells/41738_1733769755361"
-export FNM_VERSION_FILE_STRATEGY="local"
-export FNM_DIR="$HOME/.local/share/fnm"
-export FNM_LOGLEVEL="info"
-export FNM_NODE_DIST_MIRROR="https://nodejs.org/dist"
-export FNM_COREPACK_ENABLED="true"
-export FNM_RESOLVE_ENGINES="true"
-export FNM_ARCH="x64"
+# python
+export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/.pyrc
+export PYTHON_HISTORY="$HOME/.local/share/.python_history"
 
 # nnn, the file manager
 export NNN_TRASH=2 # see `man nnn` for more info
