@@ -45,6 +45,7 @@ vim.api.nvim_create_autocmd(
 )
 vim.g.filetype_md = "pandoc"
 vim.g["pandoc#syntax#conceal#urls"] = 1
+vim.g["pandoc#syntax#style#underline_special"] = 0
 vim.g["pandoc#syntax#conceal#blacklist"] = {
     "list",
     "definition",

@@ -128,3 +128,28 @@ vim.keymap.set("n", "<A-d>", function()
     vim.fn.append(vim.fn.line("."), datestamp)
     vim.cmd([[normal j]])
 end)
+
+-- an internet-friendly numbered list :)
+vim.keymap.set("n", "<A-l>", function()
+    local start_pos = vim.fn.getpos(".")
+    local para_end = vim.fn.line("'}")
+
+    if para_end == vim.fn.line("$") and vim.fn.getline(para_end) ~= "" then
+        para_end = para_end + 1
+    end
+
+    vim.cmd([['{]])
+    vim.cmd.normal("0")
+    local para_start = vim.fn.line(".")
+    local line = vim.fn.search([[^\d]], "cW")
+    if line >= para_start then
+        local num_matches = 1
+        while line > 0 and line < para_end and num_matches < 100 do
+            vim.cmd(string.format([[%ds/^\d\+/%d/]], line, num_matches))
+            line = vim.fn.search([[^\d]], "W")
+            num_matches = num_matches + 1
+        end
+    end
+
+    vim.fn.cursor(start_pos[2], start_pos[3], start_pos[4])
+end)

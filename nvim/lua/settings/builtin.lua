@@ -6,6 +6,9 @@ vim.opt_global.path = { ".", "", "./**4", "**4", }
 -- See settings/init.lua to see the value of sxtt_formatoptions
 vim.o.formatoptions = vim.g.sxtt_formatoptions
 
+-- an internet-friendly numbered list :)
+vim.opt.comments:append({ "fb:1." }) -- buffer opt
+
 -- indentation
 vim.go.smarttab = false
 vim.o.shiftwidth = 4 -- buffer opt
