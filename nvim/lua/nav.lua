@@ -16,7 +16,7 @@ vim.keymap.set("n", "-", function ()
 end)
 
 -- tab stuff
-vim.keymap.set({"n", "i"}, "<C-t>", function() vim.cmd.tabnew("%:h") end)
+vim.keymap.set("n", "<C-t>", function() vim.cmd.tabnew("%:h") end)
 vim.keymap.set("t", "<C-t>", vim.cmd.tabnew)
 
 --- QuickFix List

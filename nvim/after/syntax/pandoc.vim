@@ -10,3 +10,4 @@
 " above them.
 syn match sxttHeader +^#\{1,6} .*$+ contains=@NoSpell
 hi def link sxttHeader Title
+hi link pandocAutomaticLink @markup.link.url
