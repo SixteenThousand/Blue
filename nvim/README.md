@@ -1,14 +1,6 @@
-# My Neovim Configuration
+# Neovimm
 
-This is my configuration of neovim, the editor that makes it feel like you 
-built it yourself.
-
-It's not the most slick thing out there, but it works and if you're
-interested in writing one yourself it might be useful - feel free to email me 
-if you want to know more, though I can't make any promises about responding.
-
----
-
+It's an editor. I think it's pretty good.
 
 
 ## Features
@@ -21,37 +13,20 @@ if you want to know more, though I can't make any promises about responding.
 
 ---
 
-
-
 ## Notes
 
 ### Installing Language Servers
 
-For future reference, here is how I installed the language servers that I 
-use:
-- pyrefly has been built from source code
-- [typescript-language-server](https://github.com/typescript-language-server/typescript-language-server) 
+For future reference, here is how I installed the language servers that I have 
+used:
+* pyrefly has been built from source code
+* [typescript-language-server](https://github.com/typescript-language-server/typescript-language-server) 
   was installed globally via pnpm
-- [gopls](https://github.com/golang/tools) was installed using my system 
+* [gopls](https://github.com/golang/tools) was installed using my system 
   package manager
-- [clangd](https://clangd.llvm.org/installation) was installed by my system 
+* [clangd](https://clangd.llvm.org/installation) was installed by my system 
   package manager; the package is `clang-tools-extra` on Fedora, `clangd` on 
   Debian
-
-
-### Spell Check And Acronyms
-
-It should be possible to turn off spell check just for acronyms with the 
-following line:
-```vim
-syntax match '\<[A-Z]\+\>' contains=@NoSpell
-```
-But unfortunately this only seems to work if you also have set
-```vim
-syntax spell default
-```
-And it seems that a plugin (most likely vimwiki) has set this to `toplevel` 
-instead.
 
 
 ### Installing new plugins
@@ -60,3 +35,11 @@ This should be as simple as putting the git repo for a plugin in the right
 folder (see `lua/plugins`) and restarting vim.
 
 You will need to run `:helptags {plugin name}|ALL` to get the docs up though.
+
+
+### Debugging
+
+* `:redir` is useful for putting vim command output into a file
+* `:Inspect` will show what syntax group the thing under the cursor is in
+* `:scriptnames` & `:verbose set` can give you an idea of where a bad setting is 
+  coming from
