@@ -24,8 +24,3 @@ files here and where the actual configuration files should go.
 
 You can also skip all of that by just running `make install` without `cd`'ing 
 first, which just runs `make install` for all of the directories here.
-
-For adding new changes to this repo, you should also run
-```
-git config --local commit.template commitmsg.txt
-```
