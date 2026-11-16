@@ -1,0 +1,17 @@
+; With thanks to https://unix.stackexchange.com/questions/585054/how-to-write-systemd-user-service-that-runs-only-as-part-of-a-graphical-session
+
+[Unit]
+Description=bluetooth applet hack
+Documentation=~/Blue/README.md
+PartOf=graphical-session.target
+After=graphical-session.target
+BindsTo=graphical-session.target
+Requisite=graphical-session.target
+ConditionEnvironment=DISPLAY
+
+[Service]
+Type=exec
+ExecStart=/usr/bin/blueman-applet
+
+[Install]
+WantedBy=graphical-session.target
